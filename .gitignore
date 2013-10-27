@@ -1,0 +1,7 @@
+libs/nette
+libs/db
+.idea/
+*.htaccess
+temp/*
+!temp/.gitignore
+!temp/.htaccess

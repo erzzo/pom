@@ -25,7 +25,9 @@ common:
 
 
 	services:
+		permissionFactory: Security\Acl
 
+		authorizator: @permissionFactory::createPermission
 		authenticator: Security\Authenticator
 		routerFactory: RouterFactory
 		router: @routerFactory::createRouter

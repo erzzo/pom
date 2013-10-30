@@ -1,5 +1,5 @@
 <?php
-namespace Fleetlog;
+namespace Security;
 
 use Nette\Security\Permission;
 
@@ -12,9 +12,10 @@ class Acl
 	{
 		$permission = new Permission();
 		$permission->addRole('student');
+		$permission->addRole('lecturer');
 		$permission->addRole('teacher');
 
-		$permission->addResource('AdminModule:');
+		$permission->addResource('Admin');
 		// V basepresenteri
 		/*Pravidla opravneni*/
 

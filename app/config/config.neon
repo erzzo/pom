@@ -16,16 +16,19 @@ common:
 			errorPresenter: Error
 
 		database:
-			dsn: 'mysql:host=localhost;dbname=test'
-			user:
-			password:
+			dsn: 'mysql:host=localhost;dbname=wtMSP'
+			user: 'root'
+			password: 'root'
 
 		session:
 			expiration: 14 days
 
 
 	services:
-		authenticator: Authenticator
+		permissionFactory: Security\Acl
+
+		authorizator: @permissionFactory::createPermission
+		authenticator: Security\Authenticator
 		routerFactory: RouterFactory
 		router: @routerFactory::createRouter
 

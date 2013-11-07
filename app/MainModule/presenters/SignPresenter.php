@@ -1,6 +1,8 @@
 <?php
 
-use Nette\Application\UI;
+namespace MainModule;
+
+use \Nette\Application\UI;
 
 
 /**
@@ -9,11 +11,6 @@ use Nette\Application\UI;
 class SignPresenter extends BasePresenter
 {
 
-
-	/**
-	 * Sign-in form factory.
-	 * @return Nette\Application\UI\Form
-	 */
 	protected function createComponentSignInForm()
 	{
 		$form = new UI\Form;
@@ -45,10 +42,25 @@ class SignPresenter extends BasePresenter
 
 		try {
 			$this->getUser()->login($values->username, $values->password);
-			$this->redirect('Homepage:');
 
-		} catch (Nette\Security\AuthenticationException $e) {
+			if ($this->getUser()->isInRole('ucitel')) {
+				$this->redirect("Mentor:Default:");
+			} else {
+				$this->redirect("Student:Default:");
+			}
+		} catch (\Nette\Security\AuthenticationException $e) {
 			$form->addError($e->getMessage());
+		}
+	}
+
+	public function actionIn()
+	{
+		if ($this->getUser()->isLoggedIn()) {
+			if ($this->getUser()->isInRole('ucitel')) {
+				$this->redirect("Mentor:Default:");
+			} else {
+				$this->redirect("Student:Default:");
+			}
 		}
 	}
 

@@ -16,7 +16,7 @@ common:
 			errorPresenter: Error
 
 		database:
-			dsn: 'mysql:host=localhost;dbname=wtMSP'
+			dsn: 'mysql:host=localhost;dbname=wtmsp'
 			user: 'root'
 			password: 'root'
 

@@ -36,14 +36,14 @@ class Authenticator extends Nette\Object implements Nette\Security\IAuthenticato
 			throw new AuthenticationException('Zlý login.', self::IDENTITY_NOT_FOUND);
 		}
 
-		/*  if ($row->password !== sha1($password)) {
+		if ($row->password !== sha1($password)) {
 				throw new AuthenticationException('Zlé heslo.', self::INVALID_CREDENTIAL);
-			}*/
-		//** Najde prisluchajucu rolu.
-		$inRole = $this->database->table('role')->where('id',$row->role_id)->fetch();
+		}
+
+		$role = $this->database->table('role')->where('id', $row->role_id)->fetch();
 
 		unset($row->password);
-		return new Identity($row->id, $inRole->role, $row->toArray());
+		return new Identity($row->id, $role->name, $row->toArray());
 		//** Samotna authent. cez LDAP
 		/*	$ldap_conn = ldap_connect('ldaps://ldap.fei.tuke.sk');
 			if ($ldap_conn) {

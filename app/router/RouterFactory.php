@@ -17,7 +17,23 @@ class RouterFactory
 	public function createRouter()
 	{
 		$router = new RouteList();
-		$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
+
+		if (function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules())) {
+			//$router[] = new Route('index.php', 'Main:Sign:in', Route::ONE_WAY);
+
+			$router[] = $baseRouter = new RouteList('Main');
+			$baseRouter[] = new Route('<presenter>/<action>', 'Main:Sign:in');
+
+			$router[] = $mentorRouter = new RouteList('Mentor');
+			$mentorRouter[] = new Route('admin/<presenter>/<action>[/<id>]', 'Main:Mentor:Default:default');
+
+			$router[] = $studentRouter = new RouteList('Student');
+			$studentRouter[] = new Route('student/<presenter>/<action>[/<id>]', 'Main:Student:Default:default');
+
+		} else {
+			$router = new SimpleRouter('Front:Default:default');
+		}
+
 		return $router;
 	}
 

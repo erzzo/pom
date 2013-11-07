@@ -1,5 +1,7 @@
-libs/nette
-libs/db
+libs/
+!libs/.htaccess
+!libs/autoload.php
+!libs/web.config
 .idea/
 temp/*
 !temp/.gitignore

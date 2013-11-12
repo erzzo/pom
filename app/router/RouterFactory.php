@@ -22,7 +22,7 @@ class RouterFactory
 			//$router[] = new Route('index.php', 'Main:Sign:in', Route::ONE_WAY);
 
 			$router[] = $baseRouter = new RouteList('Main');
-			$baseRouter[] = new Route('<presenter>/<action>', 'Main:Sign:in');
+			$baseRouter[] = new Route('<presenter>/<action>', 'Sign:in');
 
 			$router[] = $mentorRouter = new RouteList('Mentor');
 			$mentorRouter[] = new Route('admin/<presenter>/<action>[/<id>]', 'Main:Mentor:Default:default');

@@ -1,4 +1,5 @@
 libs/
+!libs/Security
 !libs/.htaccess
 !libs/autoload.php
 !libs/web.config

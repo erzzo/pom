@@ -14,9 +14,13 @@
 <body>
 	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
 
-    zakladna sablonka
-	{include #body}
+    <ul id="menu">
+        <li><a n:href=":Main:Mentor:Subject:">Predmety</a></li>
+        <li><a n:href="">Predmety</a></li>
+    </ul>
 
+    {include #body}
+    <a n:href=":Main:Sign:out">Sign Out</a>
 	{block scripts}
         <script src="{$basePath}/js/jquery.js"></script>
         <script src="{$basePath}/js/netteForms.js"></script>

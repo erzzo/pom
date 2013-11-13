@@ -4,7 +4,6 @@
     },
 	"require": {
         "php"                   : ">=5.3.2",
-        "nette/nette"           : "v2.0.12",
-        "kdyby/autowired"       : "@dev"
+        "nette/nette"           : "v2.0.12"
     }
 }

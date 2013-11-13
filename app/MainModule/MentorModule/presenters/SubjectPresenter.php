@@ -8,12 +8,18 @@ class SubjectPresenter extends BasePresenter
 {
 	public function actionDefault()
 	{
-		$this->template->subjects = $this->subjectModel->getAll();
+		$this->template->subjects = $this->subjectModel->getSubjects();
 	}
 
-	public function actionAdd()
+	public function actionAddEdit($id)
 	{
-
+		if ($id) {
+			$subject = $this->subjectModel->get($id);
+			if (!$subject) {
+				//throw Nette\
+			}
+			$this['addEditSubjectForm']->setDefaults($subject);
+		}
 	}
 
 	public function createComponentAddEditSubjectForm()
@@ -33,7 +39,9 @@ class SubjectPresenter extends BasePresenter
 	{
 		$values = $form->getValues();
 		$values->created = new \Nette\Datetime;
-		$this->subjectModel->addEdit($values);
+		$id = $this->presenter->params['id'];
+
+		$this->subjectModel->addEdit($values, $id);
 		$this->flashMessage("Predmet bol pridaný");
 
 		$this->redirect('default');

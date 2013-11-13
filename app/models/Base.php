@@ -20,7 +20,7 @@ abstract class Base extends \Nette\Object
 
 	public function get($id)
 	{
-		return $this->get($id);
+		return $this->getTable()->get($id);
 	}
 
 	public function getAll()

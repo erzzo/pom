@@ -1,10 +1,6 @@
 libs/
-!libs/Security
+!libs/Security/
 !libs/.htaccess
 !libs/autoload.php
 !libs/web.config
 .idea/
-temp/*
-!temp/.gitignore
-!temp/.htaccess
-!temp/web.config

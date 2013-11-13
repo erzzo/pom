@@ -5,5 +5,10 @@
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
-	use \Kdyby\Autowired\AutowireProperties;
+	protected $projectModel;
+
+	public function injectBase(Models\Subject $project)
+	{
+		$this->projectModel = $project;
+	}
 }

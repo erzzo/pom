@@ -1,21 +1,22 @@
 {block content}
-<a n:href="add">Pridať nový projekt</a>
+<a n:href="addEdit">Pridať nový projekt</a>
 {if count($projects)}
     <table>
-    <thead>
-    <tr>
-        <th>Nazov</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    {foreach $projects as $project}
-        <tr n:class="$iterator->odd ? odd: even" >
-            <td>{$project->name}</td>
-
+        <thead>
+        <tr>
+            <th>Názov projektu</th>
+            <th>Riešenie do</th>
+            <th>Nastavenia</th>
         </tr>
-    {/foreach}
-    </tbody>
+        </thead>
+        <tbody>
+        <tr n:foreach="$projects as $project">
+            <td>{$project->name}</td>
+            <td>{$project->solution_to}</td>
+            <td><a n:href="addEdit $project->id">upraviť</a></td>
+        </tr>
+        </tbody>
+    </table>
 {else}
-    Žiadne projekty neboli nájdené.
+    Žiadne predmety neboli nájdené.
 {/if}

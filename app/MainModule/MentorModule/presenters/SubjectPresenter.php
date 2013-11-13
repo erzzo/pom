@@ -27,8 +27,10 @@ class SubjectPresenter extends BasePresenter
 		$schoolYear = $this->subjectModel->getSchoolYears()->fetchPairs('id', 'year');
 
 		$form = new Form;
-		$form->addSelect('school_year_id', 'Skolský rok', $schoolYear);
-		$form->addText('name', 'Názov predmetu');
+		$form->addSelect('school_year_id', 'Skolský rok', $schoolYear)
+			->setRequired('Povinný atribút');
+		$form->addText('name', 'Názov predmetu')
+			->setRequired('Povinný atribút');
 		$form->addSubmit('submit');
 		$form->onSuccess[] = $this->processAddEditSubjectForm;
 
@@ -39,7 +41,7 @@ class SubjectPresenter extends BasePresenter
 	{
 		$values = $form->getValues();
 		$values->created = new \Nette\Datetime;
-		$id = $this->presenter->params['id'];
+		$id = $this->presenter->getParameter('id');
 
 		$this->subjectModel->addEdit($values, $id);
 		$this->flashMessage("Predmet bol pridaný");

@@ -11,23 +11,35 @@ class ProjectPresenter extends BasePresenter
 		$this->template->projects = $this->projectModel->getAll();
 	}
 
-	public function actionAdd()
+	public function actionAddEdit($id)
 	{
-
+		if ($id) {
+			$project = $this->projectModel->get($id);
+			if (!$project) {
+				//throw Nette\
+			}
+			$this['addEditProjectForm']->setDefaults($project);
+		}
 	}
 
 	public function createComponentAddEditProjectForm()
 	{
 		$form = new Form;
-		$form->addHidden("subject_id",3);
-		$form->addText('name', 'Názov predmetu');
+		$form->addText('name', 'Názov projektu')
+			->setRequired('Povinný atribút');
 		$form->addText('acronym', 'Akronym');
 		$form->addText('description', 'Popis projektu');
 		$form->addText('max_solver_count', 'Počet riešiteľov')
-		->setType('Number');
-		$form->addText('max_points', 'Maximálny počet bodov');
-		$form->addText('solution_from', 'Riešenie od');
-		$form->addText('solution_to', 'Riešenie do');
+			->setType('Number')
+			->setRequired('Povinný atribút')
+			->addRule(FORM::RANGE,'Číslo musí byť pozitívne číslo.',array(0,NULL));
+		$form->addText('max_points', 'Maximálny počet bodov')
+			->setType('Number')
+			->setRequired('Povinný atribút');
+		$form->addText('solution_from', 'Riešenie od')
+			->setRequired('Povinný atribút');
+		$form->addText('solution_to', 'Riešenie do')
+			->setRequired('Povinný atribút');
 		$form->addSubmit('submit');
 		$form->onSuccess[] = $this->processAddEditProjectForm;
 
@@ -37,8 +49,10 @@ class ProjectPresenter extends BasePresenter
 	public function processAddEditProjectForm(Form $form)
 	{
 		$values = $form->getValues();
+		$id = $this->presenter->getParameter('id');
 		$values->created = new \Nette\Datetime;
-		$this->projectModel->addEdit($values);
+		$values->subject_id = 3;
+		$this->projectModel->addEdit($values, $id);
 		$this->flashMessage("Projekt bol pridaný");
 
 		$this->redirect('default');

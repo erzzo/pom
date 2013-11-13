@@ -3,6 +3,11 @@ namespace Models;
 
 class Subject extends Base
 {
+	public function getSubjects()
+	{
+		return $this->getAll()->order('school_year.year DESC, name ASC');
+	}
+
 	public function getSchoolYears()
 	{
 		return $this->db->table('school_year');

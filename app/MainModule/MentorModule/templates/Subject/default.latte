@@ -1,7 +1,22 @@
 {block content}
 <a n:href="add">Pridať nový predmet</a>
 {if count($subjects)}
-
+    <table>
+        <thead>
+            <tr>
+                <th>Skolský rok</th>
+                <th>Názov</th>
+                <th>Nastavenia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr n:foreach="$subjects as $subject">
+               <td>{$subject->school_year->year}</td>
+               <td>{$subject->name}</td>
+               <td><a n:href="">upraviť</a></td>
+            </tr>
+        </tbody>
+    </table>
 {else}
     Žiadne predmety neboli nájdené.
 {/if}

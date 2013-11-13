@@ -8,7 +8,7 @@ class SubjectPresenter extends BasePresenter
 {
 	public function actionDefault()
 	{
-		$this->template->subjects = $this->subjectModel->getAll();
+		$this->template->subjects = $this->subjectModel->getSubjects();
 	}
 
 	public function actionAdd()

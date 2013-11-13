@@ -5,17 +5,17 @@ namespace Models;
 abstract class Base extends \Nette\Object
 {
 	/** @var Nette\Database\Connection */
-	protected $connection;
+	protected $db;
 
 	public function __construct(\Nette\Database\Connection $db)
 	{
-		$this->connection = $db;
+		$this->db = $db;
 	}
 
 	protected function getTable()
 	{
 		preg_match('#(\w+)$#', get_class($this), $m);
-		return $this->connection->table(lcfirst($m[1]));
+		return $this->db->table(lcfirst($m[1]));
 	}
 
 	public function get($id)

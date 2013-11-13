@@ -18,7 +18,7 @@ class SubjectPresenter extends BasePresenter
 
 	public function createComponentAddEditSubjectForm()
 	{
-		$schoolYear = [];
+		$schoolYear = $this->subjectModel->getSchoolYears()->fetchPairs('id', 'year');
 
 		$form = new Form;
 		$form->addSelect('school_year_id', 'Skolský rok', $schoolYear);
@@ -32,5 +32,10 @@ class SubjectPresenter extends BasePresenter
 	public function processAddEditSubjectForm(Form $form)
 	{
 		$values = $form->getValues();
+		$values->created = new \Nette\Datetime;
+		$this->subjectModel->addEdit($values);
+		$this->flashMessage("Predmet bol pridaný");
+
+		$this->redirect('default');
 	}
 }

@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Autowired.git",
-                "reference": "00734d2c01e0262af93a428cb9758ad1d6c11a4c"
+                "reference": "49795e286164311157710b08f5743f2348422666"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Autowired/zipball/00734d2c01e0262af93a428cb9758ad1d6c11a4c",
-                "reference": "00734d2c01e0262af93a428cb9758ad1d6c11a4c",
+                "url": "https://api.github.com/repos/Kdyby/Autowired/zipball/49795e286164311157710b08f5743f2348422666",
+                "reference": "49795e286164311157710b08f5743f2348422666",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 "kdyby",
                 "nette"
             ],
-            "time": "2013-08-22 22:10:12"
+            "time": "2013-11-08 18:41:59"
         },
         {
             "name": "nette/nette",

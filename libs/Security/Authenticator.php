@@ -31,7 +31,36 @@ class Authenticator extends Nette\Object implements Nette\Security\IAuthenticato
 		list($login, $password) = $credentials;
 
 		if ($this->ldap) {
-			$this->LDAPconnect($login, $password);
+			$ldap_conn = ldap_connect('ldaps://ldap.fei.tuke.sk','636');
+			$baseDn = 'uid='.$login.',ou=People,dc=fei,dc=tuke,dc=sk';
+			if ($ldap_conn) {
+				$ldapbind = @ldap_bind ($ldap_conn,$baseDn, $password);
+				if ($ldapbind) {
+					$filter="(objectclass=*)";
+					$justthese = array("uid","uidnumber","employeetype", "givenname", "sn", "mail");
+					$sr=ldap_read($ldap_conn, $baseDn, $filter,$justthese);
+					$entry = ldap_get_entries($ldap_conn, $sr);
+					$userId = $entry[0]["uidnumber"][0];
+					$userRole = $entry[0]["employeetype"][0];
+					$role_id = $this->database->table('role')->where('name', $userRole)->fetch();
+					$userData = array(
+						'id' => $entry[0]["uidnumber"][0],
+						'role_id' => $role_id, //student
+						'login' => $entry[0]["uid"][0],
+						'firstname' => $entry[0]["givenname"][0],
+						'lastname' => $entry[0]["sn"][0],
+						'email' => $entry[0]["mail"][0]
+					);
+					ldap_unbind ($ldap_conn);
+					return new Identity($userId, $userRole, $userData);
+
+				} else {
+					ldap_unbind ($ldap_conn);
+					throw new AuthenticationException("Zlé meno alebo heslo (LDAP).", self::INVALID_CREDENTIAL);
+				}
+			} else {
+				throw new AuthenticationException("Overovací server nieje dostupný.", self::IDENTITY_NOT_FOUND);
+			}
 		} else {
 			$row = $this->database->table('user')->where('login', $login)->fetch();
 
@@ -50,38 +79,4 @@ class Authenticator extends Nette\Object implements Nette\Security\IAuthenticato
 		}
 	}
 
-	public function LDAPconnect($login, $password) {
-		$ldap_conn = ldap_connect('ldaps://ldap.fei.tuke.sk','636');
-		$baseDn = 'uid='.$login.',ou=People,dc=fei,dc=tuke,dc=sk';
-		$filter="(objectclass=*)";
-		$justthese = array("ou", "sn", "givenname", "mail");
-		if ($ldap_conn) {
-			$ldapbind = @ldap_bind ($ldap_conn,$baseDn, $password);
-
-			$userId = 111111111;
-			$userRole = 'student';
-			$userData = array(
-				'role_id' => 1, //student
-				'login' => 'buzi',
-				'firstname' => 'Vito',
-				'lastname' => 'Scaletta',
-				'email' => 'mafos@student.tuke.sk',
-				'created' => new \Nette\DateTime('22-10-2011')
-			);
-
-			if ($ldapbind) {
-				//return new Identity($login, 'Lecturer', $ldapbind);
-				$sr=ldap_read($ldap_conn, $baseDn, "(cn=*)");
-				$entry = ldap_get_entries($ldap_conn, $sr);
-				ldap_unbind ($ldap_conn);
-				return new Identity($userId, $userRole, $userData);
-
-			} else {
-				ldap_unbind ($ldap_conn);
-				throw new AuthenticationException("Zlé meno alebo heslo (LDAP).", self::INVALID_CREDENTIAL);
-			}
-		} else {
-			throw new AuthenticationException("Overovací server nieje dostupný.", self::IDENTITY_NOT_FOUND);
-		}
-	}
 }

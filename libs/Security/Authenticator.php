@@ -32,33 +32,40 @@ class Authenticator extends Nette\Object implements Nette\Security\IAuthenticato
 		$row = $this->database->table('user')->where('login', $login)->fetch();
 
 
+
 		if (!$row) {
 			throw new AuthenticationException('Zlý login.', self::IDENTITY_NOT_FOUND);
 		}
-
-		if ($row->password !== sha1($password)) {
-				throw new AuthenticationException('Zlé heslo.', self::INVALID_CREDENTIAL);
-		}
-
+		/*
+				if ($row->password !== sha1($password)) {
+						throw new AuthenticationException('Zlé heslo.', self::INVALID_CREDENTIAL);
+				}
+		*/
 		$role = $this->database->table('role')->where('id', $row->role_id)->fetch();
 
 		unset($row->password);
 		return new Identity($row->id, $role->name, $row->toArray());
 		//** Samotna authent. cez LDAP
-		/*	$ldap_conn = ldap_connect('ldaps://ldap.fei.tuke.sk');
-			if ($ldap_conn) {
-				$ldapbind = @ldap_bind ($ldap_conn,'uid='.$login.',ou=People,dc=fei,dc=tuke,dc=sk', $password);
+		/*$ldap_conn = ldap_connect('ldaps://ldap.fei.tuke.sk','636');
+		$baseDn = 'uid='.$login.',ou=People,dc=fei,dc=tuke,dc=sk';
+		$filter="(objectclass=*)";
+		$justthese = array("ou", "sn", "givenname", "mail");
+		if ($ldap_conn) {
+			$ldapbind = @ldap_bind ($ldap_conn,$baseDn, $password);
+
+			if ($ldapbind) {
+				//return new Identity($login, 'Lecturer', $ldapbind);
+				$sr=ldap_read($ldap_conn, $baseDn, "(cn=*)");
+				$entry = ldap_get_entries($ldap_conn, $sr);
 				ldap_unbind ($ldap_conn);
-				if ($ldapbind) {
-					//return new Identity($login, 'Lecturer', $ldapbind);
+				return new Identity($row->id, $role->name, $entry[0]);
 
-									 return new Identity($row->id, $inRole->role, $row->toArray(), $ldapbind);
-
-				} else {
-					throw new AuthenticationException("Zlé meno alebo heslo (LDAP).", self::INVALID_CREDENTIAL);
-				}
 			} else {
-				throw new AuthenticationException("Overovací server nieje dostupný.", self::IDENTITY_NOT_FOUND);
-			}*/
+				ldap_unbind ($ldap_conn);
+				throw new AuthenticationException("Zlé meno alebo heslo (LDAP).", self::INVALID_CREDENTIAL);
+			}
+		} else {
+			throw new AuthenticationException("Overovací server nieje dostupný.", self::IDENTITY_NOT_FOUND);
+		}*/
 	}
 }

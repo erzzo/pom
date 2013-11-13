@@ -31,7 +31,7 @@ class RouterFactory
 			$studentRouter[] = new Route('student/<presenter>/<action>[/<id>]', 'Main:Student:Default:default');
 
 		} else {
-			$router = new SimpleRouter('Front:Default:default');
+			$router = new SimpleRouter('Main:Sign:in');
 		}
 
 		return $router;

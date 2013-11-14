@@ -1,0 +1,20 @@
+{block content}
+<a n:href="addEdit">Pridať novu temu</a>
+{if count($themes)}
+    <table>
+        <thead>
+        <tr>
+            <th>Názov temy</th>
+            <th>Nastavenia</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr n:foreach="$themes as $theme">
+            <td>{$theme->name}</td>
+            <td><a n:href="addEdit $theme->id">upraviť</a></td>
+        </tr>
+        </tbody>
+    </table>
+{else}
+    Žiadne témy neboli nájdené.
+{/if}

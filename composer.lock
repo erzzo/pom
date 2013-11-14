@@ -3,59 +3,8 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "5d396fea432d982a1c34bbbebaf06cec",
+    "hash": "b48f6afde573dabe825c563c544ac636",
     "packages": [
-        {
-            "name": "kdyby/autowired",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Kdyby/Autowired.git",
-                "reference": "49795e286164311157710b08f5743f2348422666"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Autowired/zipball/49795e286164311157710b08f5743f2348422666",
-                "reference": "49795e286164311157710b08f5743f2348422666",
-                "shasum": ""
-            },
-            "require": {
-                "nette/nette": "@dev"
-            },
-            "require-dev": {
-                "nette/tester": "@dev"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Kdyby\\Autowired": "src/"
-                },
-                "classmap": [
-                    "src/Kdyby/Autowired/exceptions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause",
-                "GPL-2.0",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Filip Procházka",
-                    "homepage": "http://filip-prochazka.com"
-                }
-            ],
-            "description": "Syntax sugar for working with services in Nette Framework",
-            "homepage": "http://kdyby.org",
-            "keywords": [
-                "autowire",
-                "di",
-                "kdyby",
-                "nette"
-            ],
-            "time": "2013-11-08 18:41:59"
-        },
         {
             "name": "nette/nette",
             "version": "v2.0.12",
@@ -138,9 +87,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "kdyby/autowired": 20
-    },
+    "stability-flags": [
+
+    ],
     "platform": {
         "php": ">=5.3.2"
     },

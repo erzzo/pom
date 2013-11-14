@@ -33,6 +33,7 @@ common:
 		router: @routerFactory::createRouter
 		projectModel: Models\Project
 		subjectModel: Models\Subject
+		themeModel: Models\Theme
 
 
 

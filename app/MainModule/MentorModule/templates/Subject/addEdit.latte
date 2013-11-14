@@ -2,7 +2,10 @@
 Pridať nový predmet
 
 {form addEditSubjectForm}
-    {label school_year_id/}{input school_year_id}<br>
     {label name/}{input name}<br>
+    {label password/}{input password}<br>
+    {label grade_id/}{input grade_id}<br>
+    {label school_year_id/}{input school_year_id}<br>
+    {label term_id/}{input term_id}<br>
     {input submit value=> isset($presenter->param['id']) ? 'Uložiť' : 'Pridať predmet'}
 {/form}

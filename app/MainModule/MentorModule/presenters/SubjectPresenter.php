@@ -8,7 +8,7 @@ class SubjectPresenter extends BasePresenter
 {
 	public function actionDefault()
 	{
-		$this->template->subjects = $this->subjectModel->getSubjects();
+		$this->template->subjects = $this->subjectModel->getUserSubjects();
 	}
 
 	public function actionAddEdit($id)
@@ -25,12 +25,19 @@ class SubjectPresenter extends BasePresenter
 	public function createComponentAddEditSubjectForm()
 	{
 		$schoolYear = $this->subjectModel->getSchoolYears()->fetchPairs('id', 'year');
+		$terms = $this->subjectModel->getTerms()->fetchPairs('id', 'name');
+		$grades = $this->subjectModel->getGrades()->fetchPairs('id', 'grade');
 
 		$form = new Form;
 		$form->addSelect('school_year_id', 'Skolský rok', $schoolYear)
 			->setRequired('Povinný atribút');
+		$form->addSelect('term_id', 'Semester', $terms)
+			->setRequired('Povinný atribút');
+		$form->addSelect('grade_id', 'Ročník', $grades)
+			->setRequired('Povinný atribút');
 		$form->addText('name', 'Názov predmetu')
 			->setRequired('Povinný atribút');
+		$form->addText('password', 'Heslo na vstup');
 		$form->addSubmit('submit');
 		$form->onSuccess[] = $this->processAddEditSubjectForm;
 

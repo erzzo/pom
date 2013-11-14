@@ -4,16 +4,18 @@
     <table>
         <thead>
             <tr>
-                <th>Skolský rok</th>
                 <th>Názov</th>
+                <th>Skolský rok</th>
+                <th>Heslo na vstup</th>
                 <th>Nastavenia</th>
             </tr>
         </thead>
         <tbody>
             <tr n:foreach="$subjects as $subject">
-               <td>{$subject->school_year->year}</td>
-               <td>{$subject->name}</td>
-               <td><a n:href="addEdit $subject->id">upraviť</a></td>
+                <td><a n:href="">{$subject->name}</a></td>
+                <td>{$subject->school_year->year}</td>
+                <td>{$subject->password}</td>
+                <td><a n:href="addEdit $subject->id">upraviť</a></td>
             </tr>
         </tbody>
     </table>

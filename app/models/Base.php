@@ -6,10 +6,12 @@ abstract class Base extends \Nette\Object
 {
 	/** @var Nette\Database\Connection */
 	protected $db;
+	protected $user;
 
-	public function __construct(\Nette\Database\Connection $db)
+	public function __construct(\Nette\Database\Connection $db, \Nette\Security\User $user)
 	{
 		$this->db = $db;
+		$this->user = $user;
 	}
 
 	protected function getTable()

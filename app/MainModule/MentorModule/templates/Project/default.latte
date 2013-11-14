@@ -13,7 +13,7 @@
         <tr n:foreach="$projects as $project">
             <td>{$project->name}</td>
             <td>{$project->solution_to}</td>
-            <td><a n:href="addEdit $project->id">upraviť</a></td>
+            <td><a n:href="addEdit $presenter->param['subjectId'], $project->id">upraviť</a></td>
         </tr>
         </tbody>
     </table>

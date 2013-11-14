@@ -4,9 +4,16 @@ namespace Models;
 
 class Project extends Base
 {
-	public function getProjects()
+
+	public function getProjects($subjectId = NULL)
 	{
-		return $this->getAll()->order('created DESC, name ASC');
+		$subjects = $this->getAll()->order('name ASC');
+
+		if (!is_null($subjectId)) {
+			$subjects->where('subject_id', $subjectId);
+		}
+
+		return $subjects;
 	}
 
 	public function addEdit($values, $id = NULL)

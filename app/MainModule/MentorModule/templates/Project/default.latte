@@ -1,5 +1,5 @@
 {block content}
-<a n:href="addEdit">Pridať nový projekt</a>
+<a n:href="addEdit $presenter->param['subjectId']">Pridať nový projekt</a>
 {if count($projects)}
     <table>
         <thead>

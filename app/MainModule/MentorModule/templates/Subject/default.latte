@@ -12,10 +12,10 @@
         </thead>
         <tbody>
             <tr n:foreach="$subjects as $subject">
-                <td><a n:href="">{$subject->name}</a></td>
-                <td>{$subject->school_year->year}</td>
-                <td>{$subject->password}</td>
-                <td><a n:href="addEdit $subject->id">upraviť</a></td>
+                <td><a n:href="">{$subject->subject->name}</a></td>
+                <td>{$subject->subject->school_year->year}</td>
+                <td>{$subject->subject->password}</td>
+                <td><a n:href="addEdit $subject->subject->id">upraviť</a></td>
             </tr>
         </tbody>
     </table>

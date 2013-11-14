@@ -4,9 +4,14 @@ namespace Models;
 
 class Theme extends Base
 {
-	public function getThemes()
+	public function getThemes($projectId)
 	{
-		return $this->getAll()->order('created DESC, name ASC');
+		$projects = $this->getAll()->order('name ASC');
+
+		if (!is_null($projectId)) {
+			$projects->where('project_id', $projectId);
+		}
+		return $projects;
 	}
 
 	public function addEdit($values, $id = NULL)

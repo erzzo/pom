@@ -11,7 +11,7 @@
         </thead>
         <tbody>
         <tr n:foreach="$projects as $project">
-            <td>{$project->name}</td>
+            <td><a n:href="Theme:default, $project->id">{$project->name}</a></td>
             <td>{$project->solution_to}</td>
             <td><a n:href="addEdit $presenter->param['subjectId'], $project->id">upraviť</a></td>
         </tr>

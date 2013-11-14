@@ -36,6 +36,7 @@ class Authenticator extends Nette\Object implements Nette\Security\IAuthenticato
 			if ($ldap_conn) {
 				$ldapbind = @ldap_bind ($ldap_conn,$baseDn, $password);
 				if ($ldapbind) {
+					$row = $this->database->table('user')->where('login', $login)->fetch();
 					$filter="(objectclass=*)";
 					$justthese = array("uid","uidnumber","employeetype", "givenname", "sn", "mail");
 					$sr=ldap_read($ldap_conn, $baseDn, $filter,$justthese);
@@ -51,6 +52,9 @@ class Authenticator extends Nette\Object implements Nette\Security\IAuthenticato
 						'lastname' => $entry[0]["sn"][0],
 						'email' => $entry[0]["mail"][0]
 					);
+					if (!$row) {
+						$this->database->table('user')->insert($userData);
+					}
 					ldap_unbind ($ldap_conn);
 					return new Identity($userId, $userRole, $userData);
 

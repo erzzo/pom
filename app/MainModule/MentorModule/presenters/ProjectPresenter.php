@@ -49,14 +49,17 @@ class ProjectPresenter extends BasePresenter
 	{
 		$values = $form->getValues();
 		$id = $this->presenter->getParameter('id');
+		$subjectId = $this->presenter->getParameter('subjectId');
 
 		if (!$id) {
-			$values->subject_id = $this->presenter->getParameter('subjectId');
+			$values->subject_id = $subjectId;
+			$this->flashMessage("Projekt bol pridaný");
+		} else {
+			$this->flashMessage("Projekt bol upravený");
 		}
 
 		$this->projectModel->addEdit($values, $id);
-		$this->flashMessage("Projekt bol pridaný");
 
-		$this->redirect('default');
+		$this->redirect('default', ['subjectId' => $subjectId]);
 	}
 }

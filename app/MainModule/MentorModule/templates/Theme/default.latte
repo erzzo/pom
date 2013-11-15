@@ -1,6 +1,8 @@
 {block content}
     <h1>TEMY projektov</h1>
-Tu by mal byt odkaz na SVOJ PROJEKT
+<a n:href="Subject:default">Predmety</a>->
+<a n:href="Project:default $project->subject_id">{$project->subject->name} </a>->
+<a>{$project->name} </a><br>
 <a n:href="addEdit $presenter->param['projectId']">Pridať novu temu</a>
 {if count($themes)}
     <table>

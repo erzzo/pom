@@ -1,7 +1,9 @@
 {block content}
     <h1>Úlohy</h1>
-Tu by mal byt odkaz na SVOJ THEME
-<a n:href="addEdit $presenter->param['themeId']">Pridať novú úlohu</a>
+<a n:href="Subject:default">Predmety</a>->
+<a n:href="Project:default $theme->project->subject_id">{$theme->project->subject->name} </a>->
+<a n:href="Theme:default $theme->project_id">{$theme->project->name} </a>-><a>{$theme->name}</a><br>
+<a n:href="addEdit $theme->id">Pridať novú úlohu</a>
 {if count($tasks)}
     <table>
         <thead>
@@ -15,11 +17,11 @@ Tu by mal byt odkaz na SVOJ THEME
         </thead>
         <tbody>
         <tr n:foreach="$tasks as $task">
-            <td>{$task->name}</td>
+            <td><a n:href="taskDetail $task->id">{$task->name}</a></td>
             <td>{$task->description}</td>
             <td>{$task->grade}</td>
             <td>{$task->user->firstname} {$task->user->lastname}</td>
-            <td><a n:href="addEdit $presenter->param['themeId'], $task->id">upraviť</a></td>
+            <td><a n:href="addEdit $theme->id, $task->id">upraviť</a></td>
         </tr>
         </tbody>
     </table>

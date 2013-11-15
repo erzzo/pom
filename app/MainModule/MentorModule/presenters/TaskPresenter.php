@@ -10,8 +10,13 @@ class TaskPresenter extends BasePresenter
 
 	public function actionDefault($themeId)
 	{
-		$this->themeId = $themeId;
+		$this->template->theme = $this->themeModel->get($themeId);
 		$this->template->tasks = $this->taskModel->getTasks($themeId);
+	}
+
+	public function actionTaskDetail($taskId)
+	{
+		$this->template->task = $this->taskModel->get($taskId);
 	}
 
 	public function actionAddEdit($themeId, $id)

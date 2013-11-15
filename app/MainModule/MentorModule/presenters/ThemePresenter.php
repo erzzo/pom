@@ -8,6 +8,7 @@ class ThemePresenter extends BasePresenter
 {
 	public function actionDefault($projectId)
 	{
+		$this->template->project = $this->projectModel->get($projectId);
 		$this->template->themes = $this->themeModel->getThemes($projectId);
 	}
 

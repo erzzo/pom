@@ -8,6 +8,7 @@ class ProjectPresenter extends BasePresenter
 {
 	public function actionDefault($subjectId)
 	{
+		$this->template->subject = $this->subjectModel->get($subjectId);
 		$this->template->projects = $this->projectModel->getProjects($subjectId);
 	}
 

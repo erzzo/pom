@@ -35,6 +35,11 @@ abstract class Base extends \Nette\Object
 		return $this->getTable()->where($by);
 	}
 
+	public function findById($id)
+	{
+		return $this->getTable()->where('id', $id);
+	}
+
 	public function update($id, $values)
 	{
 		return $this->getTable()->get($id)->update($values);

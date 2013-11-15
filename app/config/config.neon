@@ -34,6 +34,7 @@ common:
 		projectModel: Models\Project
 		subjectModel: Models\Subject
 		themeModel: Models\Theme
+		taskModel: Models\Task
 
 
 

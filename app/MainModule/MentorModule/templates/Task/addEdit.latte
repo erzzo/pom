@@ -1,0 +1,9 @@
+{block content}
+Pridať novú úlohu
+
+{form addEditTaskForm}
+{label name/}{input name}<br>
+{label user_id/}{input user_id}<br>
+{label description/}{input description}<br>
+{input submit value=> isset($presenter->param['id']) ? 'Upraviť' : 'Vytvoriť'}
+{/form}

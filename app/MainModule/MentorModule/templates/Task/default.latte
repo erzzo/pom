@@ -1,0 +1,28 @@
+{block content}
+    <h1>Úlohy</h1>
+Tu by mal byt odkaz na SVOJ THEME
+<a n:href="addEdit $presenter->param['themeId']">Pridať novú úlohu</a>
+{if count($tasks)}
+    <table>
+        <thead>
+        <tr>
+            <th>Názov úlohy</th>
+            <th>Popis</th>
+            <th>Stav</th>
+            <th>Riešiteľ</th>
+            <th>Nastavenia</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr n:foreach="$tasks as $task">
+            <td>{$task->name}</td>
+            <td>{$task->description}</td>
+            <td>{$task->grade}</td>
+            <td>{$task->user->firstname} {$task->user->lastname}</td>
+            <td><a n:href="addEdit $presenter->param['themeId'], $task->id">upraviť</a></td>
+        </tr>
+        </tbody>
+    </table>
+{else}
+    Žiadne témy neboli nájdené.
+{/if}

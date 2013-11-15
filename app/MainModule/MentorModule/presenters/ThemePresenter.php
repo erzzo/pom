@@ -28,7 +28,7 @@ class ThemePresenter extends BasePresenter
 		$form->addText('name', 'Názov temy')
 			->setRequired('Povinný atribút');
 		$form->addText('acronym', 'Akronym');
-		$form->addText('description', 'Popis temy');
+		$form->addTextArea('description', 'Popis temy');
 		$form->addSubmit('submit');
 		$form->onSuccess[] = $this->processAddEditThemeForm;
 

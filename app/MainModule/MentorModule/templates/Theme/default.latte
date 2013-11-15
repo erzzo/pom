@@ -7,12 +7,18 @@ Tu by mal byt odkaz na SVOJ PROJEKT
         <thead>
         <tr>
             <th>Názov temy</th>
+            <th>Popis</th>
+            <th>Stav</th>
+            <th>Hodnotenie</th>
             <th>Nastavenia</th>
         </tr>
         </thead>
         <tbody>
         <tr n:foreach="$themes as $theme">
             <td>{$theme->name}</td>
+            <td>{$theme->description}</td>
+            <td>{$theme->submitted ? 'odovzdané' : 'neodovzdané'}</td>
+            <td>{isset($theme->evaluation_id) ? $theme->evaluation->points : 0}/{$theme->project->max_points}</td>
             <td><a n:href="addEdit $presenter->param['projectId'], $theme->id">upraviť</a></td>
         </tr>
         </tbody>

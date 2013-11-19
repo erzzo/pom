@@ -3,14 +3,19 @@ namespace Models;
 
 class Subject extends Base
 {
-	public function getSubjects()
+	public function getSubjects($gradeId = NULL)
 	{
-		return $this->getAll()->order('school_year.year DESC, name ASC');
+		$subjects = $this->getAll();
+		if ($gradeId) {
+			return $subjects->where('grade_id',$gradeId)->order('school_year.year DESC, name ASC');
+		} else {
+			return $subjects->order('school_year.year DESC, name ASC');
+		}
 	}
 
-	public function getUserSubjects()
+	public function getUserSubjects($userId)
 	{
-		return $this->db->table('user_subject')->order('subject.name ASC');
+		return $this->db->table('user_subject')->where('user_id', $userId)->order('subject.name ASC');
 	}
 
 	public function getSchoolYears()

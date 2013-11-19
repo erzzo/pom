@@ -1,6 +1,6 @@
 {block content}
 <h1>Projekty</h1>
-<a n:href="Subject:default">Predmety</a>->
+<a n:href=":Main:Student:Subject:default">Predmety</a>->
 <a>{$subject->name} </a><br>
 <a n:href="addEdit $presenter->param['subjectId']">Pridať nový projekt</a>
 {if count($projects)}

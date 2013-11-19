@@ -1,6 +1,6 @@
 {block content}
 <h1> Detail úlohy</h1>
-<a n:href="Subject:default">Predmety</a>->
+<a n:href=":Main:Student:Subject:default">Predmety</a>->
 <a n:href="Project:default $task->theme->project->subject_id">{$task->theme->project->subject->name} </a>->
 <a n:href="Theme:default $task->theme->project_id">{$task->theme->project->name} </a>->
 <a n:href="Task:default $task->theme_id">{$task->theme->name}</a>->

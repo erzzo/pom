@@ -6,10 +6,6 @@ use Nette\Application\UI\Form;
 
 class SubjectPresenter extends BasePresenter
 {
-	public function actionDefault()
-	{
-		$this->template->subjects = $this->subjectModel->getUserSubjects();
-	}
 
 	public function actionAddEdit($id)
 	{

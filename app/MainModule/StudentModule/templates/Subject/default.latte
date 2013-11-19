@@ -1,7 +1,7 @@
 {block content}
 <h1>Predmety</h1>
 
-<a n:href="addEdit">Pridať nový predmet</a>
+<a n:href="addEdit">Všetky predmety</a>
 {if count($subjects)}
     <table>
         <thead>
@@ -9,15 +9,13 @@
                 <th>Názov</th>
                 <th>Skolský rok</th>
                 <th>Heslo na vstup</th>
-                <th>Nastavenia</th>
             </tr>
         </thead>
         <tbody>
             <tr n:foreach="$subjects as $subject">
-                <td><a n:href="Project:default $subject->subject_id">{$subject->subject->name}</a></td>
-                <td>{$subject->subject->school_year->year}</td>
-                <td>{$subject->subject->password}</td>
-                <td><a n:href="addEdit $subject->subject_id">upraviť</a></td>
+                <td><a n:href=":Main:Mentor:Project:default $subject->id">{$subject->name}</a></td>
+                <td>{$subject->school_year->year}</td>
+                <td>{$subject->password}</td>
             </tr>
         </tbody>
     </table>

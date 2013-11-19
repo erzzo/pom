@@ -1,0 +1,24 @@
+{block content}
+<h1>Predmety</h1>
+
+<a n:href="addEdit">Všetky predmety</a>
+{if count($userSubjects)}
+    <table>
+        <thead>
+            <tr>
+                <th>Názov</th>
+                <th>Skolský rok</th>
+                <th>Heslo na vstup</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr n:foreach="$userSubjects as $subject">
+                <td><a n:href="Project:default $subject->subject_id">{$subject->subject->name}</a></td>
+                <td>{$subject->subject->school_year->year}</td>
+                <td>{$subject->subject->password}</td>
+            </tr>
+        </tbody>
+    </table>
+{else}
+    Žiadne predmety neboli nájdené.
+{/if}

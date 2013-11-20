@@ -13,7 +13,7 @@
         </thead>
         <tbody>
             <tr n:foreach="$userSubjects as $subject">
-                <td><a n:href=":Main:Mentor:Project:default $subject->id">{$subject->subject->name}</a></td>
+                <td><a n:href=":Main:Mentor:Project:default $subject->subject_id">{$subject->subject->name}</a></td>
                 <td>{$subject->subject->school_year->year}</td>
                 <td>{$subject->subject->password}</td>
             </tr>

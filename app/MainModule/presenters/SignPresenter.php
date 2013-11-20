@@ -42,12 +42,7 @@ class SignPresenter extends BasePresenter
 
 		try {
 			$this->getUser()->login($values->username, $values->password);
-
-			if ($this->getUser()->isInRole('ucitel')) {
-				$this->redirect("Mentor:Default:");
-			} else {
-				$this->redirect("Student:Default:");
-			}
+			$this->redirect("Subject:showAll");
 		} catch (\Nette\Security\AuthenticationException $e) {
 			$form->addError($e->getMessage());
 		}

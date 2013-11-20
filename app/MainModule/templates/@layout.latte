@@ -15,7 +15,8 @@
 	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
 
     <ul id="menu">
-        <li><a n:href=":Main:Student:Subject:">Predmety</a></li>
+        <li><a n:href=":Main:Subject:showAll">Všetky Predmety</a></li>
+        <li><a n:href=":Main:Subject:showMy">Moje predmety</a></li>
     </ul>
 
     {include #body}

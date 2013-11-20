@@ -8,7 +8,7 @@ class BasePresenter extends \BasePresenter
 		parent::startup();
 
 		if (!$this->getUser()->isLoggedIn() || $this->getUser()->isInRole('student')) {
-			$this->redirect(":Main:Sign:in");
+			$this->redirect("Subject:showAll");
 		}
 	}
 }

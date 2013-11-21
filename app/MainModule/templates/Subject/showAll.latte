@@ -12,15 +12,21 @@
         </thead>
         <tbody>
             <tr n:foreach="$subjects as $subject">
-                <td>{$subject->name}</td>
+                <td>
+                {if in_array($subject->id, $userSubjects)}
+                    <a n:href=":Main:Mentor:Project:default $subject->id">{$subject->name}</a>
+                {else}
+                    {$subject->name}
+                {/if}
+                </td>
                 <td>{$subject->school_year->year}</td>
-               <td>
+                <td>
                    {if in_array($subject->id, $userSubjects)}
                        Si v predmete
                    {else}
                        <a n:href="requestEntry $subject->id">Vyžiadať vstup</a>
                    {/if}
-               </td>
+                </td>
             </tr>
         </tbody>
     </table>

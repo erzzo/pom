@@ -8,6 +8,7 @@
                 <th>Názov</th>
                 <th>Skolský rok</th>
                 <th>Heslo na vstup</th>
+                <th>Možnosti</th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +22,7 @@
                 </td>
                 <td>{$subject->subject->school_year->year}</td>
                 <td>{$subject->subject->password}</td>
+                <td><a n:href="addEdit $subject->subject_id">upraviť</a></td>
             </tr>
         </tbody>
     </table>

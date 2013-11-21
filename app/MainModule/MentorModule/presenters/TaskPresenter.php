@@ -6,7 +6,8 @@ use Nette\Application\UI\Form;
 
 class TaskPresenter extends BasePresenter
 {
-	private $themeId;
+	private $subjectId;
+
 
 	public function actionDefault($themeId)
 	{

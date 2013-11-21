@@ -29,4 +29,5 @@ class Theme extends Base
 			return $theme->update($values);
 		}
 	}
+
 }

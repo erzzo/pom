@@ -1,6 +1,6 @@
 {block content}
     <h1>TEMY projektov</h1>
-<a n:href=":Main:Student:Subject:default">Predmety</a>->
+<a n:href=":Main:Subject:showMy">Predmety</a>->
 <a n:href="Project:default $project->subject_id">{$project->subject->name} </a>->
 <a>{$project->name} </a><br>
 <a n:href="addEdit $presenter->param['projectId']">Pridať novu temu</a>

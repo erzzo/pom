@@ -1,6 +1,9 @@
 {block body}
 <h1>Všetky Predmety</h1>
-
+{form selectGradesForm}
+    {label gradeId/}{input gradeId}
+    {input submit}
+{/form}
 {if count($subjects)}
     <table>
         <thead>

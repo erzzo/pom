@@ -5,9 +5,9 @@ use Nette\Application\UI\Form;
 
 class SubjectPresenter extends BasePresenter
 {
-	public function actionShowAll()
+	public function actionShowAll($rocnikId = null)
 	{
-		$this->template->subjects = $this->subjectModel->getSubjects();
+		$this->template->subjects =  $this->subjectModel->getSubjects($rocnikId);
 		$this->template->userSubjects =  $this->subjectModel->getUserSubjects($this->getUser()->getId())->fetchPairs('id','subject_id');
 	}
 
@@ -19,6 +19,23 @@ class SubjectPresenter extends BasePresenter
 	public function actionRequestEntry($subjectId)
 	{
 
+	}
+
+	public function createComponentSelectGradesForm()
+	{
+		$grades = $this->subjectModel->getGrades()->fetchPairs('id','grade');
+		$form = new Form;
+		$form->addSelect('gradeId','Ročník',$grades)
+			->setDefaultValue($this->presenter->getParameter('rocnikId'))
+			->setRequired();
+		$form->addSubmit('submit');
+		$form->onSuccess[] = $this->processSelectGradesForm;
+		return $form;
+	}
+	public function processSelectGradesForm(Form $form)
+	{
+		$values = $form->getValues();
+		$this->redirect('this',$values->gradeId);
 	}
 
 	public function createComponentRequestEntryForm()

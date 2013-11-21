@@ -37,11 +37,16 @@ class Subject extends Base
 	{
 		if(is_null($id)) {
 			$subject = $this->getTable()->insert($values);
-			$this->db->table('user_subject')->insert(['user_id' => $this->user->getId(), 'subject_id' => $subject->id]);
+			$this->addUserToSubject($subject->id);
 			return $subject;
 		} else {
 			$subject = $this->getTable()->get($id);
 			return $subject->update($values);
 		}
+	}
+
+	public function addUserToSubject($subjectId)
+	{
+		return $this->db->table('user_subject')->insert(['user_id' => $this->user->getId(), 'subject_id' => $subjectId]);
 	}
 }

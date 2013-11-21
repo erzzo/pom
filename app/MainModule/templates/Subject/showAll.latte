@@ -1,10 +1,11 @@
 {block body}
 <h1>Všetky Predmety</h1>
 <a n:href="addEdit">Pridať nový predmet</a>
-{form selectGradesForm}
+{form filterSubjectsForm class=>'ajax'}
     {label gradeId/}{input gradeId}
-    {input submit}
+    {input submit value=>"Zobraziť"}
 {/form}
+{snippet subjects}
 {if count($subjects)}
     <table>
         <thead>
@@ -26,7 +27,7 @@
                 <td>{$subject->school_year->year}</td>
                 <td>
                    {if in_array($subject->id, $userSubjects)}
-                       Si v predmete
+                       už si v predmete
                    {else}
                        <a n:href="requestEntry $subject->id">Vyžiadať vstup</a>
                    {/if}
@@ -37,3 +38,4 @@
 {else}
     Žiadne predmety neboli nájdené.
 {/if}
+{/snippet}

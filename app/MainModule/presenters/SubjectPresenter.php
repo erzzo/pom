@@ -13,7 +13,7 @@ class SubjectPresenter extends BasePresenter
 
 	public function actionShowMy()
 	{
-		$this->template->userSubjects = $this->subjectModel->getUserSubjects($this->getUser()->getId());
+		$this->template->userSubjects = $this->subjectModel->getUserSubjects();
 	}
 
 	public function actionRequestEntry($subjectId)
@@ -66,21 +66,30 @@ class SubjectPresenter extends BasePresenter
 		$this->redirect('showMy');
 	}
 
-	public function createComponentSelectGradesForm()
+	public function createComponentFilterSubjectsForm()
 	{
 		$grades = $this->subjectModel->getGrades()->fetchPairs('id','grade');
 		$form = new Form;
-		$form->addSelect('gradeId','Ročník',$grades)
-			->setDefaultValue($this->presenter->getParameter('rocnikId'))
+		$form->addSelect('gradeId','Ročník', [0 => 'Všetky'] + $grades)
 			->setRequired();
 		$form->addSubmit('submit');
-		$form->onSuccess[] = $this->processSelectGradesForm;
+		$form->onSuccess[] = $this->processFilterSubjectsForm;
+
 		return $form;
 	}
-	public function processSelectGradesForm(Form $form)
+	public function processFilterSubjectsForm(Form $form)
 	{
 		$values = $form->getValues();
-		$this->redirect('this',$values->gradeId);
+		if ($this->isAjax()) {
+			if ($this->presenter->isLinkCurrent('showAll')) {
+				$this->template->subjects =  $this->subjectModel->getSubjects($values['gradeId']);
+			} else {
+				$this->template->userSubjects = $this->subjectModel->getUserSubjects()->where('subject.grade_id', $values['gradeId']);
+			}
+			$this->invalidateControl('subjects');
+		} else {
+			$this->redirect('this',$values->gradeId);
+		}
 	}
 
 	public function createComponentRequestEntryForm()

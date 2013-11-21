@@ -1,6 +1,11 @@
 {block body}
 <h1>Moje predmety</h1>
+{form filterSubjectsForm class=>'ajax'}
+    {label gradeId/}{input gradeId}
+    {input submit value=>"Zobraziť"}
+{/form}
 
+{snippet subjects}
 {if count($userSubjects)}
     <table>
         <thead>
@@ -29,3 +34,4 @@
 {else}
     Žiadne predmety neboli nájdené.
 {/if}
+{/snippet}

@@ -13,9 +13,9 @@ class Subject extends Base
 		}
 	}
 
-	public function getUserSubjects($userId)
+	public function getUserSubjects()
 	{
-		return $this->db->table('user_subject')->where('user_id', $userId)->order('subject.name ASC');
+		return $this->db->table('user_subject')->where('user_id', $this->user->getId())->order('subject.name ASC');
 	}
 
 	public function getSchoolYears()

@@ -8,7 +8,7 @@ class SubjectPresenter extends BasePresenter
 	public function actionShowAll()
 	{
 		$this->template->subjects = $this->subjectModel->getSubjects();
-		$this->template->userSubjects =  $this->subjectModel->getUserSubjects($this->getUser()->getId())->fetchPairs('id','subject_id');
+		$this->template->userSubjects = $usr = $this->subjectModel->getUserSubjects($this->getUser()->getId())->fetchPairs('id','subject_id');
 	}
 
 	public function actionShowMy()
@@ -42,8 +42,10 @@ class SubjectPresenter extends BasePresenter
 		if ($subject->password === $values['password']) {
 			$this->subjectModel->addUserToSubject($subject->id);
 			$this->flashMessage('Predmet pridaný');
+			$this->redirect('showMy');
 		} else {
 			$this->flashMessage('Zadané heslo je nesprávne');
+			$this->redirect('this');
 		}
 	}
 

@@ -12,7 +12,13 @@
         </thead>
         <tbody>
             <tr n:foreach="$userSubjects as $subject">
-                <td><a n:href=":Main:Mentor:Project:default $subject->subject_id">{$subject->subject->name}</a></td>
+                <td>
+                    {if $user->isInRole('ucitel')}
+                        <a n:href=":Main:Mentor:Project:default $subject->subject_id">{$subject->subject->name}</a>
+                    {else}
+                        <a n:href=":Main:Student:Themes:showAll $subject->subject_id">{$subject->subject->name}</a>
+                    {/if}
+                </td>
                 <td>{$subject->subject->school_year->year}</td>
                 <td>{$subject->subject->password}</td>
             </tr>

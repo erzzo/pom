@@ -13,11 +13,11 @@
         <tbody>
             <tr n:foreach="$subjects as $subject">
                 <td>
-                {if in_array($subject->id, $userSubjects)}
-                    <a n:href=":Main:Mentor:Project:default $subject->id">{$subject->name}</a>
-                {else}
-                    {$subject->name}
-                {/if}
+                    {if $user->isInRole('ucitel')}
+                        <a n:href=":Main:Mentor:Project:default $subject->id">{$subject->name}</a>
+                    {else}
+                        <a n:href=":Main:Student:Themes:showAll $subject->id">{$subject->name}</a>
+                    {/if}
                 </td>
                 <td>{$subject->school_year->year}</td>
                 <td>

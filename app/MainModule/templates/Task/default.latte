@@ -1,0 +1,31 @@
+{block content}
+    <h1>Úlohy</h1>
+<a n:href=":Main:Subject:showMy">Predmety</a>->
+<a n:href="Project:default $theme->project->subject_id">{$theme->project->subject->name} </a>->
+<a n:href="Theme:default $theme->project_id">{$theme->project->name} </a>-><a>{$theme->name}</a><br>
+<a n:href="addEdit $theme->id">Pridať novú úlohu</a>
+
+{if count($tasks)}
+    <table>
+        <thead>
+        <tr>
+            <th>Názov úlohy</th>
+            <th>Popis</th>
+            <th>Stav</th>
+            <th>Riešiteľ</th>
+            <th>Nastavenia</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr n:foreach="$tasks as $task">
+            <td><a n:href="taskDetail $task->id">{$task->name}</a></td>
+            <td>{$task->description}</td>
+            <td>{$task->grade}</td>
+            <td>{$task->user->firstname} {$task->user->lastname}</td>
+            <td><a n:href="addEdit $theme->id, $task->id">upraviť</a></td>
+        </tr>
+        </tbody>
+    </table>
+{else}
+    Žiadne témy neboli nájdené.
+{/if}

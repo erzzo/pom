@@ -1,0 +1,28 @@
+{block content}
+<h1> Detail úlohy</h1>
+<a n:href=":Main:Subject:default">Predmety</a>->
+<a n:href="Project:default $task->theme->project->subject_id">{$task->theme->project->subject->name} </a>->
+<a n:href="Theme:default $task->theme->project_id">{$task->theme->project->name} </a>->
+<a n:href="Task:default $task->theme_id">{$task->theme->name}</a>->
+<a>{$task->name}</a><br>
+
+<table>
+    <thead>
+    <tr>
+        <th>Názov úlohy</th>
+        <th>Popis</th>
+        <th>Stav</th>
+        <th>Riešiteľ</th>
+        <th>Nastavenia</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{$task->name}</td>
+        <td>{$task->description}</td>
+        <td>{$task->grade}</td>
+        <td>{$task->user->firstname} {$task->user->lastname}</td>
+        <td><a n:href="addEdit $task->theme_id, $task->id">upraviť</a></td>
+    </tr>
+    </tbody>
+</table>

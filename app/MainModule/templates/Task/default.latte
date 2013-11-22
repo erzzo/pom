@@ -1,8 +1,7 @@
-{block content}
+{block body}
     <h1>Úlohy</h1>
-<a n:href=":Main:Subject:showMy">Predmety</a>->
-<a n:href="Project:default $theme->project->subject_id">{$theme->project->subject->name} </a>->
-<a n:href="Theme:default $theme->project_id">{$theme->project->name} </a>-><a>{$theme->name}</a><br>
+<a n:href=":Main:Subject:showAll">Predmety</a>->
+<a n:href=":Main:Theme:showMy $theme->project->subject_id">{$theme->project->name} </a>-><a>{$theme->name}</a><br>
 <a n:href="addEdit $theme->id">Pridať novú úlohu</a>
 
 {if count($tasks)}

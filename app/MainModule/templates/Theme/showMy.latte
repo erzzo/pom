@@ -1,0 +1,27 @@
+{block body}
+    <h1>MOJE TEMY v predmete {$subject->name}</h1>
+<a n:href="Subject:showAll">Predmety</a>
+{if count($themes)}
+    <table>
+        <thead>
+        <tr>
+            <th>Názov temy</th>
+            <th>Popis</th>
+            <th>Stav</th>
+            <th>Nastavenia</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr n:foreach="$themes as $theme">
+            <td><a n:href="Task:default, $theme->id">{$theme->name}</a></td>
+            <td>{$theme->description}</td>
+            <td>{$theme->submitted ? 'odovzdané' : 'neodovzdané'}</td>
+            {if $user->isInRole('ucitel')}
+            <td><a n:href="Mentor:Theme:addEdit $theme->project_id, $theme->id">upraviť</a></td>
+            {/if}
+        </tr>
+        </tbody>
+    </table>
+{else}
+    Žiadne témy neboli nájdené.
+{/if}

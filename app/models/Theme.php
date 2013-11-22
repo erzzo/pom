@@ -10,6 +10,14 @@ class Theme extends Base
 		return $theme_users;
 	}
 
+	public function getMyThemes($subjectId)
+	{
+		return $this->db->table('theme_user')->select('theme.id,theme.name,theme.description,theme.submitted,theme.project_id')
+			->where('user_subject.user_id', $this->user->getId())
+			->where('theme.project.subject_id', $subjectId)
+			->order('theme.name ASC');
+	}
+
 	public function getThemes($projectId)
 	{
 		$themes = $this->getAll()->order('name ASC');

@@ -10,6 +10,8 @@ class ThemePresenter extends BasePresenter
 	{
 		$this->template->project = $this->projectModel->get($projectId);
 		$this->template->themes = $this->themeModel->getThemes($projectId);
+
+		$this->template->maxSolvers = 3; //vytiahnut z DB
 	}
 
 	public function actionAddEdit($projectId, $id)
@@ -22,6 +24,30 @@ class ThemePresenter extends BasePresenter
 			$this['addEditThemeForm']->setDefaults($theme);
 		}
 	}
+
+	public function handleSearchStudent()
+	{
+
+	}
+
+	public function createComponentAssignStudentForm()
+	{
+		$form = new Form;
+		$form->addText('students')
+			->getControlPrototype()
+			->class('student-search');
+		$form->addHidden('theme_id');
+		$form->addSubmit('submit');
+		$form->onSuccess[] = $this->processAssignStudentForm;
+
+		return $form;
+	}
+
+	public function processAssignStudentForm(Form $form)
+	{
+		$values = $form->getValues();
+	}
+
 
 	public function createComponentAddEditThemeForm()
 	{

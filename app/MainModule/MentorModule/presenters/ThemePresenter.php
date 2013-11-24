@@ -27,7 +27,6 @@ class ThemePresenter extends BasePresenter
 
 	public function handleSearchStudent()
 	{
-		//TODO: obmedzit este na tych ktory nemaju pridelene temy
 		$students = $this->userModel->getFreeStudentsForTheme($_GET['projectId'], $_GET['q']);
 
 		$result = array();

@@ -29,6 +29,7 @@ class Theme extends Base
 
 	public function addRemoveUsersToTheme($themeId, $studentIds)
 	{
+		$this->db->table('theme_user')->where('theme_id', $themeId)->delete();
 		foreach ($studentIds as $id)
 		{
 			$this->db->table('theme_user')->insert(

@@ -8,9 +8,17 @@ class ThemePresenter extends BasePresenter
 {
 	public function actionDefault($projectId)
 	{
+		//pridat tu aj theme id a zjedodusit model funkcie...
 		$this->template->project = $this->projectModel->get($projectId);
 		$this->template->themes = $this->themeModel->getThemes($projectId);
+		$themeStudents = $this->themeModel->getThemeStudents($projectId);
 
+		$themeStudent = array();
+		foreach ($themeStudents as $row) {
+			$themeStudent[$row->theme_id][$row->user_id] = $row->user->firstname . ' ' . $row->user->lastname;
+		}
+
+		$this->template->themeStudent = $themeStudent;
 		$this->template->maxSolvers = 3; //vytiahnut z DB
 	}
 
@@ -44,9 +52,7 @@ class ThemePresenter extends BasePresenter
 	public function createComponentAssignStudentForm()
 	{
 		$form = new Form;
-		$form->addText('students')
-			->getControlPrototype()
-			->class('student-search');
+		$form->addText('students');
 		$form->addHidden('theme_id');
 		$form->addSubmit('submit');
 		$form->onSuccess[] = $this->processAssignStudentForm;

@@ -24,7 +24,7 @@
             <td>{isset($theme->evaluation_id) ? $theme->evaluation->points : 0}/{$theme->project->max_points}</td>
             <td>
                 {form assignStudentForm}
-                    {input students}
+                    {input students class=> "student-search " . $theme->id}
                     {input theme_id value => $theme->id}
                     {input submit}
                 {/form}
@@ -42,6 +42,11 @@
                 resultLimit: {$maxSolvers},
                 preventDuplicates: 'true'
             });
+            {foreach $themeStudent as $themeKey => $theme}
+                {foreach $theme as $userKey => $user}
+                    $('.student-search.{$themeKey}').tokenInput("add", { id: {$userKey}, name: {$user}});
+                {/foreach}
+            {/foreach}
         })
     </script>
 {else}

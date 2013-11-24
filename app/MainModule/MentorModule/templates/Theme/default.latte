@@ -26,7 +26,7 @@
                 {form assignStudentForm}
                     {input students class=> "student-search " . $theme->id}
                     {input theme_id value => $theme->id}
-                    {input submit}
+                    {input submit value => 'Upraviť'}
                 {/form}
             </td>
             <td><a n:href="addEdit $presenter->param['projectId'], $theme->id">upraviť</a></td>
@@ -42,11 +42,14 @@
                 resultLimit: {$maxSolvers},
                 preventDuplicates: 'true'
             });
-            {foreach $themeStudent as $themeKey => $theme}
-                {foreach $theme as $userKey => $user}
-                    $('.student-search.{$themeKey}').tokenInput("add", { id: {$userKey}, name: {$user}});
-                {/foreach}
-            {/foreach}
+
+            var themeStudent = {!$themeStudent};
+
+            jQuery.each(themeStudent, function(themeKey, theme) {
+                jQuery.each(theme, function(userKey, user) {
+                    $('.student-search.'+themeKey).tokenInput("add", { id: userKey, name: user});
+                })
+            })
         })
     </script>
 {else}

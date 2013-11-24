@@ -18,7 +18,7 @@ class ThemePresenter extends BasePresenter
 			$themeStudent[$row->theme_id][$row->user_id] = $row->user->firstname . ' ' . $row->user->lastname;
 		}
 
-		$this->template->themeStudent = $themeStudent;
+		$this->template->themeStudent = json_encode($themeStudent);
 		$this->template->maxSolvers = 3; //vytiahnut z DB
 	}
 
@@ -71,7 +71,7 @@ class ThemePresenter extends BasePresenter
 
 		$this->themeModel->addRemoveUsersToTheme($values['theme_id'], $studentIds);
 
-		$this->flashMessage("Studenti boli priradený k téme.");
+		$this->flashMessage("Studenti boli k danej téme upravený");
 		$this->redirect('this');
 	}
 

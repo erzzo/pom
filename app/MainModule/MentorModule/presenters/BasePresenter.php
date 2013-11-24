@@ -6,9 +6,9 @@ class BasePresenter extends \BasePresenter
 	public function startup()
 	{
 		parent::startup();
-
-		if (!$this->getUser()->isLoggedIn() || $this->getUser()->isInRole('student')) {
-			$this->redirect("Subject:showAll");
+		$user = $this->getUser();
+		if (!$user->isLoggedIn() || !$user->isInRole('ucitel')) {
+			$this->redirect(":Main:Subject:showAll");
 		}
 	}
 }

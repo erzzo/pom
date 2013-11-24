@@ -8,9 +8,9 @@ class BasePresenter extends \BasePresenter
 	public function startup()
 	{
 		parent::startup();
-
-		if (!$this->getUser()->isLoggedIn()) {
-			//$this->getUser()->logout();
+		$user = $this->getUser();
+		if (!$user->isLoggedIn() || !$user->isInRole('ucitel')) {
+			$user->logout();
 			$this->redirect(":Main:Sign:in");
 		}
 	}

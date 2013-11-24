@@ -10,6 +10,7 @@ class BasePresenter extends \BasePresenter
 		parent::startup();
 
 		if (!$this->getUser()->isLoggedIn()) {
+			//$this->getUser()->logout();
 			$this->redirect(":Main:Sign:in");
 		}
 	}

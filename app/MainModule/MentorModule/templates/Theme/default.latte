@@ -39,7 +39,8 @@
             $('.student-search').tokenInput({link searchStudent!}, {
                 hintText: "Vyhľadaj študentov",
                 minChars: 2,
-                resultLimit: {$maxSolvers}
+                resultLimit: {$maxSolvers},
+                preventDuplicates: 'true'
             });
         })
     </script>

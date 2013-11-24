@@ -28,6 +28,21 @@ class Theme extends Base
 		return $themes;
 	}
 
+	public function addRemoveUsersToTheme($themeId, $studentIds)
+	{
+		foreach ($studentIds as $id)
+		{
+			$this->db->table('theme_user')->insert(
+				array(
+					"user_id" => $id,
+					"theme_id" => $themeId
+				)
+			);
+		}
+
+		return true;
+	}
+
 	public function addEdit($values, $id = NULL)
 	{
 		if(is_null($id)) {

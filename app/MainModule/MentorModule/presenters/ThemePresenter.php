@@ -58,6 +58,12 @@ class ThemePresenter extends BasePresenter
 	public function processAssignStudentForm(Form $form)
 	{
 		$values = $form->getValues();
+		$studentIds = explode(',', $values['students']);
+
+		$this->themeModel->addRemoveUsersToTheme($values['theme_id'], $studentIds);
+
+		$this->flashMessage("Studenti boli priradený k téme.");
+		$this->redirect('this');
 	}
 
 

@@ -48,18 +48,6 @@ class SignPresenter extends BasePresenter
 		}
 	}
 
-	public function actionIn()
-	{
-		if ($this->getUser()->isLoggedIn()) {
-			if ($this->getUser()->isInRole('ucitel')) {
-				$this->redirect("Mentor:Default:");
-			} else {
-				$this->redirect("Student:Default:");
-			}
-		}
-	}
-
-
 	public function actionOut()
 	{
 		$this->getUser()->logout();

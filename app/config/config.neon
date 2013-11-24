@@ -32,6 +32,7 @@ common:
 		routerFactory: RouterFactory
 		router: @routerFactory::createRouter
 		projectModel: Models\Project
+		userModel: Models\User
 		subjectModel: Models\Subject
 		themeModel: Models\Theme
 		taskModel: Models\Task

@@ -6,8 +6,7 @@ class Theme extends Base
 {
 	public function getThemeUsers($themeId)
 	{
-		$theme_users = $this->db->table('theme_user')->select('theme_id, user_subject.user.login')->where('theme_id', $themeId)->fetchPairs('theme_id','login');
-		return $theme_users;
+		return $this->db->table('theme_user')->select('theme_id, user_subject.user.login')->where('theme_id', $themeId)->fetchPairs('theme_id','login');
 	}
 
 	public function getMyThemes($subjectId)
@@ -26,6 +25,27 @@ class Theme extends Base
 			$themes->where('project_id', $projectId);
 		}
 		return $themes;
+	}
+
+	public function addRemoveUsersToTheme($themeId, $studentIds)
+	{
+		$this->db->table('theme_user')->where('theme_id', $themeId)->delete();
+		foreach ($studentIds as $id)
+		{
+			$this->db->table('theme_user')->insert(
+				array(
+					"user_id" => $id,
+					"theme_id" => $themeId
+				)
+			);
+		}
+
+		return true;
+	}
+
+	public function getThemeStudents($projectId)
+	{
+		return $this->db->table('theme_user')->where("theme.project_id", $projectId)->order('theme_id');
 	}
 
 	public function addEdit($values, $id = NULL)

@@ -8,8 +8,18 @@ class ThemePresenter extends BasePresenter
 {
 	public function actionDefault($projectId)
 	{
+		//pridat tu aj theme id a zjedodusit model funkcie...
 		$this->template->project = $this->projectModel->get($projectId);
 		$this->template->themes = $this->themeModel->getThemes($projectId);
+		$themeStudents = $this->themeModel->getThemeStudents($projectId);
+
+		$themeStudent = array();
+		foreach ($themeStudents as $row) {
+			$themeStudent[$row->theme_id][$row->user_id] = $row->user->firstname . ' ' . $row->user->lastname;
+		}
+
+		$this->template->themeStudent = json_encode($themeStudent);
+		$this->template->maxSolvers = 3; //vytiahnut z DB
 	}
 
 	public function actionAddEdit($projectId, $id)
@@ -22,6 +32,49 @@ class ThemePresenter extends BasePresenter
 			$this['addEditThemeForm']->setDefaults($theme);
 		}
 	}
+
+	public function handleSearchStudent()
+	{
+		$students = $this->userModel->getFreeStudentsForTheme($_GET['projectId'], $_GET['q']);
+
+		$result = array();
+		foreach ($students as $key => $student) {
+			$result[] = array(
+				'id' => $key,
+				'name' => $student
+			);
+		}
+
+		echo json_encode($result);
+		$this->terminate();
+	}
+
+	public function createComponentAssignStudentForm()
+	{
+		$form = new Form;
+		$form->addText('students');
+		$form->addHidden('theme_id');
+		$form->addSubmit('submit');
+		$form->onSuccess[] = $this->processAssignStudentForm;
+
+		return $form;
+	}
+
+	public function processAssignStudentForm(Form $form)
+	{
+		$values = $form->getValues();
+		if (!empty($values['students'])) {
+			$studentIds = explode(',', $values['students']);
+		} else {
+			$studentIds = [];
+		}
+
+		$this->themeModel->addRemoveUsersToTheme($values['theme_id'], $studentIds);
+
+		$this->flashMessage("Studenti boli k danej téme upravený");
+		$this->redirect('this');
+	}
+
 
 	public function createComponentAddEditThemeForm()
 	{

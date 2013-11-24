@@ -12,6 +12,7 @@
             <th>Popis</th>
             <th>Stav</th>
             <th>Hodnotenie</th>
+            <th>Priradený študenti</th>
             <th>Nastavenia</th>
         </tr>
         </thead>
@@ -21,10 +22,36 @@
             <td>{$theme->description}</td>
             <td>{$theme->submitted ? 'odovzdané' : 'neodovzdané'}</td>
             <td>{isset($theme->evaluation_id) ? $theme->evaluation->points : 0}/{$theme->project->max_points}</td>
+            <td>
+                {form assignStudentForm}
+                    {input students class=> "student-search " . $theme->id}
+                    {input theme_id value => $theme->id}
+                    {input submit value => 'Upraviť'}
+                {/form}
+            </td>
             <td><a n:href="addEdit $presenter->param['projectId'], $theme->id">upraviť</a></td>
         </tr>
         </tbody>
     </table>
+
+    <script>
+        $(document).ready(function(){
+            $('.student-search').tokenInput({link searchStudent!}, {
+                hintText: "Vyhľadaj študentov",
+                minChars: 2,
+                resultLimit: {$maxSolvers},
+                preventDuplicates: 'true'
+            });
+
+            var themeStudent = {!$themeStudent};
+
+            jQuery.each(themeStudent, function(themeKey, theme) {
+                jQuery.each(theme, function(userKey, user) {
+                    $('.student-search.'+themeKey).tokenInput("add", { id: userKey, name: user});
+                })
+            })
+        })
+    </script>
 {else}
     Žiadne témy neboli nájdené.
 {/if}

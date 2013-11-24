@@ -8,7 +8,14 @@
 	<title>{block title|striptags|upper}Nette Application Skeleton{/block}</title>
 
 	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
+	<link rel="stylesheet" media="screen" href="{$basePath}/css/token-input.css">
 	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
+
+    <script src="{$basePath}/js/jquery.js"></script>
+    <script src="{$basePath}/js/netteForms.js"></script>
+    <script src="{$basePath}/js/main.js"></script>
+    <script src="{$basePath}/js/nette.ajax.js"></script>
+    <script src="{$basePath}/js/jquery.tokeninput.js"></script>
 </head>
 
 <body>
@@ -21,12 +28,6 @@
 
     {include #body}
     <a n:href=":Main:Sign:out">Sign Out</a>
-	{block scripts}
-        <script src="{$basePath}/js/jquery.js"></script>
-        <script src="{$basePath}/js/netteForms.js"></script>
-        <script src="{$basePath}/js/main.js"></script>
-        <script src="{$basePath}/js/nette.ajax.js"></script>
-	{/block}
     <script>
         $(function () {
             $.nette.init();

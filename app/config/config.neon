@@ -35,6 +35,7 @@ common:
 		subjectModel: Models\Subject
 		themeModel: Models\Theme
 		taskModel: Models\Task
+		fileModel: Models\File
 
 
 

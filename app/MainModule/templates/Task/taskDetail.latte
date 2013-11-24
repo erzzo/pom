@@ -24,3 +24,33 @@
     </tr>
     </tbody>
 </table>
+
+{if count($files)}
+<table>
+    <thead>
+    <tr>
+        <th>Súbor</th>
+        <th>Popis</th>
+        <th>Stav</th>
+        <th>Nastavenia</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr n:foreach="$files as $file">
+        <td>{$file->name}</td>
+        <td>{$file->description}</td>
+        <td>{$file->grade}</td>
+    </tr>
+    </tbody>
+</table>
+
+{else}
+    Žiadne súbory niesú nahraté.
+{/if}
+
+{form addEditFileForm}
+    {label name/}{input name}
+    {label description/}{input description}
+    {input file}
+    {input submit}
+{/form}

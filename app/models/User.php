@@ -13,7 +13,7 @@ class User extends Base
 		return $this->getAll()->select('id, CONCAT(firstname, \' \', lastname) AS name')
 			->where('role_id', 2)
 			->where('id', $allUsersInSubject)
-			->where('firstname LIKE ? OR lastname LIKE ?', '%' . $query . '%', '%' . $query . '%')
+			->where('CONCAT(firstname, \' \', lastname) LIKE ? OR CONCAT(lastname, \' \', firstname) LIKE ?', '%' . $query . '%', '%' . $query . '%')
 			->fetchPairs('id', 'name');
 	}
 }

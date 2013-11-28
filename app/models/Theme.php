@@ -4,14 +4,16 @@ namespace Models;
 
 class Theme extends Base
 {
-	public function getComments($themeId = NULL, $taskId = NULL)
+	public function getComments($themeId, $taskId = NULL)
 	{
-		$comments = $this->db->table('comment')->select('*')
-		if ($themeId) {
-			$comments->where('theme_id',$themeId)->where('task_id',$taskId)->order('id DESC');
-		}else {
-			$comments->where('task_id',$taskId)->order('id DESC');
-		}return $comments;
+		$comments = $this->db->table('comment')->select('*')->where('theme_id', $themeId)->order('id DESC');
+		if ($taskId) {
+			$comments->where('task_id', $taskId)->order('id DESC');
+		} else {
+			$comments->where('task_id', NULL);
+		}
+
+		return $comments;
 	}
 
 	public function getThemeUsers($themeId)

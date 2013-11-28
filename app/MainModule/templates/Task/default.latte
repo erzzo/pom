@@ -28,11 +28,14 @@
 {else}
     Žiadne témy neboli nájdené.
 {/if}
+
+<p>Komentáre k zadaniu</p>
 {foreach $comments as $comment}
     {$comment->text}<br>
     {$comment->user->login}<br>
 {/foreach}
+
 {form addEditCommentForm}
-{label text/}{input text}<br>
-{input submit value=> isset($presenter->param['commentId']) ? 'Upraviť' : 'Vytvoriť'}
+    {input text}<br>
+    {input submit value=> isset($presenter->param['commentId']) ? 'Upraviť' : 'Vytvoriť'}
 {/form}

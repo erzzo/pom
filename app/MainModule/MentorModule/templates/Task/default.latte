@@ -18,7 +18,7 @@
         </thead>
         <tbody>
         <tr n:foreach="$tasks as $task">
-            <td><a n:href="taskDetail $task->id">{$task->name}</a></td>
+            <td><a n:href=":Main:Task:taskDetail $task->id">{$task->name}</a></td>
             <td>{$task->description}</td>
             <td>{$task->grade}</td>
             <td>{$task->user->firstname} {$task->user->lastname}</td>

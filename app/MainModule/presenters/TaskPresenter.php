@@ -34,6 +34,17 @@ class TaskPresenter extends BasePresenter
 		}
 	}
 
+	public function handleDeleteFile($fileId)
+	{
+		$document = $this->fileModel->get($fileId);
+		if ($document->name) {
+			unlink($this->context->params['wwwDir'] . '/../storage/files/'.$document->url);
+		}
+		$document->delete();
+		$this->flashMessage('Súbor zmazaný.', 'success');
+		$this->redirect('this');
+	}
+
 	public function handleDownloadFile($taskId) {
 		$fileDat= $this->fileModel->get($taskId);
 

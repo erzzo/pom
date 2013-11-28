@@ -6,8 +6,7 @@ class Theme extends Base
 {
 	public function getThemeUsers($themeId)
 	{
-		$theme_users = $this->db->table('theme_user')->select('theme_id, user.login')->where('theme_id', $themeId)->fetchPairs('theme_id','login');
-		return $theme_users;
+		return $this->db->table('theme_user')->select('theme_id, user.login')->where('theme_id', $themeId)->fetchPairs('theme_id','login');
 	}
 
 	public function getMyThemes($subjectId)
@@ -16,6 +15,20 @@ class Theme extends Base
 			->where('user_id', $this->user->getId())
 			->where('theme.project.subject_id', $subjectId)
 			->order('theme.name ASC');
+	}
+
+	public function getThemePercentage($subjectId)
+	{
+		$themes = $this->getMyThemes($subjectId);
+
+		$percentage = array();
+		foreach ($themes as $key => $theme) {
+			$doneTaskCount = $this->db->table('task')->where('theme_id', $theme->id)->where('grade', TRUE)->count();
+			$taskCount = $this->db->table('task')->where('theme_id', $theme->id)->count();
+			$percentage[$key] = ($doneTaskCount/$taskCount) * 100;
+		}
+
+		return $percentage;
 	}
 
 	public function getThemes($projectId)

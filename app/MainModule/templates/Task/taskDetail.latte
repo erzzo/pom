@@ -55,3 +55,12 @@
     {input file}
     {input submit}
 {/form}
+
+{foreach $comments as $comment}
+    {$comment->text}<br>
+    {$comment->user->login}<br>
+{/foreach}
+{form addEditCommentForm}
+{label text/}{input text}<br>
+{input submit value=> isset($presenter->param['commentId']) ? 'Upraviť' : 'Vytvoriť'}
+{/form}

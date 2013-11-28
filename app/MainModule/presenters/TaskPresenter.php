@@ -15,12 +15,14 @@ class TaskPresenter extends BasePresenter
 	{
 		$this->template->theme = $this->themeModel->get($themeId);
 		$this->template->tasks = $this->taskModel->getTasks($themeId);
+		$this->template->comments = $this->themeModel->getComments($themeId);
 	}
 
 	public function actionTaskDetail($taskId)
 	{
 		$this->template->task = $this->taskModel->get($taskId);
 		$this->template->files = $this->fileModel->getFiles($taskId);
+		$this->template->comments = $this->themeModel->getComments(NULL,$taskId);
 	}
 
 	public function actionAddEdit($themeId, $id)
@@ -160,5 +162,32 @@ class TaskPresenter extends BasePresenter
 		unset($values['name']);
 
 		$this->presenter->redirect('Task:taskDetail',$taskId);
+	}
+
+	public function createComponentAddEditCommentForm()
+	{
+		$form = new Form;
+		$form->addTextArea('text', 'Text')
+			->addRule(Form::FILLED,'Zadajte text.');
+		$form->addSubmit('submit', 'Odošli');
+		$form->onSuccess[] = $this->processAddEditCommentForm;
+		return $form;
+	}
+
+	public function processAddEditCommentForm(Form $form)
+	{
+		$values = $form->getValues();
+		$id = $this->presenter->getParameter('commentId');
+		$values['created'] = new DateTime();
+		$values['user_id'] = $this->user->id;
+		if ($this->presenter->getParameter('themeId')) {
+			$values['theme_id'] = $this->presenter->getParameter('themeId');
+		}else {
+			$values['task_id'] = $this->presenter->getParameter('taskId');
+			$task = $this->taskModel->get($this->presenter->getParameter('taskId'));
+			$values['theme_id'] = $task->theme_id;
+		}
+		$this->themeModel->addEditComment($values, $id);
+		$this->redirect('this');
 	}
 }

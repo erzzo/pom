@@ -1,7 +1,7 @@
 <?php
 
 namespace MainModule;
-
+use VisualPaginator;
 class BasePresenter extends \BasePresenter
 {
 	public function startup()
@@ -11,5 +11,12 @@ class BasePresenter extends \BasePresenter
 		if (!$user->isLoggedIn() && !$this->presenter->isLinkCurrent(":Main:Sign:in")) {
 			$this->redirect(":Main:Sign:in");
 		}
+	}
+
+	protected function createComponentPaginator()
+	{
+		$visualPaginator = new VisualPaginator();
+		$visualPaginator->paginator->itemsPerPage = 4;
+		return $visualPaginator;
 	}
 }

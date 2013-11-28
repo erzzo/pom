@@ -10,19 +10,18 @@ use Nette\Application\Responses\FileResponse,
 
 class TaskPresenter extends BasePresenter
 {
+	private $comments;
 
 	public function actionDefault($themeId)
 	{
 		$this->template->theme = $this->themeModel->get($themeId);
 		$this->template->tasks = $this->taskModel->getTasks($themeId);
-		$this->template->comments = $this->themeModel->getComments($themeId);
 	}
 
 	public function actionTaskDetail($taskId)
 	{
 		$this->template->task = $this->taskModel->get($taskId);
 		$this->template->files = $this->fileModel->getFiles($taskId);
-		$this->template->comments = $this->themeModel->getComments(NULL,$taskId);
 	}
 
 	public function actionAddEdit($themeId, $id)
@@ -34,6 +33,20 @@ class TaskPresenter extends BasePresenter
 			}
 			$this['addEditTaskForm']->setDefaults($task);
 		}
+	}
+
+	public function renderTaskDetail($taskId)
+	{
+		$paginator = $this['paginator']->getPaginator();
+		$paginator->itemCount = count($this->themeModel->getAllComments(NULL,$taskId));
+		$this->template->comments = $this->themeModel->getComments(NULL,$taskId,$paginator->offset, $paginator->itemsPerPage);
+	}
+
+	public function renderDefault($themeId)
+	{
+		$paginator = $this['paginator']->getPaginator();
+		$paginator->itemCount = count($this->themeModel->getAllComments($themeId));
+		$this->template->comments = $this->themeModel->getComments($themeId,NULL,$paginator->offset, $paginator->itemsPerPage);
 	}
 
 	public function handleDeleteFile($fileId)

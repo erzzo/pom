@@ -10,5 +10,6 @@ class ThemePresenter extends BasePresenter
 	{
 		$this->template->subject = $this->subjectModel->get($subjectId);
 		$this->template->themes = $this->themeModel->getMyThemes($subjectId);
+		$this->template->taskPercentage = $this->themeModel->getThemePercentage($subjectId);
 	}
 }

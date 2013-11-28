@@ -25,7 +25,7 @@ class Theme extends Base
 		foreach ($themes as $key => $theme) {
 			$doneTaskCount = $this->db->table('task')->where('theme_id', $theme->id)->where('grade', TRUE)->count();
 			$taskCount = $this->db->table('task')->where('theme_id', $theme->id)->count();
-			$percentage[$key] = ($doneTaskCount/$taskCount) * 100;
+			$percentage[$key] = $taskCount != 0 ? ($doneTaskCount/$taskCount) * 100 : 0;
 		}
 
 		return $percentage;

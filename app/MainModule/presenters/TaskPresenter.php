@@ -38,7 +38,7 @@ class TaskPresenter extends BasePresenter
 		$fileDat= $this->fileModel->get($taskId);
 
 		$file = $this->context->params['wwwDir'].'/../storage/files/'. $fileDat->url;
-		$fileName = $fileDat->name;
+		$fileName = $fileDat->name.'.'.$fileDat->extension;
 		$httpResponse = $this->context->getService('httpResponse');
 		$httpResponse->setHeader('Pragma', "public");
 		$httpResponse->setHeader('Expires', 0);
@@ -46,7 +46,7 @@ class TaskPresenter extends BasePresenter
 		$httpResponse->setHeader('Content-Transfer-Encoding', "binary");
 		$httpResponse->setHeader('Content-Description', "File Transfer");
 		if( $httpResponse->setHeader('Content-Length', filesize($file)) &&
-			$this->sendResponse(new FileResponse($file, $fileName,'application/octet-stream,application/force-download, application/download'))
+			$this->sendResponse(new FileResponse($file,$fileName ,'application/octet-stream,application/force-download, application/download'))
 		){$this->flashMessage('Súbor stiahnutý.', 'success');
 		}else{
 			$this->flashMessage('Problém pri sťahovaní súboru.', 'error');
@@ -119,21 +119,20 @@ class TaskPresenter extends BasePresenter
 		if ($task && $task->max_files_count > $fileCount) {
 			if($values['file']->isOk()){
 				$values['extension'] = pathinfo($values['file']->getName(), PATHINFO_EXTENSION); //TODO: treba do DB dat extension
-				$values['file_name'] = $values['name'].new DateTime().'.'.$values['extension']; //TODO: datum na Y-m-d
+				$values['file_name'] = Strings::webalize($values['name'].new DateTime()).'.'.$values['extension']; //TODO: datum na Y-m-d
 				$urlSubject = Strings::webalize('subject'. $task->theme->project->subject->name, NULL, FALSE);
 				$urlProject = Strings::webalize('project'.$task->theme->project->name, NULL, FALSE);
 				$urlTheme = Strings::webalize('theme'.$task->theme->name, NULL, FALSE);
 				$urlTask = Strings::webalize('task'. $task->name, NULL, FALSE);
 				$URL = $urlSubject.'/'.$urlProject.'/'.$urlTheme.'/'.$urlTask;
-				if (!file_exists($this->context->params['wwwDir'] . '/storage/files/'.$URL)) {
-					mkdir($this->context->params['wwwDir'] . '/../storage/files/'.$URL, 0755, true);
+				if (!file_exists($this->context->params['wwwDir'] . '/../storage/files/'.$URL)) {
+					mkdir($this->context->params['wwwDir'] . '/../storage/files/'.$URL, 0777, true);
 				}
 				$values['url'] = $URL.'/'.$values['file_name'];
-				//$values['file']->move($this->context->params['wwwDir'] . '/../storage/files/'.$values['url']); //TODO: Daco tu nejde, mozno na hrone by to slo :D
+				$values['file']->move($this->context->params['wwwDir'] . '/../storage/files/'.$values['url']); //TODO: Daco tu nejde, mozno na hrone by to slo :D
 
 				//DB ukladanie
 				unset($values['file']);
-				unset($values['extension']);
 				unset($values['file_name']);
 				$values['theme_id'] = $task->theme_id;
 				$values['task_id'] = $task->id;

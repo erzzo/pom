@@ -8,12 +8,12 @@ class SubjectPresenter extends BasePresenter
 	public function actionShowAll($rocnikId = null)
 	{
 		$this->template->subjects =  $this->subjectModel->getSubjects($rocnikId);
-		$this->template->userSubjects =  $usr = $this->subjectModel->getUserSubjects($this->getUser()->getId())->fetchPairs('id','subject_id');
+		$this->template->userSubjects = $this->subjectModel->getUserSubjects($this->getUser()->getId())->fetchPairs('id','subject_id');
 	}
 
 	public function actionShowMy()
 	{
-		$this->template->userSubjects = $this->subjectModel->getUserSubjects();
+		$this->template->userSubjects = $this->subjectModel->getUserSubjects($this->getUser()->getId());
 	}
 
 	public function actionRequestEntry($subjectId)

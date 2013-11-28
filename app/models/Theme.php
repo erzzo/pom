@@ -6,13 +6,12 @@ class Theme extends Base
 {
 	public function getComments($themeId, $taskId = NULL)
 	{
-		$comments = $this->db->table('comment')->select('*')->where('theme_id', $themeId)->order('id DESC');
+		$comments = $this->db->table('comment')->select('*');
 		if ($taskId) {
 			$comments->where('task_id', $taskId)->order('id DESC');
 		} else {
-			$comments->where('task_id', NULL);
+			$comments->where('theme_id', $themeId)->order('id DESC');
 		}
-
 		return $comments;
 	}
 

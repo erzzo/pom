@@ -59,7 +59,7 @@
 <p>Komentáre k úlohe</p>
 {foreach $comments as $comment}
     {$comment->text}<br>
-    {$comment->user->login}<br>
+    <p>Používateľ: {$comment->user->login} Dátum: {$comment->created}</p><br>
 {/foreach}
 {form addEditCommentForm}
     {input text}<br>

@@ -4,6 +4,16 @@ namespace Models;
 
 class Theme extends Base
 {
+	public function getComments($themeId = NULL, $taskId = NULL)
+	{
+		$comments = $this->db->table('comment')->select('*')
+		if ($themeId) {
+			$comments->where('theme_id',$themeId)->where('task_id',$taskId)->order('id DESC');
+		}else {
+			$comments->where('task_id',$taskId)->order('id DESC');
+		}return $comments;
+	}
+
 	public function getThemeUsers($themeId)
 	{
 		return $this->db->table('theme_user')->select('theme_id, user.login')->where('theme_id', $themeId)->fetchPairs('theme_id','login');
@@ -69,6 +79,16 @@ class Theme extends Base
 		} else {
 			$theme = $this->getTable()->get($id);
 			return $theme->update($values);
+		}
+	}
+
+	public function addEditComment($values, $id = NULL)
+	{
+		if(is_null($id)) {
+			return $this->db->table('comment')->insert($values);
+		} else {
+			$comment = $this->db->table('comment')->get($id);
+			return $comment->update($values);
 		}
 	}
 

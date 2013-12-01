@@ -23,4 +23,10 @@ class Task extends Base
 			return $task->update($values);
 		}
 	}
+
+	public function markDone($id)
+	{
+		$this->findBy(array('id' => $id))->update(array('grade' => 1));
+
+	}
 }

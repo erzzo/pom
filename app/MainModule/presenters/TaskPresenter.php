@@ -60,6 +60,16 @@ class TaskPresenter extends BasePresenter
 		$this->redirect('this');
 	}
 
+	public function handleMarkDone($taskId)
+	{
+		$this->taskModel->markDone($taskId);
+
+		if (!$this->presenter->isAjax()) {
+			$this->presenter->redirect('this');
+		}
+		$this->invalidateControl();
+	}
+
 	public function handleDownloadFile($taskId) {
 		$fileDat= $this->fileModel->get($taskId);
 
@@ -141,35 +151,30 @@ class TaskPresenter extends BasePresenter
 		$values = $form->getValues();
 		$taskId = $this->presenter->getParameter('taskId');
 		$task = $this->taskModel->get($taskId);
-		$fileCount = $this->fileModel->getAll()->where('task_id', $taskId)->count();
-		if ($task && $task->max_files_count > $fileCount) {
-			if($values['file']->isOk()){
-				$values['extension'] = pathinfo($values['file']->getName(), PATHINFO_EXTENSION); //TODO: treba do DB dat extension
-				$values['file_name'] = Strings::webalize($values['name'].new DateTime()).'.'.$values['extension']; //TODO: datum na Y-m-d
-				$urlSubject = Strings::webalize('subject'. $task->theme->project->subject->name, NULL, FALSE);
-				$urlProject = Strings::webalize('project'.$task->theme->project->name, NULL, FALSE);
-				$urlTheme = Strings::webalize('theme'.$task->theme->name, NULL, FALSE);
-				$urlTask = Strings::webalize('task'. $task->name, NULL, FALSE);
-				$URL = $urlSubject.'/'.$urlProject.'/'.$urlTheme.'/'.$urlTask;
-				if (!file_exists($this->context->params['wwwDir'] . '/../storage/files/'.$URL)) {
-					mkdir($this->context->params['wwwDir'] . '/../storage/files/'.$URL, 0777, true);
-				}
-				$values['url'] = $URL.'/'.$values['file_name'];
-				$values['file']->move($this->context->params['wwwDir'] . '/../storage/files/'.$values['url']); //TODO: Daco tu nejde, mozno na hrone by to slo :D
-
-				//DB ukladanie
-				unset($values['file']);
-				unset($values['file_name']);
-				$values['theme_id'] = $task->theme_id;
-				$values['task_id'] = $task->id;
-				$values['created'] = new \Nette\DateTime;
-				$this->fileModel->addEdit($values);
-				$this->flashMessage("Súbor nahratý");
-			}else {
-				$this->flashMessage("CHYBA súboru");
+		if($values['file']->isOk()){
+			$values['extension'] = pathinfo($values['file']->getName(), PATHINFO_EXTENSION);
+			$values['file_name'] = Strings::webalize($values['name'].new DateTime()).'.'.$values['extension']; //TODO: datum na Y-m-d
+			$urlSubject = Strings::webalize('subject'. $task->theme->project->subject->name, NULL, FALSE);
+			$urlProject = Strings::webalize('project'.$task->theme->project->name, NULL, FALSE);
+			$urlTheme = Strings::webalize('theme'.$task->theme->name, NULL, FALSE);
+			$urlTask = Strings::webalize('task'. $task->name, NULL, FALSE);
+			$URL = $urlSubject.'/'.$urlProject.'/'.$urlTheme.'/'.$urlTask;
+			if (!file_exists($this->context->params['wwwDir'] . '/../storage/files/'.$URL)) {
+				mkdir($this->context->params['wwwDir'] . '/../storage/files/'.$URL, 0777, true);
 			}
+			$values['url'] = $URL.'/'.$values['file_name'];
+			$values['file']->move($this->context->params['wwwDir'] . '/../storage/files/'.$values['url']);
+
+			//DB ukladanie
+			unset($values['file']);
+			unset($values['file_name']);
+			$values['theme_id'] = $task->theme_id;
+			$values['task_id'] = $task->id;
+			$values['created'] = new \Nette\DateTime;
+			$this->fileModel->addEdit($values);
+			$this->flashMessage("Súbor nahratý");
 		}else {
-			$this->flashMessage("Prekročený maximálny počet súborov.");
+			$this->flashMessage("CHYBA súboru");
 		}
 
 		unset($values['name']);

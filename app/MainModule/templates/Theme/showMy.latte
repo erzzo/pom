@@ -7,6 +7,8 @@
         <tr>
             <th>Názov temy</th>
             <th>Popis</th>
+            <th>Riešenie od</th>
+            <th>Riešenie do</th>
             <th>Stav</th>
             <th>Nastavenia</th>
         </tr>
@@ -15,6 +17,8 @@
         <tr n:foreach="$themes as $theme">
             <td><a n:href="Task:default, $theme->id">{$theme->name}</a></td>
             <td>{$theme->description}</td>
+            <td>{$theme->solution_from|date:"d. n. Y"}</td>
+            <td>{$theme->solution_to|date:"d. n. Y"}</td>
             <td>{$theme->submitted ? 'odovzdané': number_format($taskPercentage[$theme->id], 1).'%'}</td>
             {if $user->isInRole('ucitel')}
             <td><a n:href="Mentor:Theme:addEdit $theme->project_id, $theme->id">upraviť</a></td>

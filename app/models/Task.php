@@ -6,7 +6,7 @@ class Task extends Base
 {
 	public function getTasks($themeId)
 	{
-		$tasks = $this->getAll()->order('name ASC');
+		$tasks = $this->getAll()->order('grade ASC, name ASC');
 
 		if (!is_null($themeId)) {
 			$tasks->where('theme_id', $themeId);

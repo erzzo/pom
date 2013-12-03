@@ -38,6 +38,8 @@ class ProjectPresenter extends BasePresenter
 			//->setRequired('Povinný atribút');
 		$form->addText('solution_from', 'Riešenie od');
 			//->setRequired('Povinný atribút');
+		$form->addText('max_files_count', 'Maximálny počet súborov')
+			->setType('Number');
 		$form->addText('solution_to', 'Riešenie do');
 			//->setRequired('Povinný atribút');
 		$form->addSubmit('submit');

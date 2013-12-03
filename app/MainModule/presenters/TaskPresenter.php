@@ -16,12 +16,13 @@ class TaskPresenter extends BasePresenter
 	{
 		$this->template->theme = $this->themeModel->get($themeId);
 		$this->template->tasks = $this->taskModel->getTasks($themeId);
+		$this->template->files = $this->fileModel->getFiles($themeId);
 	}
 
 	public function actionTaskDetail($taskId)
 	{
-		$this->template->task = $this->taskModel->get($taskId);
-		$this->template->files = $this->fileModel->getFiles($taskId);
+		$this->template->task = $task = $this->taskModel->get($taskId);
+		$this->template->files = $this->fileModel->getFiles($task->theme_id,$taskId);
 	}
 
 	public function actionAddEdit($themeId, $id)
@@ -70,8 +71,8 @@ class TaskPresenter extends BasePresenter
 		$this->invalidateControl();
 	}
 
-	public function handleDownloadFile($taskId) {
-		$fileDat= $this->fileModel->get($taskId);
+	public function handleDownloadFile($fileId) {
+		$fileDat= $this->fileModel->get($fileId);
 
 		$file = $this->context->params['wwwDir'].'/../storage/files/'. $fileDat->url;
 		$fileName = $fileDat->name.'.'.$fileDat->extension;
@@ -150,36 +151,54 @@ class TaskPresenter extends BasePresenter
 	{
 		$values = $form->getValues();
 		$taskId = $this->presenter->getParameter('taskId');
-		$task = $this->taskModel->get($taskId);
-		if($values['file']->isOk()){
-			$values['extension'] = pathinfo($values['file']->getName(), PATHINFO_EXTENSION);
-			$values['file_name'] = Strings::webalize($values['name'].new DateTime()).'.'.$values['extension']; //TODO: datum na Y-m-d
-			$urlSubject = Strings::webalize('subject'. $task->theme->project->subject->name, NULL, FALSE);
-			$urlProject = Strings::webalize('project'.$task->theme->project->name, NULL, FALSE);
-			$urlTheme = Strings::webalize('theme'.$task->theme->name, NULL, FALSE);
-			$urlTask = Strings::webalize('task'. $task->name, NULL, FALSE);
-			$URL = $urlSubject.'/'.$urlProject.'/'.$urlTheme.'/'.$urlTask;
-			if (!file_exists($this->context->params['wwwDir'] . '/../storage/files/'.$URL)) {
-				mkdir($this->context->params['wwwDir'] . '/../storage/files/'.$URL, 0777, true);
-			}
-			$values['url'] = $URL.'/'.$values['file_name'];
-			$values['file']->move($this->context->params['wwwDir'] . '/../storage/files/'.$values['url']);
+		$themeId = $this->presenter->getParameter('themeId');
+		//Max file count, default 1, for task.
+		$maxFileCount = 1;
 
-			//DB ukladanie
-			unset($values['file']);
-			unset($values['file_name']);
-			$values['theme_id'] = $task->theme_id;
+		if ($taskId) {
+			$task = $this->taskModel->get($taskId);
+			$theme = $task->theme;
+			$values['theme_id'] = $theme->id;
 			$values['task_id'] = $task->id;
-			$values['created'] = new \Nette\DateTime;
-			$this->fileModel->addEdit($values);
-			$this->flashMessage("Súbor nahratý");
-		}else {
-			$this->flashMessage("CHYBA súboru");
+			$fileCount = $this->fileModel->getAll()->where('task_id', $taskId)->count();
+		} else {
+			$theme = $this->themeModel->get($themeId);
+			$values['theme_id'] = $theme->id;
+			$maxFileCount = $theme->project->max_files_count;
+			$fileCount = $this->fileModel->getAll()->where('task_id', $themeId)->count();
+		}
+
+		if ($maxFileCount > $fileCount) {
+			if($values['file']->isOk()){
+				$values['extension'] = pathinfo($values['file']->getName(), PATHINFO_EXTENSION);
+				$values['file_name'] = Strings::webalize($values['name'].new DateTime()).'.'.$values['extension']; //TODO: datum na Y-m-d
+				$urlSubject = Strings::webalize('subject'. $theme->project->subject->name, NULL, FALSE);
+				$urlProject = Strings::webalize('project'.$theme->project->name, NULL, FALSE);
+				$urlTheme = Strings::webalize('theme'.$theme->name, NULL, FALSE);
+				$URL = $urlSubject.'/'.$urlProject.'/'.$urlTheme;
+				if (!file_exists($this->context->params['wwwDir'] . '/../storage/files/'.$URL)) {
+					mkdir($this->context->params['wwwDir'] . '/../storage/files/'.$URL, 0777, true);
+				}
+				$values['url'] = $URL.'/'.$values['file_name'];
+				$values['file']->move($this->context->params['wwwDir'] . '/../storage/files/'.$values['url']);
+
+				//DB ukladanie
+				unset($values['file']);
+				unset($values['file_name']);
+
+				$values['created'] = new \Nette\DateTime;
+				$this->fileModel->addEdit($values);
+				$this->flashMessage("Súbor nahratý");
+			}else {
+				$this->flashMessage("CHYBA súboru");
+			}
+		} else {
+			$this->flashMessage("Prekročený maximálny počet súborov");
 		}
 
 		unset($values['name']);
 
-		$this->presenter->redirect('Task:taskDetail',$taskId);
+		$this->presenter->redirect('this');
 	}
 
 	public function createComponentAddEditCommentForm()

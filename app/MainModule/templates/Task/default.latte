@@ -30,7 +30,37 @@
 {else}
     Žiadne témy neboli nájdené.
 {/if}
+<div>
+    {if count($files)}
+        <table>
+            <thead>
+            <tr>
+                <th>Súbor</th>
+                <th>Popis</th>
+                <th>Stav</th>
+                <th>Nastavenia</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr n:foreach="$files as $file">
+                <td><a n:href="downloadFile! $file->id">{$file->name}</a></td>
+                <td>{$file->description}</td>
+                <td>{$file->grade}</td>
+                <td><a n:href="deleteFile! $file->id">Zmazať</a></td>
+            </tr>
+            </tbody>
+        </table>
 
+    {else}
+        Žiadne súbory niesú nahraté.
+    {/if}
+    {form addEditFileForm}
+    {label name/}{input name}
+    {label description/}{input description}
+    {input file}
+    {input submit}
+    {/form}
+</div>
 <p>Komentáre k zadaniu</p>
 {foreach $comments as $comment}
     {$comment->text}<br>

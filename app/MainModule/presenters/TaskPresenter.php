@@ -160,7 +160,7 @@ class TaskPresenter extends BasePresenter
 			$theme = $this->themeModel->get($themeId);
 			$values['theme_id'] = $theme->id;
 			$maxFileCount = $theme->project->max_files_count;
-			$fileCount = $this->fileModel->getAll()->where('task_id', $themeId)->count();
+			$fileCount = $this->fileModel->getAll()->where('theme_id', $themeId)->count();
 		}
 
 		if ($maxFileCount > $fileCount) {

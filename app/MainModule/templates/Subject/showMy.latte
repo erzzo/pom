@@ -1,9 +1,6 @@
 {block body}
 <h1>Moje predmety</h1>
-{form filterSubjectsForm class=>'ajax'}
-    {label gradeId/}{input gradeId}
-    {input submit value=>"Zobraziť"}
-{/form}
+{include @filterSubjects.latte}
 
 {snippet subjects}
 {if count($userSubjects)}

@@ -1,0 +1,9 @@
+{form filterSubjectsForm class=>'ajax'}
+    {label gradeId/}{input gradeId}
+{/form}
+
+<script>
+    $('#frmfilterSubjectsForm-gradeId').on('change', function(){
+        $(this).closest("form").submit()
+    })
+</script>

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b48f6afde573dabe825c563c544ac636",
+    "hash": "8e694a313357248c96dce0e21a39bbe0",
     "packages": [
         {
             "name": "nette/nette",
@@ -78,6 +78,58 @@
                 "templating"
             ],
             "time": "2013-08-07 23:14:19"
+        },
+        {
+            "name": "pvy/nette-visual-paginator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pvy/nette-visual-paginator.git",
+                "reference": "1b14f23982989590b523ed81c6a03fa7702f382b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pvy/nette-visual-paginator/zipball/1b14f23982989590b523ed81c6a03fa7702f382b",
+                "reference": "1b14f23982989590b523ed81c6a03fa7702f382b",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": "2.0.*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "VisualPaginator.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "email": "david@grudl.com",
+                    "homepage": "http://davidgrudl.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Jan Dolecek",
+                    "email": "juzna.cz@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "pvy",
+                    "email": "pvy@centrum.cz"
+                }
+            ],
+            "description": "Simple paginator with ajax support",
+            "homepage": "https://github.com/pvy/nette-visual-paginator",
+            "keywords": [
+                "nette",
+                "paginator"
+            ],
+            "time": "2013-03-05 01:23:52"
         }
     ],
     "packages-dev": [
@@ -87,9 +139,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "pvy/nette-visual-paginator": 20
+    },
     "platform": {
         "php": ">=5.3.2"
     },

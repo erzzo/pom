@@ -33,14 +33,14 @@
 
 <p>Komentáre k zadaniu</p>
 {snippet comments}
-{foreach $comments as $comment}
-    {$comment->text}<br>
-    <p>Používateľ: {$comment->user->login} Dátum: {$comment->created}</p><br>
-{/foreach}
-{control paginator}
+    {foreach $comments as $comment}
+        {$comment->text}<br>
+        <p>Používateľ: {$comment->user->login} Dátum: {$comment->created}</p><br>
+    {/foreach}
+    {control paginator}
 
-{form addEditCommentForm class=>"ajax"}
-    {input text}<br>
-    {input submit value=> isset($presenter->param['commentId']) ? 'Upraviť' : 'Vytvoriť'}
-{/form}
+    {form addEditCommentForm class=>"ajax"}
+        {input text}<br>
+        {input submit value=> isset($presenter->param['commentId']) ? 'Upraviť' : 'Vytvoriť'}
+    {/form}
 {/snippet}

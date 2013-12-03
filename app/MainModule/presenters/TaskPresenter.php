@@ -201,15 +201,17 @@ class TaskPresenter extends BasePresenter
 
 		if ($this->presenter->getParameter('themeId')) {
 			$values['theme_id'] = $this->presenter->getParameter('themeId');
+			$this->themeModel->addEditComment($values, $id);
 			$paginator->itemCount = count($this->themeModel->getAllComments($values['theme_id']));
-		}else {
+			$this->template->comments = $this->themeModel->getComments($values['theme_id'],NULL,$paginator->offset, $paginator->itemsPerPage);
+		} else {
 			$values['task_id'] = $this->presenter->getParameter('taskId');
-			$task = $this->taskModel->get($this->presenter->getParameter('taskId'));
+			$task = $this->taskModel->get($values['task_id']);
 			$values['theme_id'] = $task->theme_id;
-			$paginator->itemCount = count($this->themeModel->getAllComments(NULL, $values['theme_id']));
+			$this->themeModel->addEditComment($values, $id);
+			$paginator->itemCount = count($this->themeModel->getAllComments(NULL, $values['task_id']));
+			$this->template->comments = $this->themeModel->getComments(NULL, $values['task_id'],$paginator->offset, $paginator->itemsPerPage);
 		}
-		$this->themeModel->addEditComment($values, $id);
-		$this->template->comments = $this->themeModel->getComments($values['theme_id'],NULL,$paginator->offset, $paginator->itemsPerPage);
 		$this['addEditCommentForm']->setValues([], TRUE);
 
 		$this->invalidateControl('comments');

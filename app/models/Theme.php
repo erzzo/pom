@@ -10,7 +10,7 @@ class Theme extends Base
 		if ($taskId) {
 			$comments->where('task_id', $taskId)->order("id DESC")->limit($limit,$offset);
 		} else {
-			$comments->where('theme_id', $themeId)->order("id DESC")->limit($limit,$offset);
+			$comments->where('theme_id', $themeId)->where('task_id', NULL)->order("id DESC")->limit($limit,$offset);
 		}
 		return $comments;
 	}
@@ -21,7 +21,7 @@ class Theme extends Base
 		if ($taskId) {
 			$comments->where('task_id', $taskId)->order("id DESC");
 		} else {
-			$comments->where('theme_id', $themeId)->order("id DESC");
+			$comments->where('theme_id', $themeId)->where('task_id', NULL)->order("id DESC");
 		}
 		return $comments;
 	}

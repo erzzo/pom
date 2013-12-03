@@ -3,7 +3,8 @@
     "vendor-dir": "libs"
     },
 	"require": {
-        "php"                   : ">=5.3.2",
-        "nette/nette"           : "v2.0.12"
+        "php"                       : ">=5.3.2",
+        "nette/nette"               : "v2.0.12",
+        "pvy/nette-visual-paginator": "dev-master"
     }
 }

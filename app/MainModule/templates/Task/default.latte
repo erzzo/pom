@@ -62,12 +62,12 @@
     {/form}
 </div>
 <p>Komentáre k zadaniu</p>
-{foreach $comments as $comment}
-    {$comment->text}<br>
-    <p>Používateľ: {$comment->user->login} Dátum: {$comment->created}</p><br>
-{/foreach}
-{control paginator}
-{form addEditCommentForm}
-{input text}<br>
-{input submit value=> isset($presenter->param['commentId']) ? 'Upraviť' : 'Vytvoriť'}
-{/form}
+{snippet comments}
+    {include @addEditCommentForm.latte}
+    {control paginator}
+    {foreach $comments as $comment}
+        {$comment->text}<br>
+        <p>Používateľ: {$comment->user->login} Dátum: {$comment->created}</p><br>
+    {/foreach}
+    {control paginator}
+{/snippet}

@@ -17,12 +17,21 @@ class TaskPresenter extends BasePresenter
 		$this->template->theme = $this->themeModel->get($themeId);
 		$this->template->tasks = $this->taskModel->getTasks($themeId);
 		$this->template->files = $this->fileModel->getFiles($themeId);
+
+		$paginator = $this['paginator']->getPaginator();
+		$paginator->itemCount = count($this->themeModel->getAllComments($themeId));
+		$this->template->comments = $this->themeModel->getComments($themeId,NULL,$paginator->offset, $paginator->itemsPerPage);
 	}
 
 	public function actionTaskDetail($taskId)
 	{
+
 		$this->template->task = $task = $this->taskModel->get($taskId);
 		$this->template->files = $this->fileModel->getFiles($task->theme_id,$taskId);
+
+		$paginator = $this['paginator']->getPaginator();
+		$paginator->itemCount = count($this->themeModel->getAllComments(NULL,$taskId));
+		$this->template->comments = $this->themeModel->getComments(NULL,$taskId,$paginator->offset, $paginator->itemsPerPage);
 	}
 
 	public function actionAddEdit($themeId, $id)
@@ -34,20 +43,6 @@ class TaskPresenter extends BasePresenter
 			}
 			$this['addEditTaskForm']->setDefaults($task);
 		}
-	}
-
-	public function renderTaskDetail($taskId)
-	{
-		$paginator = $this['paginator']->getPaginator();
-		$paginator->itemCount = count($this->themeModel->getAllComments(NULL,$taskId));
-		$this->template->comments = $this->themeModel->getComments(NULL,$taskId,$paginator->offset, $paginator->itemsPerPage);
-	}
-
-	public function renderDefault($themeId)
-	{
-		$paginator = $this['paginator']->getPaginator();
-		$paginator->itemCount = count($this->themeModel->getAllComments($themeId));
-		$this->template->comments = $this->themeModel->getComments($themeId,NULL,$paginator->offset, $paginator->itemsPerPage);
 	}
 
 	public function handleDeleteFile($fileId)
@@ -217,14 +212,24 @@ class TaskPresenter extends BasePresenter
 		$id = $this->presenter->getParameter('commentId');
 		$values['created'] = new DateTime();
 		$values['user_id'] = $this->user->id;
+		$paginator = $this['paginator']->getPaginator();
+
 		if ($this->presenter->getParameter('themeId')) {
 			$values['theme_id'] = $this->presenter->getParameter('themeId');
-		}else {
+			$this->themeModel->addEditComment($values, $id);
+			$paginator->itemCount = count($this->themeModel->getAllComments($values['theme_id']));
+			$this->template->comments = $this->themeModel->getComments($values['theme_id'],NULL,$paginator->offset, $paginator->itemsPerPage);
+		} else {
 			$values['task_id'] = $this->presenter->getParameter('taskId');
-			$task = $this->taskModel->get($this->presenter->getParameter('taskId'));
+			$task = $this->taskModel->get($values['task_id']);
 			$values['theme_id'] = $task->theme_id;
+			$this->themeModel->addEditComment($values, $id);
+			$paginator->itemCount = count($this->themeModel->getAllComments(NULL, $values['task_id']));
+			$this->template->comments = $this->themeModel->getComments(NULL, $values['task_id'],$paginator->offset, $paginator->itemsPerPage);
 		}
-		$this->themeModel->addEditComment($values, $id);
-		$this->redirect('this');
+		$this['addEditCommentForm']->setValues([], TRUE);
+
+		$this->invalidateControl('comments');
 	}
+
 }

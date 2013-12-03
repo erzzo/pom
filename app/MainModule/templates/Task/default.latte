@@ -39,8 +39,5 @@
     {/foreach}
     {control paginator}
 
-    {form addEditCommentForm class=>"ajax"}
-        {input text}<br>
-        {input submit value=> isset($presenter->param['commentId']) ? 'Upraviť' : 'Vytvoriť'}
-    {/form}
+    {include @addEditCommentForm.latte}
 {/snippet}

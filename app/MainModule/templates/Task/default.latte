@@ -19,7 +19,7 @@
         <tr n:foreach="$tasks as $task">
             <td><a n:href="taskDetail $task->id">{$task->name}</a></td>
             <td>{$task->description}</td>
-            <td>{$task->grade}</td>
+            <td>{$task->grade ? "splnená" : "nesplnená"}</td>
             <td>{$task->user->firstname} {$task->user->lastname}</td>
             <td><a n:href="addEdit $theme->id, $task->id">upraviť</a>
                 <a n:if="$task->grade == 0" n:href="markDone! $task->id">Hotovo</a>

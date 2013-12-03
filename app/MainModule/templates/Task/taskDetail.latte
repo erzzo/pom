@@ -18,7 +18,7 @@
     <tr>
         <td>{$task->name}</td>
         <td>{$task->description}</td>
-        <td>{$task->grade}</td>
+        <td>{$task->grade ? "splnená" : "nesplnená"}</td>
         <td>{$task->user->firstname} {$task->user->lastname}</td>
         <td><a n:href="addEdit $task->theme_id, $task->id">upraviť</a></td>
     </tr>

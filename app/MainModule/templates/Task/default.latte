@@ -33,11 +33,11 @@
 
 <p>Komentáre k zadaniu</p>
 {snippet comments}
+    {include @addEditCommentForm.latte}
+    {control paginator}
     {foreach $comments as $comment}
         {$comment->text}<br>
         <p>Používateľ: {$comment->user->login} Dátum: {$comment->created}</p><br>
     {/foreach}
     {control paginator}
-
-    {include @addEditCommentForm.latte}
 {/snippet}

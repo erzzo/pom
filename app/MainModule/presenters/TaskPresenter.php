@@ -12,15 +12,12 @@ class TaskPresenter extends BasePresenter
 {
 	private $comments;
 
-	private $itemsPerPage = 2;
-
 	public function actionDefault($themeId)
 	{
 		$this->template->theme = $this->themeModel->get($themeId);
 		$this->template->tasks = $this->taskModel->getTasks($themeId);
 
 		$paginator = $this['paginator']->getPaginator();
-		$paginator->itemsPerPage = $this->itemsPerPage;
 		$paginator->itemCount = count($this->themeModel->getAllComments($themeId));
 		$this->template->comments = $this->themeModel->getComments($themeId,NULL,$paginator->offset, $paginator->itemsPerPage);
 	}
@@ -31,7 +28,6 @@ class TaskPresenter extends BasePresenter
 		$this->template->files = $this->fileModel->getFiles($taskId);
 
 		$paginator = $this['paginator']->getPaginator();
-		$paginator->itemsPerPage = $this->itemsPerPage;
 		$paginator->itemCount = count($this->themeModel->getAllComments(NULL,$taskId));
 		$this->template->comments = $this->themeModel->getComments(NULL,$taskId,$paginator->offset, $paginator->itemsPerPage);
 	}
@@ -197,7 +193,6 @@ class TaskPresenter extends BasePresenter
 		$values['created'] = new DateTime();
 		$values['user_id'] = $this->user->id;
 		$paginator = $this['paginator']->getPaginator();
-		$paginator->itemsPerPage = $this->itemsPerPage;
 
 		if ($this->presenter->getParameter('themeId')) {
 			$values['theme_id'] = $this->presenter->getParameter('themeId');

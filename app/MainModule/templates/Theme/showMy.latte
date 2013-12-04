@@ -26,6 +26,7 @@
                 {else}
                     {number_format($taskPercentage[$theme->id], 1).'%'}
                 {/if}
+                <div class="chart" style="width: 200px; height:50px; position: relative"></div>
             </td>
             {if $user->isInRole('ucitel')}
             <td><a n:href="Mentor:Theme:addEdit $theme->project_id, $theme->id">upraviť</a></td>
@@ -33,21 +34,12 @@
         </tr>
         </tbody>
     </table>
-    <div id="placeholder" style="width: 400px; height: 200px; position: relative"></div>
+
 
     <script>
         $(function() {
-            var data = [],
-                    series = Math.floor(Math.random() * 6) + 3;
-
-            for (var i = 0; i < series; i++) {
-                data[i] = {
-                    label: "Series" + (i + 1),
-                    data: Math.floor(Math.random() * 100) + 1
-                }
-            }
-
-            $.plot('#placeholder', data, {
+            var data = {!$flotPercentage};
+            $.plot('.chart', data[1], {
                 series: {
                     pie: {
                         innerRadius: 0.7,

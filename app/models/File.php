@@ -11,6 +11,8 @@ class File extends Base
 
 		if (!is_null($taskId)) {
 			$files->where('task_id', $taskId);
+		} else {
+			$files->where('task_id',NULL);
 		}
 		return $files;
 	}

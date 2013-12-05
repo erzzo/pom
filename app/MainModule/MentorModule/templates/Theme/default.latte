@@ -6,6 +6,7 @@
 <a n:href="addEdit $presenter->param['projectId']">Pridať novu temu</a>
 {if count($themes)}
     <div id="progress-chart" style="width: 500px; height: 250px; font-size: 14px; line-height: 1.2em;"></div>
+    <br><br>
     <table>
         <thead>
         <tr>
@@ -52,9 +53,8 @@
                 })
             })
             var data = {!$flotPercentage};
-            console.log(data)
 
-            $.plot("#progress-chart", [ data ], {
+            $.plot("#progress-chart", data, {
                 series: {
                     stack: 0,
                     lines: {
@@ -64,13 +64,24 @@
                     },
                     bars: {
                         show: true,
-                        barWidth: 0.6
+                        barWidth: 0.6,
+                        align: "center"
                     }
+                },
+                grid: { hoverable: true, clickable: true },
+                tooltip : true,
+                tooltipOpts: {
+                    content: "<strong>%s</strong><br>stav: %y %"
                 },
                 yaxis : {
                     max: 100
                 },
-                colors: ['red']
+                xaxis : {
+                    show: false
+                },
+                legend: {
+                    show: false
+                }
             });
         })
     </script>

@@ -22,8 +22,11 @@ class ThemePresenter extends BasePresenter
 		$themePercentage = $this->themeModel->getThemePercentageForMentor($projectId);
 
 		$flotPercentage = array();
-		foreach ($themePercentage as $key => $perc) {
-			$flotPercentage[] = array($key, $perc);
+		foreach ($themePercentage as $key => $theme) {
+			$flotPercentage[] = array(
+				"data" => [[$key, $theme['percent']]],
+				"label" => $theme['label']
+			);
 		}
 
 		$this->template->flotPercentage = json_encode($flotPercentage);

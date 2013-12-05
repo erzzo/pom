@@ -5,6 +5,7 @@
 <a>{$project->name} </a><br>
 <a n:href="addEdit $presenter->param['projectId']">Pridať novu temu</a>
 {if count($themes)}
+    <div id="progress-chart" style="width: 500px; height: 250px; font-size: 14px; line-height: 1.2em;"></div>
     <table>
         <thead>
         <tr>
@@ -35,21 +36,42 @@
     </table>
 
     <script>
-        $(document).ready(function(){
+        $(function(){
             $('.student-search').tokenInput({link searchStudent!}, {
                 hintText: "Vyhľadaj študentov",
                 minChars: 2,
-                resultLimit: {$maxSolvers},
+                resultLimit: {$project->max_solver_count},
                 preventDuplicates: 'true'
             });
 
             var themeStudent = {!$themeStudent};
 
-            jQuery.each(themeStudent, function(themeKey, theme) {
+            $.each(themeStudent, function(themeKey, theme) {
                 jQuery.each(theme, function(userKey, user) {
                     $('.student-search.'+themeKey).tokenInput("add", { id: userKey, name: user});
                 })
             })
+            var data = {!$flotPercentage};
+            console.log(data)
+
+            $.plot("#progress-chart", [ data ], {
+                series: {
+                    stack: 0,
+                    lines: {
+                        show: false,
+                        fill: true,
+                        steps: false
+                    },
+                    bars: {
+                        show: true,
+                        barWidth: 0.6
+                    }
+                },
+                yaxis : {
+                    max: 100
+                },
+                colors: ['red']
+            });
         })
     </script>
 {else}

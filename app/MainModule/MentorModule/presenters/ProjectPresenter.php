@@ -49,6 +49,7 @@ class ProjectPresenter extends BasePresenter
 		$form->addText('max_files_count', 'Maximálny počet súborov')
 			->setType('Number');
 		$form->addText('solution_to', 'Riešenie do');
+		$form->addText('evaluation_from', 'Možnosť hodnotiť témy od');
 			//->setRequired('Povinný atribút');
 		$form->addSubmit('submit');
 		$form->onSuccess[] = $this->processAddEditProjectForm;

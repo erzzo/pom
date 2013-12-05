@@ -21,6 +21,22 @@ class TaskPresenter extends BasePresenter
 		$paginator = $this['paginator']->getPaginator();
 		$paginator->itemCount = count($this->themeModel->getAllComments($themeId));
 		$this->template->comments = $this->themeModel->getComments($themeId,NULL,$paginator->offset, $paginator->itemsPerPage);
+
+		$this->template->taskPercentage = $taskPercentage = $this->themeModel->getThemePercentage($themeId);
+
+		$flotPercentage[] = array(
+			"label" => "Splnene",
+			"data" => $taskPercentage,
+			"color" => "#00D50F"
+		);
+
+		$flotPercentage[] = array(
+			"label" => "Nesplnene",
+			"data" => 100-$taskPercentage,
+			"color" => "#FA0000"
+		);
+
+		$this->template->flotPercentage = json_encode($flotPercentage);
 	}
 
 	public function actionTaskDetail($taskId)

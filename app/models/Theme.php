@@ -39,7 +39,7 @@ class Theme extends Base
 			->order('theme.name ASC');
 	}
 
-	public function getThemePercentage($subjectId)
+	public function getThemesPercentage($subjectId)
 	{
 		$themes = $this->getMyThemes($subjectId);
 
@@ -51,6 +51,14 @@ class Theme extends Base
 		}
 
 		return $percentage;
+	}
+
+	public function getThemePercentage($themeId)
+	{
+		$doneTaskCount = $this->db->table('task')->where('theme_id', $themeId)->where('grade', TRUE)->count();
+		$taskCount = $this->db->table('task')->where('theme_id', $themeId)->count();
+
+		return $percentage = $taskCount != 0 ? ($doneTaskCount/$taskCount) * 100 : 0;
 	}
 
 	public function getThemes($projectId)

@@ -1,6 +1,9 @@
 {block body}
 <h1> Detail úlohy</h1>
 <a n:href=":Main:Subject:showAll">Predmety</a>->
+{if $user->isAllowed('admin')}
+    <a n:href=":Main:Mentor:Theme:default $task->theme->project_id">{$task->theme->project->name} </a>->
+{/if}
 <a n:href="Task:default $task->theme_id">{$task->theme->name}</a>->
 <a>{$task->name}</a><br>
 

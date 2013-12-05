@@ -68,16 +68,23 @@
                         align: "center"
                     }
                 },
-                grid: { hoverable: true, clickable: true },
+                grid: {
+                    borderWidth: 0,
+                    hoverable: true,
+                    clickable: true
+                },
                 tooltip : true,
                 tooltipOpts: {
                     content: "<strong>%s</strong><br>stav: %y %"
                 },
                 yaxis : {
-                    max: 100
+                    max: 100,
+                    tickLength: 0
                 },
                 xaxis : {
-                    show: false
+                    tickLength: 0,
+                    label: null,
+                    ticks: [0]
                 },
                 legend: {
                     show: false

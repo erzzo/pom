@@ -28,14 +28,24 @@ class ThemePresenter extends BasePresenter
 		$this->template->project = $this->projectModel->get($projectId);
 		$this->template->themes = $this->themeModel->getThemes($projectId);
 		$themeStudents = $this->themeModel->getThemeStudents($projectId);
-
 		$themeStudent = array();
+		$this->template->themeStudent = json_encode($themeStudent);
+
 		foreach ($themeStudents as $row) {
 			$themeStudent[$row->theme_id][$row->user_id] = $row->user->firstname . ' ' . $row->user->lastname;
 		}
 
-		$this->template->themeStudent = json_encode($themeStudent);
-		$this->template->maxSolvers = 3; //vytiahnut z DB
+		$themePercentage = $this->themeModel->getThemePercentageForMentor($projectId);
+
+		$flotPercentage = array();
+		foreach ($themePercentage as $key => $theme) {
+			$flotPercentage[] = array(
+				"data" => [[$key, $theme['percent']]],
+				"label" => $theme['label']
+			);
+		}
+
+		$this->template->flotPercentage = json_encode($flotPercentage);
 	}
 
 	public function actionAddEdit($projectId, $id)

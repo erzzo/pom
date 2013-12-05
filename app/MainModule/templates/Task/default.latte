@@ -34,6 +34,29 @@
     <h1></h1>
 </div>
 {if count($tasks)}
+    <style>
+        #chart-value {
+            position: relative;
+            top: 50px;
+            left: 23px;
+            font-size: 33px;
+            z-index: 1 ;
+            width: 100px;
+            display: block;
+            text-align: right;
+        }
+        #task-chart {
+            width: 150px;
+            height:150px;
+            position: absolute;
+            top: 0;
+            left: 0
+        }
+    </style>
+    <div style="width: 150px; height: 150px; position: relative">
+        <span id="chart-value">{$taskPercentage|number: 1}%</span>
+        <div id="task-chart"></div>
+    </div>
     <table>
         <thead>
         <tr>
@@ -100,3 +123,19 @@
     {/foreach}
     {control paginator}
 {/snippet}
+<script>
+    $(function() {
+        var data = {!$flotPercentage};
+        $.plot('#task-chart', data, {
+            series: {
+                pie: {
+                    innerRadius: 0.7,
+                    show: true
+                }
+            },
+            legend: {
+                container: '.none'
+            }
+        });
+    });
+</script>

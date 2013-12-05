@@ -49,7 +49,8 @@ class Theme extends Base
 			->order('theme.name ASC');
 	}
 
-	public function getThemePercentage($subjectId)
+	// pre vsetky temy
+	public function getThemesPercentage($subjectId)
 	{
 		$themes = $this->getMyThemes($subjectId);
 
@@ -58,6 +59,32 @@ class Theme extends Base
 			$doneTaskCount = $this->db->table('task')->where('theme_id', $theme->id)->where('grade', TRUE)->count();
 			$taskCount = $this->db->table('task')->where('theme_id', $theme->id)->count();
 			$percentage[$key] = $taskCount != 0 ? ($doneTaskCount/$taskCount) * 100 : 0;
+		}
+
+		return $percentage;
+	}
+
+	//pre danu temu
+	public function getThemePercentage($themeId)
+	{
+		$doneTaskCount = $this->db->table('task')->where('theme_id', $themeId)->where('grade', TRUE)->count();
+		$taskCount = $this->db->table('task')->where('theme_id', $themeId)->count();
+
+		return $percentage = $taskCount != 0 ? ($doneTaskCount/$taskCount) * 100 : 0;
+	}
+
+	//pre vsetky temy v danom projekte
+	public function getThemePercentageForMentor($projectId)
+	{
+		$themes = $this->getThemes($projectId);
+		$percentage = array();
+		foreach ($themes as $key => $theme) {
+			$doneTaskCount = $this->db->table('task')->where('theme_id', $theme->id)->where('grade', TRUE)->count();
+			$taskCount = $this->db->table('task')->where('theme_id', $theme->id)->count();
+			$percentage[$key] = array(
+				"label" => $theme->name,
+				"percent" => $taskCount != 0 ? ($doneTaskCount/$taskCount) * 100 : 0
+			);
 		}
 
 		return $percentage;

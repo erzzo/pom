@@ -3,6 +3,10 @@ namespace Models;
 
 class Subject extends Base
 {
+	public function isInSubject($subjectId, $userId)
+	{
+		return $this->db->table('user_subject')->where('subject_id', $subjectId)->where('user_id',$userId)->fetch();
+	}
 	public function getSubjects($gradeId = NULL)
 	{
 		$subjects = $this->getAll();

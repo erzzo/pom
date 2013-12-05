@@ -4,6 +4,11 @@ namespace Models;
 
 class Theme extends Base
 {
+	public function isInTheme($themeId, $userId)
+	{
+		return $this->db->table('theme_user')->where('theme_id', $themeId)->where('user_id',$userId)->fetch();
+	}
+
 	public function getComments($themeId, $taskId = NULL,$offset = 0, $limit = 5)
 	{
 		$comments = $this->db->table('comment')->select('*');

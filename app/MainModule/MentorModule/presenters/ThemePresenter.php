@@ -6,6 +6,22 @@ use Nette\Application\UI\Form;
 
 class ThemePresenter extends BasePresenter
 {
+	public function startup()
+	{
+		parent::startup();
+		$project = $this->projectModel->get($this->getParameter('projectId'));
+		if ($project) {
+			if (!$this->subjectModel->isInSubject($project->subject_id,$this->user->getId())) {
+				$this->flashMessage('Access denied','error');
+				$this->redirect(':Main:Subject:showAll');
+			}
+		} else {
+			$this->flashMessage('Access denied','error');
+			$this->redirect(':Main:Subject:showAll');
+		}
+
+	}
+
 	public function actionDefault($projectId)
 	{
 		//pridat tu aj theme id a zjedodusit model funkcie...

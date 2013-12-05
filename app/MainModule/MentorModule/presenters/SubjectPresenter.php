@@ -6,6 +6,7 @@ use Nette\Application\UI\Form;
 
 class SubjectPresenter extends BasePresenter
 {
+
 	public function actionAddEdit($id)
 	{
 		if ($id) {

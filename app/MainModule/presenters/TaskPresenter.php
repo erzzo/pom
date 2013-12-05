@@ -10,8 +10,27 @@ use Nette\Application\Responses\FileResponse,
 
 class TaskPresenter extends BasePresenter
 {
-	private $comments;
-
+	public function startup()
+	{
+		parent::startup();
+		if ($this->action === 'taskDetail') {
+			$task = $this->taskModel->get($this->getParameter('taskId'));
+			if ($task) {
+				if (!$this->user->isAllowed('admin') && !$this->themeModel->isInTheme($task->theme_id,$this->user->getId())) {
+					$this->flashMessage('Access denied','error');
+					$this->redirect(':Main:Subject:showAll');
+				}
+			} else {
+				$this->flashMessage('Access denied','error');
+				$this->redirect(':Main:Subject:showAll');
+			}
+		} else {
+			if (!$this->user->isAllowed('admin') && !$this->themeModel->isInTheme($this->presenter->getParameter('themeId'),$this->user->getId())) {
+				$this->flashMessage('Access denied','error');
+				$this->redirect(':Main:Subject:showAll');
+			}
+		}
+	}
 	public function actionDefault($themeId)
 	{
 		$this->template->theme = $this->themeModel->get($themeId);

@@ -36,6 +36,11 @@ class Theme extends Base
 		return $this->db->table('theme_user')->select('theme_id, user.login')->where('theme_id', $themeId)->fetchPairs('theme_id','login');
 	}
 
+	public function getEvaluation($evaluationId)
+	{
+		return $this->db->table('evaluation')->where('id', $evaluationId)->fetch();
+	}
+
 	public function getMyThemes($subjectId)
 	{
 		return $this->db->table('theme_user')->select('theme.id,theme.name,theme.description,theme.submitted,theme.project_id,theme.project.solution_from, theme.project.solution_to')
@@ -106,6 +111,16 @@ class Theme extends Base
 		} else {
 			$comment = $this->db->table('comment')->get($id);
 			return $comment->update($values);
+		}
+	}
+
+	public function addEditEvaluation($values, $id = NULL)
+	{
+		if(is_null($id)) {
+			return $this->db->table('evaluation')->insert($values);
+		} else {
+			$evaluation = $this->db->table('evaluation')->get($id);
+			return $evaluation->update($values);
 		}
 	}
 

@@ -2,7 +2,15 @@
     <h1>MOJE TEMY v predmete {$subject->name}</h1>
 <a n:href="Subject:showAll">Predmety</a>
 {if count($themes)}
-
+    <style>
+        .percentage {
+            font-size: 12px;
+            position: relative;
+            top: 35px;
+            left:20px;
+            z-index: 1
+            }
+    </style>
     <table>
         <thead>
         <tr>
@@ -24,9 +32,9 @@
                 {if $theme->submitted}
                     odovzdané
                 {else}
-                    {number_format($taskPercentage[$theme->id], 1).'%'}
+                    <span class="percentage">{number_format($taskPercentage[$theme->id], 1).'%'}</span>
                 {/if}
-                <div class="chart" style="width: 200px; height:50px; position: relative"></div>
+                <div class="chart-{$theme->id}" style="width: 150px; height:45px;"></div>
             </td>
             {if $user->isInRole('ucitel')}
             <td><a n:href="Mentor:Theme:addEdit $theme->project_id, $theme->id">upraviť</a></td>
@@ -39,14 +47,17 @@
     <script>
         $(function() {
             var data = {!$flotPercentage};
-            $.plot('.chart', data[1], {
-                series: {
-                    pie: {
-                        innerRadius: 0.7,
-                        show: true
+            console.log(data)
+            $.each(data, function(i, item){
+                $.plot('.chart-'+i, item, {
+                    series: {
+                        pie: {
+                            innerRadius: 0.7,
+                            show: true
+                        }
                     }
-                }
-            });
+                });
+            })
         });
     </script>
 {else}

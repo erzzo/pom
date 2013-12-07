@@ -4,9 +4,14 @@
 <a n:href="Project:default $project->subject_id">{$project->subject->name} </a>->
 <a>{$project->name} </a><br>
 <a n:href="addEdit $presenter->param['projectId']">Pridať novu temu</a>
+<div id="progress-chart" style="width: 500px; height: 250px; font-size: 14px; line-height: 1.2em;"></div>
+<br><br>
+{form filterThemesForm class=>'ajax'}
+    {input name placeholder => "Vyhľadať podľa názov témy"}
+{/form}
+
+{snippet themes}
 {if count($themes)}
-    <div id="progress-chart" style="width: 500px; height: 250px; font-size: 14px; line-height: 1.2em;"></div>
-    <br><br>
     <table>
         <thead>
         <tr>
@@ -35,63 +40,69 @@
         </tr>
         </tbody>
     </table>
-
     <script>
-        $(function(){
-            $('.student-search').tokenInput({link searchStudent!}, {
-                hintText: "Vyhľadaj študentov",
-                minChars: 2,
-                resultLimit: {$project->max_solver_count},
-                preventDuplicates: 'true'
-            });
+        $('.student-search').tokenInput({link searchStudent!}, {
+            hintText: "Vyhľadaj študentov",
+            minChars: 2,
+            resultLimit: {$project->max_solver_count},
+            preventDuplicates: 'true'
+        });
 
-            var themeStudent = {!$themeStudent};
+        var themeStudent = {!$themeStudent};
 
-            $.each(themeStudent, function(themeKey, theme) {
-                jQuery.each(theme, function(userKey, user) {
-                    $('.student-search.'+themeKey).tokenInput("add", { id: userKey, name: user});
-                })
+        $.each(themeStudent, function(themeKey, theme) {
+            jQuery.each(theme, function(userKey, user) {
+                $('.student-search.'+themeKey).tokenInput("add", { id: userKey, name: user});
             })
-            var data = {!$flotPercentage};
-
-            $.plot("#progress-chart", data, {
-                series: {
-                    stack: 0,
-                    lines: {
-                        show: false,
-                        fill: true,
-                        steps: false
-                    },
-                    bars: {
-                        show: true,
-                        barWidth: 0.6,
-                        align: "center"
-                    }
-                },
-                grid: {
-                    borderWidth: 0,
-                    hoverable: true,
-                    clickable: true
-                },
-                tooltip : true,
-                tooltipOpts: {
-                    content: "<strong>%s</strong><br>stav: %y %"
-                },
-                yaxis : {
-                    max: 100,
-                    tickLength: 0
-                },
-                xaxis : {
-                    tickLength: 0,
-                    label: null,
-                    ticks: [0]
-                },
-                legend: {
-                    show: false
-                }
-            });
         })
     </script>
 {else}
     Žiadne témy neboli nájdené.
 {/if}
+{/snippet}
+
+<script>
+    $(function(){
+        $('#frmfilterThemesForm-name').on('keyup',function(){
+            $(this).closest('form').submit()
+        })
+
+        var data = {!$flotPercentage};
+        $.plot("#progress-chart", data, {
+            series: {
+                stack: 0,
+                lines: {
+                    show: false,
+                    fill: true,
+                    steps: false
+                },
+                bars: {
+                    show: true,
+                    barWidth: 0.6,
+                    align: "center"
+                }
+            },
+            grid: {
+                borderWidth: 0,
+                hoverable: true,
+                clickable: true
+            },
+            tooltip : true,
+            tooltipOpts: {
+                content: "<strong>%s</strong><br>stav: %y %"
+            },
+            yaxis : {
+                max: 100,
+                tickLength: 0
+            },
+            xaxis : {
+                tickLength: 0,
+                label: null,
+                ticks: [0]
+            },
+            legend: {
+                show: false
+            }
+        });
+    })
+</script>

@@ -75,6 +75,40 @@ class ThemePresenter extends BasePresenter
 		$this->terminate();
 	}
 
+	public function createComponentFilterThemesForm()
+	{
+		$form = new Form();
+		$form->addText('name');
+		$form->onSuccess[] = $this->processFilterThemesForm;
+
+		return $form;
+	}
+
+	public function processFilterThemesForm(Form $form)
+	{
+		if ($this->isAjax()) {
+			$values = $form->getValues();
+			$projectId = $this->presenter->params['projectId'];
+			$this->template->project = $this->projectModel->get($projectId);
+
+			$themes =  $this->themeModel->getThemes($projectId);
+			if ($values['name'] != "") {
+				$themes->where('name LIKE ?', '%' . $values['name'] . '%');
+			}
+
+			$themeStudents = $this->themeModel->getThemeStudents($projectId);
+
+			$themeStudent = array();
+			foreach ($themeStudents as $row) {
+				$themeStudent[$row->theme_id][$row->user_id] = $row->user->firstname . ' ' . $row->user->lastname;
+			}
+			$this->template->themeStudent = json_encode($themeStudent);
+
+			$this->template->themes = $themes;
+			$this->invalidateControl('themes');
+		}
+	}
+
 	public function createComponentAssignStudentForm()
 	{
 		$form = new Form;

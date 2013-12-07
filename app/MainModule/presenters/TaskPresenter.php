@@ -152,6 +152,7 @@ class TaskPresenter extends BasePresenter
 
 		if (!$id) {
 			$values->theme_id = $themeId;
+			$values['created'] = new \Nette\DateTime();
 			$this->flashMessage("Úloha bola pridaná");
 		} else {
 			$this->flashMessage("Úloha bola upravená");
@@ -192,6 +193,7 @@ class TaskPresenter extends BasePresenter
 			$values['task_id'] = $task->id;
 			$fileCount = $this->fileModel->getAll()->where('task_id', $taskId)->count();
 		} else {
+			$values['created'] = new \Nette\DateTime();
 			$theme = $this->themeModel->get($themeId);
 			$values['theme_id'] = $theme->id;
 			$maxFileCount = $theme->project->max_files_count;

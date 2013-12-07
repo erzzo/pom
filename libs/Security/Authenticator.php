@@ -50,7 +50,8 @@ class Authenticator extends Nette\Object implements Nette\Security\IAuthenticato
 						'login' => $entry[0]["uid"][0],
 						'firstname' => $entry[0]["givenname"][0],
 						'lastname' => $entry[0]["sn"][0],
-						'email' => $entry[0]["mail"][0]
+						'email' => $entry[0]["mail"][0],
+						'created' => new \Nette\DateTime()
 					);
 					if (!$row) {
 						$this->database->table('user')->insert($userData);

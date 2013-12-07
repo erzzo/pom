@@ -124,6 +124,7 @@ class ThemePresenter extends BasePresenter
 
 		if (!$id) {
 			$values->project_id = $projectId;
+			$values['created'] = new \Nette\DateTime();
 			$this->flashMessage("Téma bola pridaná");
 		} else {
 			$this->flashMessage("Téma bola upravená");

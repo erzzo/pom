@@ -23,10 +23,12 @@ class ProjectPresenter extends BasePresenter
 	public function actionAddEdit($subjectId, $id)
 	{
 		if ($id) {
-			$project = $this->projectModel->get($id);
+			$project = $this->projectModel->get($id)->toArray();
 			if (!$project) {
 				//throw Nette\
 			}
+			$project['solution_from'] = $project['solution_from']->format('d.m.Y');
+			$project['solution_to'] = $project['solution_to']->format('d.m.Y');
 			$this['addEditProjectForm']->setDefaults($project);
 		}
 	}
@@ -60,6 +62,10 @@ class ProjectPresenter extends BasePresenter
 	public function processAddEditProjectForm(Form $form)
 	{
 		$values = $form->getValues();
+
+		$values['solution_from'] = \Nette\DateTime::createFromFormat('d.m.Y', $values['solution_from']);
+		$values['solution_to'] = \Nette\DateTime::createFromFormat('d.m.Y', $values['solution_to']);
+
 		$id = $this->presenter->getParameter('id');
 		$subjectId = $this->presenter->getParameter('subjectId');
 
@@ -75,3 +81,5 @@ class ProjectPresenter extends BasePresenter
 		$this->redirect('default', ['subjectId' => $subjectId]);
 	}
 }
+
+

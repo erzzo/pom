@@ -12,3 +12,12 @@ Pridať nový predmet
     {label evaluation_from/}{input evaluation_from}<br>
     {input submit value=> isset($presenter->param['id']) ? 'Upraviť' : 'Vytvoriť'}
 {/form}
+
+<script>
+    $('#frmaddEditProjectForm-solution_from').datepicker({
+        dateFormat: "dd.mm.yy"
+    })
+    $('#frmaddEditProjectForm-solution_to').datepicker({
+        dateFormat: "dd.mm.yy"
+    })
+</script>

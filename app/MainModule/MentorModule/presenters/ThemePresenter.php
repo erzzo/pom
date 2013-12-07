@@ -28,12 +28,12 @@ class ThemePresenter extends BasePresenter
 		$this->template->project = $this->projectModel->get($projectId);
 		$this->template->themes = $this->themeModel->getThemes($projectId);
 		$themeStudents = $this->themeModel->getThemeStudents($projectId);
-		$themeStudent = array();
-		$this->template->themeStudent = json_encode($themeStudent);
 
+		$themeStudent = array();
 		foreach ($themeStudents as $row) {
 			$themeStudent[$row->theme_id][$row->user_id] = $row->user->firstname . ' ' . $row->user->lastname;
 		}
+		$this->template->themeStudent = json_encode($themeStudent);
 
 		$themePercentage = $this->themeModel->getThemePercentageForMentor($projectId);
 

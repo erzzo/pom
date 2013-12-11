@@ -3,67 +3,71 @@
 namespace MainModule\MentorModule;
 
 use Nette\Application\UI\Form;
+use Nette\DateTime;
 
 class TaskPresenter extends BasePresenter
 {
-	private $subjectId;
-
-
-	public function actionDefault($themeId)
+	public function startup()
 	{
-		$this->template->theme = $this->themeModel->get($themeId);
-		$this->template->tasks = $this->taskModel->getTasks($themeId);
-	}
-
-	public function actionTaskDetail($taskId)
-	{
-		$this->template->task = $this->taskModel->get($taskId);
-	}
-
-	public function actionAddEdit($themeId, $id)
-	{
-		if ($id) {
-			$task = $this->taskModel->get($id);
-			if (!$task) {
-				//throw Nette\
+		parent::startup();
+		$theme = $this->themeModel->get($this->getParameter('themeId'));
+		if ($theme) {
+			if (!$this->subjectModel->isInSubject($theme->project->subject_id,$this->user->getId())) {
+				$this->flashMessage('Access denied','error');
+				$this->redirect(':Main:Subject:showAll');
 			}
-			$this['addEditTaskForm']->setDefaults($task);
+		} else {
+			$this->flashMessage('Access denied','error');
+			$this->redirect(':Main:Subject:showAll');
 		}
 	}
 
-	public function createComponentAddEditTaskForm()
+	public function actionAddEditEvaluation($themeId, $evaluationId = NULL)
 	{
-		$users = $this->themeModel->getThemeUsers($this->presenter->params['themeId']);
+		$this->template->theme = $theme = $this->themeModel->get($themeId);
+		if ($theme->project->evaluation_from > new DateTime()) {
+			$this->flashMessage("Nieje ešte možné pridávať hodnotenie");
+			$this->redirect(':Main:Task:default', ['themeId' => $themeId]);
+		}
+		if ($evaluationId) {
+			$evalutaion = $this->themeModel->getEvaluation($evaluationId);
+			if (!$evalutaion) {
+				//throw Nette\
+			}
+			$this['addEditEvaluationForm']->setDefaults($evalutaion);
+		}
+	}
 
+	public function createComponentAddEditEvaluationForm()
+	{
+		$theme = $this->themeModel->get($this->presenter->getParameter('themeId'));
 		$form = new Form;
-		$form->addText('name', 'Názov úlohy')
-			->setRequired('Povinný atribút');
-		$form->addSelect('user_id','Riešitelia', $users)
-			->setRequired('Povinný atribút');
-		$form->addText('max_files_count', 'Maximálny počet nahratých súborov')
-			->setType('Number');
-		$form->addTextArea('description', 'Popis úlohy');
+		$form->addText('points', 'Počet bodov')
+			->setType('numner')
+			->setRequired('Povinný atribút')
+			->addRule($form::EQUAL, "Maximálny počet bodov je %d",$theme->project->max_points);
+		$form->addTextArea('description', 'Popis');
 		$form->addSubmit('submit');
-		$form->onSuccess[] = $this->processAddEditTaskForm;
+		$form->onSuccess[] = $this->processAddEditEvaluationForm;
 
 		return $form;
 	}
 
-	public function processAddEditTaskForm(Form $form)
+	public function processAddEditEvaluationForm(Form $form)
 	{
 		$values = $form->getValues();
-		$id = $this->presenter->getParameter('id');
+		$values->user_id = $this->user->getId();
+		$id = $this->presenter->getParameter('evaluationId');
 		$themeId = $this->presenter->getParameter('themeId');
+		$theme = $this->themeModel->get($themeId);
+		$eval = $this->themeModel->addEditEvaluation($values, $id);
 
 		if (!$id) {
-			$values->theme_id = $themeId;
-			$this->flashMessage("Úloha bola pridaná");
+			$this->flashMessage("Hodnotenie bolo pridané");
+			$theme->update(array("evaluation_id" => $eval->id));
 		} else {
-			$this->flashMessage("Úloha bola upravená");
+			$this->flashMessage("Hodnotenie bolo upravené");
 		}
-
-		$this->taskModel->addEdit($values, $id);
-
-		$this->redirect('default', ['themeId' => $themeId]);
+		$this->redirect(':Main:Task:default', ['themeId' => $themeId]);
 	}
 }

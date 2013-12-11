@@ -1,10 +1,62 @@
 {block body}
-    <h1>Úlohy</h1>
+    <h1>Úlohy v {$theme->name}</h1>
 <a n:href=":Main:Subject:showAll">Predmety</a>->
-<a n:href=":Main:Theme:showMy $theme->project->subject_id">{$theme->project->name} </a>-><a>{$theme->name}</a><br>
-<a n:href="addEdit $theme->id">Pridať novú úlohu</a>
-
+<a n:href=":Main:Theme:showMy $theme->project->subject_id">{$theme->project->subject->name} </a>->
+{if $user->isAllowed('admin')}
+    <a n:href=":Main:Mentor:Theme:default $theme->project_id">{$theme->project->name} </a>->
+{/if}
+<a>{$theme->name}</a><br>
+<div>
+    <a n:href="addEdit $theme->id">Pridať novú úlohu</a>
+    {if $user->isAllowed('admin') && $theme->evaluation_id == NULL}
+        <a n:href=":Main:Mentor:Task:addEditEvaluation $theme->id">Pridať hodnotenie</a>
+    {/if}
+</div>
+<div>
+    {if $theme->evaluation_id == NULL}
+         Žiadne hodnotenie
+    {else}
+        <ul>
+            <li>
+              <h1>body: {$theme->evaluation->points}</h1>
+            </li>
+            <li>
+                <h1>popis: {$theme->evaluation->description}</h1><br>
+            </li>
+            <li>
+                <h1>pridal: {$theme->evaluation->user->lastname}</h1><br>
+                {if $user->isAllowed('admin')}
+                    <a n:href=":Main:Mentor:Task:addEditEvaluation $theme->id, $theme->evaluation->id">Upraviť hodnotenie</a>
+                {/if}
+            </li>
+        </ul>
+    {/if}
+    <h1></h1>
+</div>
 {if count($tasks)}
+    <style>
+        #chart-value {
+            position: relative;
+            top: 50px;
+            left: 23px;
+            font-size: 33px;
+            z-index: 1 ;
+            width: 100px;
+            display: block;
+            text-align: right;
+        }
+        #task-chart {
+            width: 150px;
+            height:150px;
+            position: absolute;
+            top: 0;
+            left: 0
+        }
+    </style>
+    <div style="width: 150px; height: 150px; position: relative">
+        <span id="chart-value">{$taskPercentage|number: 1}%</span>
+        <div id="task-chart"></div>
+    </div>
     <table>
         <thead>
         <tr>
@@ -19,7 +71,7 @@
         <tr n:foreach="$tasks as $task">
             <td><a n:href="taskDetail $task->id">{$task->name}</a></td>
             <td>{$task->description}</td>
-            <td>{$task->grade}</td>
+            <td>{$task->grade ? "splnená" : "nesplnená"}</td>
             <td>{$task->user->firstname} {$task->user->lastname}</td>
             <td><a n:href="addEdit $theme->id, $task->id">upraviť</a>
                 <a n:if="$task->grade == 0" n:href="markDone! $task->id">Hotovo</a>
@@ -30,14 +82,60 @@
 {else}
     Žiadne témy neboli nájdené.
 {/if}
+<div>
+    {if count($files)}
+        <table>
+            <thead>
+            <tr>
+                <th>Súbor</th>
+                <th>Popis</th>
+                <th>Stav</th>
+                <th>Nastavenia</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr n:foreach="$files as $file">
+                <td><a n:href="downloadFile! $file->id">{$file->name}</a></td>
+                <td>{$file->description}</td>
+                <td>{$file->grade}</td>
+                <td><a n:href="deleteFile! $file->id">Zmazať</a></td>
+            </tr>
+            </tbody>
+        </table>
 
+    {else}
+        Žiadne súbory niesú nahraté.
+    {/if}
+    {form addEditFileForm}
+    {label name/}{input name}
+    {label description/}{input description}
+    {input file}
+    {input submit}
+    {/form}
+</div>
 <p>Komentáre k zadaniu</p>
-{foreach $comments as $comment}
-    {$comment->text}<br>
-    <p>Používateľ: {$comment->user->login} Dátum: {$comment->created}</p><br>
-{/foreach}
-{control paginator}
-{form addEditCommentForm}
-{input text}<br>
-{input submit value=> isset($presenter->param['commentId']) ? 'Upraviť' : 'Vytvoriť'}
-{/form}
+{snippet comments}
+    {include @addEditCommentForm.latte}
+    {control paginator}
+    {foreach $comments as $comment}
+        {$comment->text}<br>
+        <p>Používateľ: {$comment->user->login} Dátum: {$comment->created}</p><br>
+    {/foreach}
+    {control paginator}
+{/snippet}
+<script>
+    $(function() {
+        var data = {!$flotPercentage};
+        $.plot('#task-chart', data, {
+            series: {
+                pie: {
+                    innerRadius: 0.7,
+                    show: true
+                }
+            },
+            legend: {
+                container: '.none'
+            }
+        });
+    });
+</script>

@@ -12,20 +12,20 @@ class Acl
 	{
 		$permission = new Permission();
 		$permission->addRole('student');
-		$permission->addRole('lecturer');
-		$permission->addRole('teacher');
-
-		$permission->addResource('Admin');
+		$permission->addRole('ucitel');
 		// V basepresenteri
 		/*Pravidla opravneni*/
+		$permission->addResource('Main:Subject');
+		$permission->addResource('Main:Task');
+		$permission->addResource('Main:Theme');
+		$permission->addResource('Main:Mentor:Subject');
+		$permission->addResource('Main:Mentor:Task');
+		$permission->addResource('Main:Mentor:Project');
+		$permission->addResource('Main:Mentor:Theme');
+		$permission->addResource('admin');
+		$permission->allow('student',['Main:Subject','Main:Task','Main:Theme']);
 
-		//$permission->deny('driver', ['Main:Vehicles:Overview,Main:Vehicles']);
-		$permission->allow('teacher','AdminModule:');
-
-
+		$permission->allow('ucitel');
 		return $permission;
 	}
-
-
-
 }

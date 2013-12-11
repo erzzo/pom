@@ -4,13 +4,15 @@ namespace Models;
 
 class File extends Base
 {
-	//TODO: dokoncit pre theme
-	public function getFiles($taskId)
+
+	public function getFiles($themeId, $taskId = NULL)
 	{
-		$files= $this->getAll()->order('name ASC');
+		$files= $this->getAll()->where('theme_id', $themeId)->order('name ASC');
 
 		if (!is_null($taskId)) {
 			$files->where('task_id', $taskId);
+		} else {
+			$files->where('task_id',NULL);
 		}
 		return $files;
 	}

@@ -1,10 +1,10 @@
 {block body}
 <h1>Všetky Predmety</h1>
-<a n:href=":Main:Mentor:Subject:addEdit">Pridať nový predmet</a>
-{form filterSubjectsForm class=>'ajax'}
-    {label gradeId/}{input gradeId}
-    {input submit value=>"Zobraziť"}
-{/form}
+{if $user->isInRole('ucitel')}
+    <a n:href=":Main:Mentor:Subject:addEdit">Pridať nový predmet</a>
+{/if}
+{include @filterSubjects.latte}
+
 {snippet subjects}
 {if count($subjects)}
     <table>

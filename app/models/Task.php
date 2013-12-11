@@ -26,7 +26,7 @@ class Task extends Base
 
 	public function markDone($id)
 	{
-		$this->findBy(array('id' => $id))->update(array('grade' => 1));
+		$this->findBy(array('id' => $id))->update(array('grade' => 1, 'submitted' => new \Nette\DateTime()));
 
 	}
 }

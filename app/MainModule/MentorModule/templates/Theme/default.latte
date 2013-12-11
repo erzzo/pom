@@ -4,6 +4,13 @@
 <a n:href="Project:default $project->subject_id">{$project->subject->name} </a>->
 <a>{$project->name} </a><br>
 <a n:href="addEdit $presenter->param['projectId']">Pridať novu temu</a>
+<div id="progress-chart" style="width: 500px; height: 250px; font-size: 14px; line-height: 1.2em;"></div>
+<br><br>
+{form filterThemesForm class=>'ajax'}
+    {input name placeholder => "Vyhľadať podľa názov témy"}
+{/form}
+
+{snippet themes}
 {if count($themes)}
     <table>
         <thead>
@@ -18,7 +25,7 @@
         </thead>
         <tbody>
         <tr n:foreach="$themes as $theme">
-            <td><a n:href="Task:default, $theme->id">{$theme->name}</a></td>
+            <td><a n:href=":Main:Task:default, $theme->id">{$theme->name}</a></td>
             <td>{$theme->description}</td>
             <td>{$theme->submitted ? 'odovzdané' : 'neodovzdané'}</td>
             <td>{isset($theme->evaluation_id) ? $theme->evaluation->points : 0}/{$theme->project->max_points}</td>
@@ -33,25 +40,69 @@
         </tr>
         </tbody>
     </table>
-
     <script>
-        $(document).ready(function(){
-            $('.student-search').tokenInput({link searchStudent!}, {
-                hintText: "Vyhľadaj študentov",
-                minChars: 2,
-                resultLimit: {$maxSolvers},
-                preventDuplicates: 'true'
-            });
+        $('.student-search').tokenInput({link searchStudent!}, {
+            hintText: "Vyhľadaj študentov",
+            minChars: 2,
+            resultLimit: {$project->max_solver_count},
+            preventDuplicates: 'true'
+        });
 
-            var themeStudent = {!$themeStudent};
+        var themeStudent = {!$themeStudent};
 
-            jQuery.each(themeStudent, function(themeKey, theme) {
-                jQuery.each(theme, function(userKey, user) {
-                    $('.student-search.'+themeKey).tokenInput("add", { id: userKey, name: user});
-                })
+        $.each(themeStudent, function(themeKey, theme) {
+            jQuery.each(theme, function(userKey, user) {
+                $('.student-search.'+themeKey).tokenInput("add", { id: userKey, name: user});
             })
         })
     </script>
 {else}
     Žiadne témy neboli nájdené.
 {/if}
+{/snippet}
+
+<script>
+    $(function(){
+        $('#frmfilterThemesForm-name').on('keyup',function(){
+            $(this).closest('form').submit()
+        })
+
+        var data = {!$flotPercentage};
+        $.plot("#progress-chart", data, {
+            series: {
+                stack: 0,
+                lines: {
+                    show: false,
+                    fill: true,
+                    steps: false
+                },
+                bars: {
+                    show: true,
+                    barWidth: 0.6,
+                    align: "center"
+                }
+            },
+            grid: {
+                borderWidth: 0,
+                hoverable: true,
+                clickable: true
+            },
+            tooltip : true,
+            tooltipOpts: {
+                content: "<strong>%s</strong><br>stav: %y %"
+            },
+            yaxis : {
+                max: 100,
+                tickLength: 0
+            },
+            xaxis : {
+                tickLength: 0,
+                label: null,
+                ticks: [0]
+            },
+            legend: {
+                show: false
+            }
+        });
+    })
+</script>

@@ -5,6 +5,7 @@ use Nette\Application\UI\Form;
 
 class SubjectPresenter extends BasePresenter
 {
+
 	public function actionShowAll($rocnikId = null)
 	{
 		$this->template->subjects =  $this->subjectModel->getSubjects($rocnikId);

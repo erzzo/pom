@@ -6,7 +6,18 @@ Pridať nový predmet
     {label description/}{input description}<br>
     {label max_solver_count/}{input max_solver_count}<br>
     {label max_points/}{input max_points}<br>
+    {label max_files_count/}{input max_files_count}<br>
     {label solution_from/}{input solution_from}<br>
     {label solution_to/}{input solution_to}<br>
+    {label evaluation_from/}{input evaluation_from}<br>
     {input submit value=> isset($presenter->param['id']) ? 'Upraviť' : 'Vytvoriť'}
 {/form}
+
+<script>
+    $('#frmaddEditProjectForm-solution_from').datepicker({
+        dateFormat: "dd.mm.yy"
+    })
+    $('#frmaddEditProjectForm-solution_to').datepicker({
+        dateFormat: "dd.mm.yy"
+    })
+</script>

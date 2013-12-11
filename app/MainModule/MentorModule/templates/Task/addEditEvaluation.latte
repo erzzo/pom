@@ -1,0 +1,8 @@
+{block body}
+Pridať ohodnotenie
+
+{form addEditEvaluationForm}
+    <p>{label points/}{input points}maximálny počet je {$theme->project->max_points}</p><br>
+    {label description/}{input description}<br>
+    {input submit value=> isset($presenter->param['evaluationId']) ? 'Uložiť' : 'Pridať ohodnotenie'}
+{/form}

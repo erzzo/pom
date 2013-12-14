@@ -26,15 +26,19 @@
     
        <div class="container">     
                 {if $user->isLoggedIn()}
-                <div class="col-md-3">
-                <a n:href=":Main:Sign:out">Sign Out</a>
-                    <ul id="menu">
-                        <li><a n:href=":Main:Subject:showAll">Všetky Predmety</a></li>
-                        <li><a n:href=":Main:Subject:showMy">Moje predmety</a></li>
-                    </ul>
-                </div>
+					<div class="col-md-3">
+						<a n:href=":Main:Sign:out">Sign Out</a>
+						<ul id="menu">
+							<li><a n:href=":Main:Subject:showAll">Všetky Predmety</a></li>
+							<li><a n:href=":Main:Subject:showMy">Moje predmety</a></li>
+						</ul>
+					</div>
+					<div id="obsah">
+						{include #body}
+					</div>
+				{else}
+					{include Sign/in.latte}
                 {/if}
-                {include #body}
                 
             <script>
                 $(function () {

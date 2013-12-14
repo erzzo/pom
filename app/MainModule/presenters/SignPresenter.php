@@ -15,10 +15,11 @@ class SignPresenter extends BasePresenter
 	{
 		$form = new UI\Form;
 		$form->addText('username', 'Meno:')
-			->setRequired('Zadajte svoje užívatelské meno.');
+			->setRequired('Zadajte svoje užívatelské meno.')
+                        ->setAttribute('placeholder', 'Meno');;
 
 		$form->addPassword('password', 'Heslo:')
-			->setRequired('Zadajte heslo.');
+			->setRequired('Zadajte heslo.')->setAttribute('placeholder', 'Heslo');
 
 		$form->addCheckbox('remember', 'Neodhlasovať');
 
@@ -51,7 +52,7 @@ class SignPresenter extends BasePresenter
 	public function actionOut()
 	{
 		$this->getUser()->logout();
-		$this->flashMessage('You have been signed out.');
+		$this->flashMessage('Boli ste odhlásení.','success');
 		$this->redirect('in');
 	}
 

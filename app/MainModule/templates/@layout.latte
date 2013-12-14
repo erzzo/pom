@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{block title|striptags|upper}Nette Application Skeleton{/block}</title>
 	<link rel="stylesheet" href="{$basePath}/css/bootstrap.css">
-	
+	<link rel="stylesheet" href="{$basePath}/css/style.css">
 
     <script src="{$basePath}/js/jquery.js"></script>
     <script src="{$basePath}/js/netteForms.js"></script>
@@ -24,13 +24,15 @@
 <body>
     <div class="wrapper">
     
-            <div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+       <div class="container">     
                 {if $user->isLoggedIn()}
+                <div class="col-md-3">
                 <a n:href=":Main:Sign:out">Sign Out</a>
                     <ul id="menu">
                         <li><a n:href=":Main:Subject:showAll">Všetky Predmety</a></li>
                         <li><a n:href=":Main:Subject:showMy">Moje predmety</a></li>
                     </ul>
+                </div>
                 {/if}
                 {include #body}
                 
@@ -40,6 +42,7 @@
                 });
             </script>
         </div>
-   
+    </div>
+    
 </body>
 </html>

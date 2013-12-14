@@ -1,5 +1,8 @@
 {extends '../../templates/@layout.latte'}
 
 {block body}
+<div class="col-md-9">QWIEUYQIWUYEQIUWYEIQWYEIQUWYEIQUWYEIUQWYEIQUWYEIUQWYEIQUYWEIQY
+<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
 
 {include #content}
+</div>

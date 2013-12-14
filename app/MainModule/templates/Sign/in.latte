@@ -1,7 +1,23 @@
 {var $robots = noindex}
 
-<h1>Manažment školských projektov</h1>
+{block body}
+<div class="container">
+        <div class="col-md-4 col-md-offset-4 custom-border-radius">
+<h2>Manažment školských projektov</h2>
 
-<h2>PRIHLÁSENIE</h2>
 
-{control signInForm}
+
+{form signInForm}
+<div class="form-group">
+{label username class=>"sr-only"/} {input username class=>"form-control"}
+</div>
+<div class="form-group">
+{label password class=>"sr-only"/} {input password class=>"form-control"}
+</div>
+<div class="form-group form-inline">
+
+{input send class=>"btn btn-danger btn-lg"} <div class="checkbox" style="padding-left:30px">{input remember class=>"form-cotrol"} {label remember /} </div>
+</div>
+{/form}
+        </div>
+</div>

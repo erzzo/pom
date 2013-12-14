@@ -14,13 +14,13 @@ class SignPresenter extends BasePresenter
 	protected function createComponentSignInForm()
 	{
 		$form = new UI\Form;
-		$form->addText('username', 'Prihl. meno:')
+		$form->addText('username', 'Meno:')
 			->setRequired('Zadajte svoje užívatelské meno.');
 
 		$form->addPassword('password', 'Heslo:')
 			->setRequired('Zadajte heslo.');
 
-		$form->addCheckbox('remember', 'Zapamatať si prihlásenie');
+		$form->addCheckbox('remember', 'Neodhlasovať');
 
 		$form->addSubmit('send', 'Prihlásiť');
 

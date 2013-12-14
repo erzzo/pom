@@ -45,14 +45,12 @@ class TaskPresenter extends BasePresenter
 
 		$flotPercentage[] = array(
 			"label" => "Splnene",
-			"data" => $taskPercentage,
-			"color" => "#00D50F"
+			"data" => $taskPercentage
 		);
 
 		$flotPercentage[] = array(
 			"label" => "Nesplnene",
-			"data" => 100-$taskPercentage,
-			"color" => "#FA0000"
+			"data" => 100-$taskPercentage
 		);
 
 		$this->template->flotPercentage = json_encode($flotPercentage);

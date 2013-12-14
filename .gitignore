@@ -1,4 +1,5 @@
 libs/
+!libs/pomRest/
 !libs/Security/
 !libs/.htaccess
 !libs/autoload.php

@@ -12,8 +12,7 @@
     </ol>
 </div>
 <div class="col-md-2">
-{if count($tasks)}
-    
+
     <style>
         #chart-value {
             position: relative;
@@ -42,31 +41,39 @@
 </div>
    
 <div class="form-group">
-    <a n:href="addEdit $theme->id" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i> Pridať novú úlohu</a>
-    {if $user->isAllowed('admin') && $theme->evaluation_id == NULL}
+	{if count($tasks)}
+		<a n:href="addEdit $theme->id" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i> Pridať novú úlohu</a>
+	{/if}
+	{if $user->isInRole('student') && !$theme->submitted}
+		<a n:href="sendToEvaluation! $theme->id" class="btn btn-warning pull-right"> Odovzdať zadanie</a>
+	{/if}
+	{if $user->isAllowed('admin') && !$theme->evaluation_id}
         <a n:href=":Main:Mentor:Task:addEditEvaluation $theme->id" class="btn btn-warning">Pridať hodnotenie</a>
     {/if}
 </div>
 <div>
-    {if $theme->evaluation_id == NULL}
-    <div class="form-group"><div class="alert alert-info">Žiadne hodnotenie</div></div>
-    {else}
-    <blockquote class="success">
-       
-              <h2>Získaný počet bodov: <span style="font-weight:500;">{$theme->evaluation->points}</span></h2>
-            
-                <p>{$theme->evaluation->description}</p>
-            
-                <small>pridal: {$theme->evaluation->user->lastname}</small>
-                {if $user->isAllowed('admin')}
-                    <a n:href=":Main:Mentor:Task:addEditEvaluation $theme->id, $theme->evaluation->id" class="btn btn-primary">Upraviť hodnotenie</a>
-                {/if}
-            
-        
-    </blockquote>
-    {/if}
+	{if $theme->submitted || $theme->evaluation_id}
+		{if $theme->evaluation_id == NULL}
+			<div class="form-group"><div class="alert alert-info">Projekt bol odovzdaný. Hodnotenie zatial nebolo pridané.</div></div>
+		{else}
+		<blockquote class="success">
+
+				  <h2>Získaných bodov: <span style="font-weight:500;">{$theme->evaluation->points}/{$theme->project->max_points}</span></h2>
+
+					<p>{$theme->evaluation->description}</p>
+
+					<small>pridal: {$theme->evaluation->user->lastname}</small>
+					{if $user->isAllowed('admin')}
+						<a n:href=":Main:Mentor:Task:addEditEvaluation $theme->id, $theme->evaluation->id" class="btn btn-primary">Upraviť hodnotenie</a>
+					{/if}
+
+		</blockquote>
+		{/if}
+	{/if}
     <h1></h1>
 </div>
+
+{if count($tasks)}
 <h2>Úlohy</h2>
     <table class="table table-hover table-striped">
         <thead>
@@ -91,9 +98,9 @@
         </tbody>
     </table>
 {else}
-</div>
 
-<div class="alert alert-danger" style="clear:both">Žiadne témy neboli nájdené.</div>
+
+<div class="alert alert-danger" style="clear:both">Žiadne úlohy neboli nájdené.</div>
 {/if}
 <div class="form-group">
 <a n:href="addEdit $theme->id" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i> Pridať novú úlohu</a>

@@ -32,8 +32,15 @@
         <tr n:foreach="$themes as $theme">
             <td><a n:href=":Main:Task:default, $theme->id">{$theme->name}</a></td>
             <td>{$theme->description}</td>
-            <td>{$theme->evaluation_id ? 'odovzdané' : 'neodovzdané'}</td>
-            <td>{isset($theme->evaluation_id) ? $theme->evaluation->points : 0}/{$theme->project->max_points}</td>
+            <td>
+				{var $late = $theme->project->solution_to < new \Nette\Datetime() ? TRUE : FALSE}
+				{if $theme->evaluation_id}
+					ohodnotené
+				{else}
+					<span n:class="(!$theme->submitted && $late) ? to-late">{$theme->submitted ? 'odovzdané' : 'neodovzdané'}</span>
+				{/if}
+			</td>
+            <td>{$theme->evaluation_id ? $theme->evaluation->points : 0}/{$theme->project->max_points}</td>
             <td>
                 {form assignStudentForm class=>"form form-inline"}
                 <div class="form-group">

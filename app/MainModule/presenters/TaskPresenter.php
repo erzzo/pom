@@ -176,6 +176,15 @@ class TaskPresenter extends BasePresenter
 		return $form;
 	}
 
+	public function handleSendToEvaluation($themeId)
+	{
+		$theme = $this->themeModel->get($themeId);
+		$theme->update(array('submitted' => new \Nette\DateTime()));
+
+		$this->flashMessage('Zadanie bolo úspešne odovzdané');
+		$this->redirect('this');
+	}
+
 	public function processAddEditFileForm(Form $form)
 	{
 		$values = $form->getValues();

@@ -4,6 +4,7 @@
     padding:20px;
     min-height: 200px;
     -moz-min-height:200px;
+    margin-bottom:50px;
 }
 .custom-bg-white{
     background-color:#fff;

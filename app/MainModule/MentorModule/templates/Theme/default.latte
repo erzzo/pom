@@ -1,25 +1,30 @@
 {block content}
-    <h1>TEMY projektov</h1>
-<a n:href=":Main:Subject:showMy">Predmety</a>->
-<a n:href="Project:default $project->subject_id">{$project->subject->name} </a>->
-<a>{$project->name} </a><br>
-<a n:href="addEdit $presenter->param['projectId']">Pridať novu temu</a>
-<div id="progress-chart" style="width: 500px; height: 250px; font-size: 14px; line-height: 1.2em;"></div>
-<br><br>
-{form filterThemesForm class=>'ajax'}
-    {input name placeholder => "Vyhľadať podľa názov témy"}
+    <h1>Témy projektov</h1>
+    <ol class="breadcrumb">
+        <li><a n:href=":Main:Subject:showMy">Predmety</a></li>
+<li><a n:href="Project:default $project->subject_id">{$project->subject->name} </a></li>
+<li><a>{$project->name}</a> </li>
+    </ol>
+    <div class="form-group">
+    <a n:href="addEdit $presenter->param['projectId']" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i> Pridať novú tému</a>
+    </div>
+    <div class="form">
+<div id="progress-chart" style="height: 250px; font-size: 14px; line-height: 1.2em;" ></div></div>
+
+{form filterThemesForm class=>'ajax form-inline'}
+    {input name placeholder => "Vyhľadať podľa názov témy", class=>"form-control"}
 {/form}
 
 {snippet themes}
 {if count($themes)}
-    <table>
+    <table class="table table-striped table-hover">
         <thead>
         <tr>
-            <th>Názov temy</th>
+            <th>Názov témy</th>
             <th>Popis</th>
             <th>Stav</th>
             <th>Hodnotenie</th>
-            <th>Priradený študenti</th>
+            <th>Priradení študenti</th>
             <th>Nastavenia</th>
         </tr>
         </thead>
@@ -30,13 +35,15 @@
             <td>{$theme->submitted ? 'odovzdané' : 'neodovzdané'}</td>
             <td>{isset($theme->evaluation_id) ? $theme->evaluation->points : 0}/{$theme->project->max_points}</td>
             <td>
-                {form assignStudentForm}
-                    {input students class=> "student-search " . $theme->id}
+                {form assignStudentForm class=>"form form-inline"}
+                <div class="form-group">
+                    {input students class=> "student-search" . $theme->id}
+                </div>
                     {input theme_id value => $theme->id}
-                    {input submit value => 'Upraviť'}
+                    {input submit value => 'Upraviť', class=>"btn btn-default"}
                 {/form}
             </td>
-            <td><a n:href="addEdit $presenter->param['projectId'], $theme->id">upraviť</a></td>
+            <td><a n:href="addEdit $presenter->param['projectId'], $theme->id" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Upraviť</a></td>
         </tr>
         </tbody>
     </table>
@@ -57,7 +64,8 @@
         })
     </script>
 {else}
-    Žiadne témy neboli nájdené.
+<div class="alert alert-info">
+    Žiadne témy neboli nájdené.</div>
 {/if}
 {/snippet}
 

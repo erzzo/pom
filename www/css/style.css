@@ -30,3 +30,14 @@
     padding-left:0px;
     padding-bottom: 5px;
 }
+.form{
+    border-radius:15px;
+    padding:15px;
+    border:1px dotted #ccc;
+    margin-bottom:15px;
+}
+.h2,.h3{
+    padding-top:20px;
+    margin-top: 20px;
+}
+.nodisplay{display:none;}

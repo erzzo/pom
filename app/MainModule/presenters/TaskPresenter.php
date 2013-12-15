@@ -45,14 +45,12 @@ class TaskPresenter extends BasePresenter
 
 		$flotPercentage[] = array(
 			"label" => "Splnene",
-			"data" => $taskPercentage,
-			"color" => "#66d25e"
+			"data" => $taskPercentage
 		);
 
 		$flotPercentage[] = array(
 			"label" => "Nesplnene",
-			"data" => 100-$taskPercentage,
-			"color" => "#ccc"
+			"data" => 100-$taskPercentage
 		);
 
 		$this->template->flotPercentage = json_encode($flotPercentage);
@@ -160,7 +158,7 @@ class TaskPresenter extends BasePresenter
 
 		$this->taskModel->addEdit($values, $id);
 
-		$this->redirect('default', ['themeId' => $themeId]);
+		$this->redirect('default', array('themeId' => $themeId));
 	}
 
 	public function createComponentAddEditFileForm()
@@ -176,6 +174,15 @@ class TaskPresenter extends BasePresenter
 		$form->addSubmit('submit', 'Ulož');
 		$form->onSuccess[] = $this->processAddEditFileForm;
 		return $form;
+	}
+
+	public function handleSendToEvaluation($themeId)
+	{
+		$theme = $this->themeModel->get($themeId);
+		$theme->update(array('submitted' => new \Nette\DateTime()));
+
+		$this->flashMessage('Zadanie bolo úspešne odovzdané');
+		$this->redirect('this');
 	}
 
 	public function processAddEditFileForm(Form $form)

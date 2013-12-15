@@ -27,7 +27,7 @@ class TaskPresenter extends BasePresenter
 		$this->template->theme = $theme = $this->themeModel->get($themeId);
 		if ($theme->project->evaluation_from > new DateTime()) {
 			$this->flashMessage("Nieje ešte možné pridávať hodnotenie");
-			$this->redirect(':Main:Task:default', ['themeId' => $themeId]);
+			$this->redirect(':Main:Task:default', array('themeId' => $themeId));
 		}
 		if ($evaluationId) {
 			$evalutaion = $this->themeModel->getEvaluation($evaluationId);
@@ -43,9 +43,9 @@ class TaskPresenter extends BasePresenter
 		$theme = $this->themeModel->get($this->presenter->getParameter('themeId'));
 		$form = new Form;
 		$form->addText('points', 'Počet bodov')
-			->setType('numner')
+			->setType('number')
 			->setRequired('Povinný atribút')
-			->addRule($form::EQUAL, "Maximálny počet bodov je %d",$theme->project->max_points);
+			->addRule($form::RANGE, "Bodovanie je od %d do %d bodov.", array(0, $theme->project->max_points));
 		$form->addTextArea('description', 'Popis');
 		$form->addSubmit('submit');
 		$form->onSuccess[] = $this->processAddEditEvaluationForm;
@@ -68,6 +68,6 @@ class TaskPresenter extends BasePresenter
 		} else {
 			$this->flashMessage("Hodnotenie bolo upravené");
 		}
-		$this->redirect(':Main:Task:default', ['themeId' => $themeId]);
+		$this->redirect(':Main:Task:default', array('themeId' => $themeId));
 	}
 }

@@ -19,59 +19,43 @@
         <tr>
             <th>Názov temy</th>
             <th>Popis</th>
-            <th>Riešenie od</th>
-            <th>Riešenie do</th>
+            <th>Termín odovzdania</th>
             <th>Stav</th>
-            <th>Nastavenia</th>
+            <th>&nbsp;</th>
         </tr>
         </thead>
         <tbody>
         <tr n:foreach="$themes as $theme">
-            <td><a n:href="Task:default, $theme->id">{$theme->name}</a></td>
-            <td>{$theme->description}</td>
-            <td>{$theme->solution_from|date:"d. n. Y"}</td>
-            <td>{$theme->solution_to|date:"d. n. Y"}</td>
+            <td><a n:href="Task:default, $theme->theme_id">{$theme->theme->name}</a></td>
+            <td>{$theme->theme->description}</td>
+            <td>
+				{var $late = $theme->theme->project->solution_to < new \Nette\Datetime() ? TRUE : FALSE}
+				<span n:class="$late ? to-late">{$theme->theme->project->solution_to|date:"d. n. Y"}</span>
+			</td>
             <td style="width:20%">
-                {if $theme->submitted}
-                    odovzdané
+                {if $theme->theme->submitted || $theme->theme->evaluation_id}
+					{if $theme->theme->evaluation_id}
+						ohodnotené ({$theme->theme->evaluation->points}/{$theme->theme->project->max_points})
+					{else}
+                    	odovzdané
+					{/if}
                 {else}
                 <div class="progress" style="margin-top: 15px;">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="{number_format($taskPercentage[$theme->id], 1).'%'}" aria-valuemin="0" aria-valuemax="100" style="width: {number_format($taskPercentage[$theme->id], 0)}%;"></div>
-                        <span class="sr-only">{number_format($taskPercentage[$theme->id], 1).'%'} Complete</span>
+                    <div class="progress-bar" role="progressbar" aria-valuenow="{number_format($taskPercentage[$theme->theme_id], 1).'%'}" aria-valuemin="0" aria-valuemax="100" style="width: {number_format($taskPercentage[$theme->theme_id], 0)}%;"></div>
+                        <span class="sr-only">{number_format($taskPercentage[$theme->theme_id], 1).'%'} Complete</span>
                 </div>
                 {/if}
-               <!-- <div class="chart-{$theme->id}" style="width: 50px; height:45px;"></div> -->
-               
+
             </td>
             <td>
             {if $user->isInRole('ucitel')}
             <a n:href="Mentor:Theme:addEdit $theme->project_id, $theme->id">upraviť</a>
             {/if}
             </td>
+			<td></td>
         </tr>
         </tbody>
     </table>
-
-
-    <script>
-        $(function() {
-            var data = {!$flotPercentage};
-            console.log(data)
-            $.each(data, function(i, item){
-                $.plot('.chart-'+i, item, {
-                    series: {
-                        pie: {
-                            innerRadius: 0.7,
-                            show: true
-                        }
-                    },
-                    legend: {
-                        container: '.none'
-                    }
-                });
-            })
-        });
-    </script>
 {else}
     Žiadne témy neboli nájdené.
 {/if}

@@ -158,7 +158,7 @@ class TaskPresenter extends BasePresenter
 
 		$this->taskModel->addEdit($values, $id);
 
-		$this->redirect('default', ['themeId' => $themeId]);
+		$this->redirect('default', array('themeId' => $themeId));
 	}
 
 	public function createComponentAddEditFileForm()

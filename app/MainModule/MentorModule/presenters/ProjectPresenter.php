@@ -78,7 +78,7 @@ class ProjectPresenter extends BasePresenter
 
 		$this->projectModel->addEdit($values, $id);
 
-		$this->redirect('default', ['subjectId' => $subjectId]);
+		$this->redirect('default', array('subjectId' => $subjectId));
 	}
 }
 

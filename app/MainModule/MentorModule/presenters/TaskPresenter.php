@@ -27,7 +27,7 @@ class TaskPresenter extends BasePresenter
 		$this->template->theme = $theme = $this->themeModel->get($themeId);
 		if ($theme->project->evaluation_from > new DateTime()) {
 			$this->flashMessage("Nieje ešte možné pridávať hodnotenie");
-			$this->redirect(':Main:Task:default', ['themeId' => $themeId]);
+			$this->redirect(':Main:Task:default', array('themeId' => $themeId));
 		}
 		if ($evaluationId) {
 			$evalutaion = $this->themeModel->getEvaluation($evaluationId);
@@ -68,6 +68,6 @@ class TaskPresenter extends BasePresenter
 		} else {
 			$this->flashMessage("Hodnotenie bolo upravené");
 		}
-		$this->redirect(':Main:Task:default', ['themeId' => $themeId]);
+		$this->redirect(':Main:Task:default', array('themeId' => $themeId));
 	}
 }

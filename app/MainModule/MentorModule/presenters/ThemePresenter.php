@@ -40,7 +40,7 @@ class ThemePresenter extends BasePresenter
 		$flotPercentage = array();
 		foreach ($themePercentage as $key => $theme) {
 			$flotPercentage[] = array(
-				"data" => [[$key, $theme['percent']]],
+				"data" => array(array($key, $theme['percent'])),
 				"label" => $theme['label']
 			);
 		}
@@ -126,7 +126,7 @@ class ThemePresenter extends BasePresenter
 		if (!empty($values['students'])) {
 			$studentIds = explode(',', $values['students']);
 		} else {
-			$studentIds = [];
+			$studentIds = array();
 		}
 
 		$this->themeModel->addRemoveUsersToTheme($values['theme_id'], $studentIds);
@@ -166,6 +166,6 @@ class ThemePresenter extends BasePresenter
 
 		$this->themeModel->addEdit($values, $id);
 
-		$this->redirect('default', ['projectId' => $projectId]);
+		$this->redirect('default', array('projectId' => $projectId));
 	}
 }

@@ -11,9 +11,9 @@
 
     </ol>
 </div>
-
-    {if count($tasks)}
-    <div class="col-md-2">
+<div class="col-md-2">
+{if count($tasks)}
+    
     <style>
         #chart-value {
             position: relative;
@@ -40,6 +40,7 @@
         <div id="task-chart"></div>
     </div>
 </div>
+   
 <div class="form-group">
     <a n:href="addEdit $theme->id" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i> Pridať novú úlohu</a>
     {if $user->isAllowed('admin') && $theme->evaluation_id == NULL}
@@ -90,7 +91,9 @@
         </tbody>
     </table>
 {else}
-<div class="alert alert-danger">Žiadne témy neboli nájdené.</div>
+</div>
+
+<div class="alert alert-danger" style="clear:both">Žiadne témy neboli nájdené.</div>
 {/if}
 <div class="form-group">
 <a n:href="addEdit $theme->id" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i> Pridať novú úlohu</a>

@@ -26,7 +26,7 @@ class SubjectPresenter extends BasePresenter
 	{
 		$grades = $this->subjectModel->getGrades()->fetchPairs('id','grade');
 		$form = new Form;
-		$form->addSelect('gradeId','Ročník', [0 => 'Všetky'] + $grades)
+		$form->addSelect('gradeId','Ročník', array(0 => 'Všetky') + $grades)
 			->setRequired();
 		$form->addSubmit('submit');
 		$form->onSuccess[] = $this->processFilterSubjectsForm;

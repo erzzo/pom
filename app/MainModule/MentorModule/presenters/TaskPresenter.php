@@ -43,9 +43,9 @@ class TaskPresenter extends BasePresenter
 		$theme = $this->themeModel->get($this->presenter->getParameter('themeId'));
 		$form = new Form;
 		$form->addText('points', 'Počet bodov')
-			->setType('numner')
+			->setType('number')
 			->setRequired('Povinný atribút')
-			->addRule($form::EQUAL, "Maximálny počet bodov je %d",$theme->project->max_points);
+			->addRule($form::RANGE, "Bodovanie je od %d do %d bodov.", array(0, $theme->project->max_points));
 		$form->addTextArea('description', 'Popis');
 		$form->addSubmit('submit');
 		$form->onSuccess[] = $this->processAddEditEvaluationForm;

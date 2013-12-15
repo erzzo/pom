@@ -5,7 +5,7 @@
         <li><a n:href=":Main:Subject:showAll">Predmety</a></li>
         <li><a n:href=":Main:Theme:showMy $theme->project->subject_id">{$theme->project->subject->name} </a></li>
 {if $user->isAllowed('admin')}
-<li><a n:href=":Main:Mentor:Theme:default $theme->project_id">{$theme->project->name} </a></li>
+<li><a n:href=":Main:Mentor:Theme:default $theme->project_id" class>{$theme->project->name} </a></li>
 {/if}
 <li><a>{$theme->name}</a></li>
 
@@ -42,27 +42,26 @@
 <div class="form-group">
     <a n:href="addEdit $theme->id" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i> Pridať novú úlohu</a>
     {if $user->isAllowed('admin') && $theme->evaluation_id == NULL}
-        <a n:href=":Main:Mentor:Task:addEditEvaluation $theme->id">Pridať hodnotenie</a>
+        <a n:href=":Main:Mentor:Task:addEditEvaluation $theme->id" class="btn btn-warning">Pridať hodnotenie</a>
     {/if}
 </div>
 <div>
     {if $theme->evaluation_id == NULL}
     <div class="form-group"><div class="alert alert-info">Žiadne hodnotenie</div></div>
     {else}
-        <ul>
-            <li>
-              <h1>body: {$theme->evaluation->points}</h1>
-            </li>
-            <li>
-                <h1>popis: {$theme->evaluation->description}</h1><br>
-            </li>
-            <li>
-                <h1>pridal: {$theme->evaluation->user->lastname}</h1><br>
+    <blockquote class="success">
+       
+              <h2>Získaný počet bodov: <span style="font-weight:500;">{$theme->evaluation->points}</span></h2>
+            
+                <p>{$theme->evaluation->description}</p>
+            
+                <small>pridal: {$theme->evaluation->user->lastname}</small>
                 {if $user->isAllowed('admin')}
-                    <a n:href=":Main:Mentor:Task:addEditEvaluation $theme->id, $theme->evaluation->id">Upraviť hodnotenie</a>
+                    <a n:href=":Main:Mentor:Task:addEditEvaluation $theme->id, $theme->evaluation->id" class="btn btn-primary">Upraviť hodnotenie</a>
                 {/if}
-            </li>
-        </ul>
+            
+        
+    </blockquote>
     {/if}
     <h1></h1>
 </div>

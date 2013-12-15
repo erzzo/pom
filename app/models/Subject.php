@@ -51,6 +51,6 @@ class Subject extends Base
 
 	public function addUserToSubject($subjectId)
 	{
-		return $this->db->table('user_subject')->insert(['user_id' => $this->user->getId(), 'subject_id' => $subjectId]);
+		return $this->db->table('user_subject')->insert(array('user_id' => $this->user->getId(), 'subject_id' => $subjectId));
 	}
 }

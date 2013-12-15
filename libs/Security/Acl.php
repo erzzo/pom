@@ -23,7 +23,7 @@ class Acl
 		$permission->addResource('Main:Mentor:Project');
 		$permission->addResource('Main:Mentor:Theme');
 		$permission->addResource('admin');
-		$permission->allow('student',['Main:Subject','Main:Task','Main:Theme']);
+		$permission->allow('student',array('Main:Subject','Main:Task','Main:Theme'));
 
 		$permission->allow('ucitel');
 		return $permission;

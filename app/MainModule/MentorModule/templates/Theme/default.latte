@@ -27,7 +27,7 @@
         <tr n:foreach="$themes as $theme">
             <td><a n:href=":Main:Task:default, $theme->id">{$theme->name}</a></td>
             <td>{$theme->description}</td>
-            <td>{$theme->submitted ? 'odovzdané' : 'neodovzdané'}</td>
+            <td>{$theme->evaluation_id ? 'odovzdané' : 'neodovzdané'}</td>
             <td>{isset($theme->evaluation_id) ? $theme->evaluation->points : 0}/{$theme->project->max_points}</td>
             <td>
                 {form assignStudentForm}

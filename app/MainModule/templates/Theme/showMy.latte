@@ -1,5 +1,5 @@
 {block body}
-    <h1>MOJE TEMY v predmete {$subject->name}</h1>
+<h1><i class="glyphicon-list glyphicon"></i> Moje Témy v predmete {$subject->name}</h1>
     <ol class="breadcrumb">
 
         <li><a n:href="Subject:showAll" class="active">Predmety</a></li>
@@ -36,7 +36,7 @@
                     odovzdané
                 {else}
                 <div class="progress" style="margin-top: 15px;">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="{number_format($taskPercentage[$theme->id], 1).'%'}" aria-valuemin="0" aria-valuemax="100" style="width: {number_format($taskPercentage[$theme->id], 0).'%'}%;"></div>
+                    <div class="progress-bar" role="progressbar" aria-valuenow="{number_format($taskPercentage[$theme->id], 1).'%'}" aria-valuemin="0" aria-valuemax="100" style="width: {number_format($taskPercentage[$theme->id], 0)}%;"></div>
                         <span class="sr-only">{number_format($taskPercentage[$theme->id], 1).'%'} Complete</span>
                 </div>
                 {/if}

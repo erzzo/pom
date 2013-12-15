@@ -677,7 +677,7 @@ pre code {
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
-  margin-top:50px;
+  margin-top:20px;
 }
 .container:before,
 .container:after {
@@ -736,15 +736,10 @@ pre code {
   padding-left: 15px;
   padding-right: 15px;
  
-  background-color:#fff;
-  border-radius:50px;
+  
+  
 }
-.custom-border-radius{padding-left: 50px;
-  padding-right: 50px;
-  padding-top:40px;
-  padding-bottom:30px;
-  background-color:#fff;
-  border-radius:50px;}
+
 .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
   float: left;
 }
@@ -1394,7 +1389,7 @@ th {
 .table > tfoot > tr > td {
   padding: 8px;
   line-height: 1.428571429;
-  vertical-align: top;
+  vertical-align: middle;
   border-top: 1px solid #dddddd;
 }
 .table > thead > tr > th {

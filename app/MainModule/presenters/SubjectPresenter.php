@@ -68,10 +68,10 @@ class SubjectPresenter extends BasePresenter
 
 		if ($subject->password === $values['password']) {
 			$this->subjectModel->addUserToSubject($subject->id);
-			$this->flashMessage('Predmet pridaný');
+			$this->flashMessage('Predmet pridaný','alert-success');
 			$this->redirect('showMy');
 		} else {
-			$this->flashMessage('Zadané heslo je nesprávne');
+			$this->flashMessage('Zadané heslo je nesprávne','alert-danger');
 			$this->redirect('this');
 		}
 	}

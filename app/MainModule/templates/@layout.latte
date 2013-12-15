@@ -23,17 +23,23 @@
 
 <body>
     <div class="wrapper">
-    
+        {if $user->isLoggedIn()}
+       
+      {/if}
        <div class="container">     
                 {if $user->isLoggedIn()}
+                <div class="text-right form-group"><a n:href=":Main:Sign:out" class="btn btn-info"><span class="glyphicon glyphicon-lock"></span> Sign Out</a></div>
 					<div class="col-md-3">
-						<a n:href=":Main:Sign:out">Sign Out</a>
-						<ul id="menu">
-							<li><a n:href=":Main:Subject:showAll">Všetky Predmety</a></li>
-							<li><a n:href=":Main:Subject:showMy">Moje predmety</a></li>
+                                            <div class="col-md-11 custom-main-menu custom-bg-white">
+						
+						<ul id="menu" class="custom-main-menu-list">
+							<li><a n:href=":Main:Subject:showAll" class="btn btn-block btn-default"><span class="glyphicon glyphicon-list"></span> Všetky Predmety</a></li>
+							<li><a n:href=":Main:Subject:showMy" class="btn btn-block btn-default"><span class="glyphicon glyphicon-user"></span> Moje predmety</a></li>
 						</ul>
-					</div>
-					<div id="obsah">
+                                                
+                                            </div>
+                                        </div>
+					<div id="obsah" class="col-md-9 custom-main-content custom-bg-white">
 						{include #body}
 					</div>
 				{else}

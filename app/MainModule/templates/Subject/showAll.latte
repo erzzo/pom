@@ -1,13 +1,16 @@
 {block body}
-<h1>Všetky Predmety</h1>
+
+<h1><span class="glyphicon glyphicon-list"></span> Všetky Predmety</h1>
 {if $user->isInRole('ucitel')}
-    <a n:href=":Main:Mentor:Subject:addEdit">Pridať nový predmet</a>
+<div class="form-group">
+    <a n:href=":Main:Mentor:Subject:addEdit" class="btn btn-danger">Pridať nový predmet</a>
+    </div>
 {/if}
 {include @filterSubjects.latte}
 
 {snippet subjects}
 {if count($subjects)}
-    <table>
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>Názov</th>
@@ -25,21 +28,22 @@
                         <a n:href=":Main:Theme:showMy $subject->id">{$subject->name}</a>
                     {/if}
                 {else}
-                    {$subject->name}
+                {$subject->name}
                 {/if}
                 </td>
                 <td>{$subject->school_year->year}</td>
                 <td>
                    {if in_array($subject->id, $userSubjects)}
-                       už si v predmete
+                   <button class="btn btn-default btn-disabled" disabled="disabled">už si v predmete</button>
                    {else}
-                       <a n:href="requestEntry $subject->id">Vyžiadať vstup</a>
+                       <a n:href="requestEntry $subject->id" class="btn btn-danger">Vyžiadať vstup</a>
                    {/if}
                 </td>
             </tr>
         </tbody>
     </table>
 {else}
-    Žiadne predmety neboli nájdené.
+<div class="alert alert-danger form-group">
+    Žiadne predmety neboli nájdené.</div>
 {/if}
 {/snippet}

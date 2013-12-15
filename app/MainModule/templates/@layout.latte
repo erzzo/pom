@@ -4,15 +4,10 @@
 	<meta charset="UTF-8">
 	<meta name="description" content="">
 	<meta name="robots" content="{$robots}" n:ifset="$robots">
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{block title|striptags|upper}Nette Application Skeleton{/block}</title>
-
-	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
-	<link rel="stylesheet" media="screen" href="{$basePath}/css/token-input.css">
-    <link rel="stylesheet" media="screen" href="{$basePath}/css/jquery-ui/jquery-ui-1.10.3.custom.min.css">
-	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
-    <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/visualpaginator.css" type="text/css">
-
+	<link rel="stylesheet" href="{$basePath}/css/bootstrap.css">
+	<link rel="stylesheet" href="{$basePath}/css/style.css">
 
     <script src="{$basePath}/js/jquery.js"></script>
     <script src="{$basePath}/js/netteForms.js"></script>
@@ -27,19 +22,37 @@
 </head>
 
 <body>
-	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
-
-    <ul id="menu">
-        <li><a n:href=":Main:Subject:showAll">Všetky Predmety</a></li>
-        <li><a n:href=":Main:Subject:showMy">Moje predmety</a></li>
-    </ul>
-
-    {include #body}
-    <a n:href=":Main:Sign:out">Sign Out</a>
-    <script>
-        $(function () {
-            $.nette.init();
-        });
-    </script>
+    <div class="wrapper">
+        {if $user->isLoggedIn()}
+       
+      {/if}
+       <div class="container">     
+                {if $user->isLoggedIn()}
+                <div class="text-right form-group"><a n:href=":Main:Sign:out" class="btn btn-info"><span class="glyphicon glyphicon-lock"></span> Sign Out</a></div>
+					<div class="col-md-3">
+                                            <div class="col-md-11 custom-main-menu custom-bg-white">
+						
+						<ul id="menu" class="custom-main-menu-list">
+							<li><a n:href=":Main:Subject:showAll" class="btn btn-block btn-default"><span class="glyphicon glyphicon-list"></span> Všetky Predmety</a></li>
+							<li><a n:href=":Main:Subject:showMy" class="btn btn-block btn-default"><span class="glyphicon glyphicon-user"></span> Moje predmety</a></li>
+						</ul>
+                                                
+                                            </div>
+                                        </div>
+					<div id="obsah" class="col-md-9 custom-main-content custom-bg-white">
+						{include #body}
+					</div>
+				{else}
+					{include Sign/in.latte}
+                {/if}
+                
+            <script>
+                $(function () {
+                    $.nette.init();
+                });
+            </script>
+        </div>
+    </div>
+    
 </body>
 </html>

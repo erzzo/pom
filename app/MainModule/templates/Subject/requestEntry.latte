@@ -1,8 +1,12 @@
 {block body}
 
-<h1>Request Entry</h1>
+<h1><i class="glyphicon glyphicon-lock"></i> Vyžiadať vstup do predmetu</h1>
 
-{form requestEntryForm}
-    {label password/} {input password} <br>
-    {input submit value=>'Vyžiadať vstup'}
+{form requestEntryForm class=>"form"}
+<div class="col-md-4">
+<div class="form-group">
+    {label password/} {input password class=>"form-control"} 
+     </div>
+    {input submit class=>'btn btn-danger'}
+</div>
 {/form}

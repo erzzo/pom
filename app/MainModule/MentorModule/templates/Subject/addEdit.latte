@@ -1,11 +1,32 @@
 {block body}
-Pridať nový predmet
+<h1><i class="glyphicon glyphicon-edit"></i> Pridať nový predmet</h1>
 
-{form addEditSubjectForm}
-    {label name/}{input name}<br>
-    {label password/}{input password}<br>
-    {label grade_id/}{input grade_id}<br>
-    {label school_year_id/}{input school_year_id}<br>
-    {label term_id/}{input term_id}<br>
-    {input submit value=> isset($presenter->param['id']) ? 'Uložiť' : 'Pridať predmet'}
-{/form}
+{form addEditSubjectForm class=>"form-horizontal"}
+
+<div class="form-group">
+    {label name class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input name class=>"form-control"}</div>
+</div>
+<div class="form-group">
+    {label password class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input password class=>"form-control"}</div>
+    </div>
+<div class="form-group">
+    {label grade_id class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input grade_id class=>"form-control"}</div>
+    </div>
+<div class="form-group">
+    {label school_year_id class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input school_year_id class=>"form-control"}</div>
+    </div>
+<div class="form-group">
+    
+    {label term_id class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input term_id class=>"form-control"}</div>
+    </div>
+<div class="form-group ">
+    <div class="col-sm-10 col-sm-offset-2">
+    {input submit  class=>'btn btn-danger', value=> isset($presenter->param['id']) ? 'Uložiť' : 'Pridať predmet'}
+</div>
+</div>
+    {/form}

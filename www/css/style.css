@@ -1,0 +1,32 @@
+
+.custom-main-menu, .custom-main-content{
+    border-radius:15px;
+    padding:20px;
+    min-height: 200px;
+    -moz-min-height:200px;
+}
+.custom-bg-white{
+    background-color:#fff;
+}
+.custom-signup{
+    border-radius: 50px;
+    margin-top:50px;
+}
+.custom-border-radius{
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top:40px;
+  padding-bottom:30px;
+  
+  border-radius:50px;
+}
+.custom-main-menu-list{
+    list-style-type: none;
+    padding:0px;
+    margin:0px;
+}
+.custom-main-menu-list li{
+    margin-left:0px;
+    padding-left:0px;
+    padding-bottom: 5px;
+}

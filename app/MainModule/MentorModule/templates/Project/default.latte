@@ -9,7 +9,6 @@
         <tr>
             <th>Názov projektu</th>
             <th>Riešenie do</th>
-            <th>Možnosť hodnotiť od</th>
             <th>Nastavenia</th>
         </tr>
         </thead>
@@ -17,7 +16,6 @@
         <tr n:foreach="$projects as $project">
             <td><a n:href="Theme:default, $project->id">{$project->name}</a></td>
             <td>{$project->solution_to|date:"d. n. Y"}</td>
-            <td>{$project->evaluation_from|date:"d. n. Y"}</td>
             <td><a n:href="addEdit $presenter->param['subjectId'], $project->id">upraviť</a></td>
         </tr>
         </tbody>

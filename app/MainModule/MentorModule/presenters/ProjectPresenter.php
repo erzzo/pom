@@ -46,13 +46,9 @@ class ProjectPresenter extends BasePresenter
 		$form->addText('max_points', 'Maximálny počet bodov')
 			->setType('Number');
 			//->setRequired('Povinný atribút');
-		$form->addText('solution_from', 'Riešenie od');
-			//->setRequired('Povinný atribút');
 		$form->addText('max_files_count', 'Maximálny počet súborov')
 			->setType('Number');
 		$form->addText('solution_to', 'Riešenie do');
-		$form->addText('evaluation_from', 'Možnosť hodnotiť témy od');
-			//->setRequired('Povinný atribút');
 		$form->addSubmit('submit');
 		$form->onSuccess[] = $this->processAddEditProjectForm;
 
@@ -63,7 +59,6 @@ class ProjectPresenter extends BasePresenter
 	{
 		$values = $form->getValues();
 
-		$values['solution_from'] = \Nette\DateTime::createFromFormat('d.m.Y', $values['solution_from']);
 		$values['solution_to'] = \Nette\DateTime::createFromFormat('d.m.Y', $values['solution_to']);
 
 		$id = $this->presenter->getParameter('id');

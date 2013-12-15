@@ -9,8 +9,10 @@
             <tr>
                 <th>Názov</th>
                 <th>Skolský rok</th>
-                <th>Heslo na vstup</th>
-                <th>Možnosti</th>
+				{if $user->isInRole('ucitel')}
+					<th>Heslo na vstup</th>
+					<th>Možnosti</th>
+				{/if}
             </tr>
         </thead>
         <tbody>
@@ -23,8 +25,10 @@
                     {/if}
                 </td>
                 <td>{$subject->subject->school_year->year}</td>
-                <td>{$subject->subject->password}</td>
-                <td><a n:href=":Main:Mentor:Subject:addEdit $subject->subject_id" class="btn btn-primary"><i class="glyphicon glyphicon glyphicon-pencil"></i> Upraviť</a></td>
+				{if $user->isInRole('ucitel')}
+					<td>{$subject->subject->password}</td>
+					<td><a n:href=":Main:Mentor:Subject:addEdit $subject->subject_id" class="btn btn-primary"><i class="glyphicon glyphicon glyphicon-pencil"></i> Upraviť</a></td>
+				{/if}
             </tr>
         </tbody>
     </table>

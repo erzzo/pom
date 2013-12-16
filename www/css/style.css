@@ -47,3 +47,7 @@ h2,h3{
 .clrbth{clear:both;}
 .to-late {color: red;}
 .alert-info h2 {border-color:#a6e1ec;}
+div.flash {
+	margin-left: 300px;
+	float:left;
+}

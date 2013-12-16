@@ -61,7 +61,7 @@
 		{if $theme->evaluation_id == NULL}
 			<div class="form-group"><div class="alert alert-info">Projekt bol odovzdaný. Hodnotenie zatial nebolo pridané.</div></div>
 		{else}
-		<blockquote class="success">
+		<blockquote class="alert-info">
 
 				  <h2>Získaných bodov: <span style="font-weight:500;">{$theme->evaluation->points}/{$theme->project->max_points}</span></h2>
 

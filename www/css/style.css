@@ -46,3 +46,4 @@ h2,h3{
 .nodisplay{display:none;}
 .clrbth{clear:both;}
 .to-late {color: red;}
+.alert-info h2 {border-color:#a6e1ec;}

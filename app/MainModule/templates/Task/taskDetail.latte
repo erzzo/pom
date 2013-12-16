@@ -1,13 +1,14 @@
 {block body}
-<h1> Detail úlohy {$task->name}</h1>
-<a n:href=":Main:Subject:showAll">Predmety</a>->
+<h1><i class="glyphicon glyphicon-list-alt"></i> Detail úlohy {$task->name}</h1>
+<ol class="breadcrumb">
+    <li><a n:href=":Main:Subject:showAll">Predmety</a></li>
 {if $user->isAllowed('admin')}
-    <a n:href=":Main:Mentor:Theme:default $task->theme->project_id">{$task->theme->project->name} </a>->
+<li><a n:href=":Main:Mentor:Theme:default $task->theme->project_id">{$task->theme->project->name} </a></li>
 {/if}
-<a n:href="Task:default $task->theme_id">{$task->theme->name}</a>->
-<a>{$task->name}</a><br>
+<li><a n:href="Task:default $task->theme_id">{$task->theme->name}</a></li>
+<li><a>{$task->name}</a></li></ol>
 
-<table>
+<table class="table table-hover table-striped">
     <thead>
     <tr>
         <th>Názov úlohy</th>
@@ -37,8 +38,9 @@
 <div>
 
 </div>
+<h2>Súbory</h2>
 {if count($files)}
-<table>
+<table class="table table-hover table-striped">
     <thead>
     <tr>
         <th>Súbor</th>
@@ -58,17 +60,37 @@
 </table>
 
 {else}
-    Žiadne súbory niesú nahraté.
+<div class="alert alert-danger">Žiadne súbory niesú nahraté.</div>
 {/if}
+<div class="form-group">
+    <button class="btn btn-danger" id="button-pridat-subor"><i class="glyphicon glyphicon-plus"></i> Pridať nový súbor</button></div>
+    <div id="subor-form">
+    
+    {form addEditFileForm class=>"form form-horizontal nodisplay", id=>"form2"}
+    <h3>Pridať nový súbor</h3>
+    <div class="form-group">
+    {label name class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input name class=>"form-control" }</div>
+    </div>
+    <div class="form-group">
+    {label description class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input description class=>"form-control"}</div>
+    </div>
+    <div class="form-group">
+    {label file class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">
+        {input file class=>"form-control"}
+    </div>
+    </div>
+    <div class="form-group ">
+    <div class="col-sm-5 col-sm-offset-2">
+    {input submit class=>"btn btn-danger"}
+    </div>
+    {/form}
+    </div>
 
-{form addEditFileForm}
-    {label name/}{input name}
-    {label description/}{input description}
-    {input file}
-    {input submit}
-{/form}
 
-<p>Komentáre k úlohe</p>
+<h2>Komentáre k úlohe</h2>
 {snippet comments}
     {include @addEditCommentForm.latte}
     {control paginator}
@@ -79,3 +101,9 @@
     {control paginator}
 {/snippet}
 
+<script>
+        
+     $( "#button-pridat-subor" ).click(function() {
+        $( "#form2" ).fadeToggle( "slow", "linear" );
+});
+    </script>

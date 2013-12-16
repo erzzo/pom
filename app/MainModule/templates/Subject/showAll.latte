@@ -3,7 +3,7 @@
 <h1><span class="glyphicon glyphicon-list"></span> Všetky Predmety</h1>
 {if $user->isInRole('ucitel')}
 <div class="form-group">
-    <a n:href=":Main:Mentor:Subject:addEdit" class="btn btn-danger">Pridať nový predmet</a>
+    <a n:href=":Main:Mentor:Subject:addEdit" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i> Pridať nový predmet</a>
     </div>
 {/if}
 {include @filterSubjects.latte}

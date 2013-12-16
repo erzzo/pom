@@ -48,13 +48,15 @@
 			</td>
             <td>{$theme->evaluation_id ? $theme->evaluation->points : 0}/{$theme->project->max_points}</td>
             <td>
-                {form assignStudentForm class=>"form form-inline"}
-                <div class="form-group">
-                    {input students class=> "student-search " . $theme->id}
-                </div>
-				{input submit value => 'OK', class=>"btn btn-default"}
-				{input theme_id value => $theme->id}
+				
+                {form assignStudentForm class=>"form"}
+					<div class="form-group">
+						{input students class=> "student-search " . $theme->id}
+					</div>
+					{input theme_id value => $theme->id}
+					{input submit value => 'OK', class=>"btn btn-default"}
 				{/form}
+
             </td>
             <td><a n:href="addEdit $presenter->param['projectId'], $theme->id" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Upraviť</a></td>
         </tr>

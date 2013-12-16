@@ -1,13 +1,17 @@
 {block body}
-<h1> Detail úlohy {$task->name}</h1>
-<a n:href=":Main:Subject:showAll">Predmety</a>->
+<h1><i class="glyphicon glyphicon-list-alt"></i> Detail úlohy {$task->name}</h1>
+<ol class="breadcrumb">
+    <li><a n:href=":Main:Subject:showAll">Predmety</a></li>
 {if $user->isAllowed('admin')}
-    <a n:href=":Main:Mentor:Theme:default $task->theme->project_id">{$task->theme->project->name} </a>->
+    <li><a n:href=":Main:Mentor:Project:default $task->theme->project->subject_id">{$task->theme->project->subject->name} </a></li>
+<li><a n:href=":Main:Mentor:Theme:default $task->theme->project_id">{$task->theme->project->name} </a></li>
+{else}
+    <li><a n:href=":Main:Theme:showMy $task->theme->project->subject_id">{$task->theme->project->subject->name} </a></li>
 {/if}
-<a n:href="Task:default $task->theme_id">{$task->theme->name}</a>->
-<a>{$task->name}</a><br>
+<li><a n:href="Task:default $task->theme_id">{$task->theme->name}</a></li>
+<li><a>{$task->name}</a></li></ol>
 
-<table>
+<table class="table table-hover table-striped">
     <thead>
     <tr>
         <th>Názov úlohy</th>
@@ -25,20 +29,23 @@
         <td>{$task->grade ? "splnená" : "nesplnená"}</td>
         <td>{$task->user->firstname} {$task->user->lastname}</td>
         <td>
-            {form editHoursWorkedForm}
-                <span>{input hours_worked value => $task->hours_worked} </span>
-                <span>{input submit value => 'Upraviť'}</span>
+            {form editHoursWorkedForm class=>"form-inline"}
+            <div class="form-group">
+                {input hours_worked value => $task->hours_worked, class=>"form-control", style=>"width:65%"}&nbsp;
+                {input submit value => 'Upraviť', class=>"btn btn-default"}
+            </div>
             {/form}
         </td>
-        <td><a n:href="addEdit $task->theme_id, $task->id">upraviť</a></td>
+        <td><a n:href="addEdit $task->theme_id, $task->id" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> upraviť</a></td>
     </tr>
     </tbody>
 </table>
 <div>
 
 </div>
+<h2>Súbory</h2>
 {if count($files)}
-<table>
+<table class="table table-hover table-striped">
     <thead>
     <tr>
         <th>Súbor</th>
@@ -52,30 +59,59 @@
         <td><a n:href="downloadFile! $file->id">{$file->name}</a></td>
         <td>{$file->description}</td>
         <td>{$file->grade}</td>
-        <td><a n:href="deleteFile! $file->id">Zmazať</a></td>
+        <td><a n:href="deleteFile! $file->id" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Zmazať</a></td>
     </tr>
     </tbody>
 </table>
 
 {else}
-    Žiadne súbory niesú nahraté.
+<div class="alert alert-danger">Žiadne súbory niesú nahraté.</div>
 {/if}
+<div class="form-group">
+    <button class="btn btn-danger" id="button-pridat-subor"><i class="glyphicon glyphicon-plus"></i> Pridať nový súbor</button></div>
+    <div id="subor-form">
+    
+    {form addEditFileForm class=>"form form-horizontal nodisplay", id=>"form2"}
+    <h3>Pridať nový súbor</h3>
+    <div class="form-group">
+    {label name class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input name class=>"form-control" }</div>
+    </div>
+    <div class="form-group">
+    {label description class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input description class=>"form-control"}</div>
+    </div>
+    <div class="form-group">
+    {label file class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">
+        {input file class=>"form-control"}
+    </div>
+    </div>
+    <div class="form-group ">
+    <div class="col-sm-5 col-sm-offset-2">
+    {input submit class=>"btn btn-danger"}
+    </div>
+    {/form}
+    </div>
 
-{form addEditFileForm}
-    {label name/}{input name}
-    {label description/}{input description}
-    {input file}
-    {input submit}
-{/form}
 
-<p>Komentáre k úlohe</p>
+<h2>Komentáre k úlohe</h2>
 {snippet comments}
-    {include @addEditCommentForm.latte}
+    
     {control paginator}
     {foreach $comments as $comment}
-        {$comment->text}<br>
-        <p>Používateľ: {$comment->user->login} Dátum: {$comment->created}</p><br>
+    <blockquote>
+        {$comment->text}
+        <small>Používateľ: {$comment->user->login} Dátum: {$comment->created}</small>
+    </blockquote>
     {/foreach}
     {control paginator}
+    {include @addEditCommentForm.latte}
 {/snippet}
 
+<script>
+        
+     $( "#button-pridat-subor" ).click(function() {
+        $( "#form2" ).fadeToggle( "slow", "linear" );
+});
+    </script>

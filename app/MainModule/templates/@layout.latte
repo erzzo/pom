@@ -6,7 +6,7 @@
 	<meta name="robots" content="{$robots}" n:ifset="$robots">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{block title|striptags|upper}Nette Application Skeleton{/block}</title>
-    <link rel="stylesheet" href="{$basePath}/css/token-input.css">
+        <link rel="stylesheet" href="{$basePath}/css/token-input.css">
 	<link rel="stylesheet" href="{$basePath}/css/bootstrap.css">
 	<link rel="stylesheet" href="{$basePath}/css/style.css">
         
@@ -27,12 +27,9 @@
 
 <body>
     <div class="wrapper">
-        {if $user->isLoggedIn()}
-       
-      {/if}
        <div class="container">     
                 {if $user->isLoggedIn()}
-                <div class="text-right form-group"><a n:href=":Main:Sign:out" class="btn btn-info"><span class="glyphicon glyphicon-lock"></span> Sign Out</a></div>
+                <div class="text-right form-group"><span class="btn btn-default" disabled="disabled">Prihlásený: {$user->identity->lastname} {$user->identity->firstname}</span> <a n:href=":Main:Sign:out" class="btn btn-info"><span class="glyphicon glyphicon-lock"></span> Sign Out</a></div>
 					<div class="col-md-3">
                                             <div class="col-md-11 custom-main-menu custom-bg-white">
 						

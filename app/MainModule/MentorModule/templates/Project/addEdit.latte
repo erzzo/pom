@@ -1,14 +1,35 @@
 {block content}
-Pridať nový predmet
+<h1><i class="glyphicon glyphicon-edit"></i> Pridať nový projekt</h1>
 
-{form addEditProjectForm}
-    {label name/}{input name}<br>
-    {label description/}{input description}<br>
-    {label max_solver_count/}{input max_solver_count}<br>
-    {label max_points/}{input max_points}<br>
-    {label max_files_count/}{input max_files_count}<br>
-    {label solution_to/}{input solution_to}<br>
-    {input submit value=> isset($presenter->param['id']) ? 'Upraviť' : 'Vytvoriť'}
+{form addEditProjectForm class=>"form form-horizontal"}
+<div class="form-group">
+    {label name class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input name class=>"form-control"}</div>
+</div>
+<div class="form-group">
+    {label description class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input description class=>"form-control"}</div>
+    </div>
+<div class="form-group">
+    {label max_solver_count class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input max_solver_count class=>"form-control"}</div>
+    </div>
+<div class="form-group">
+    {label max_points class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input max_points class=>"form-control"}</div>
+    </div>
+<div class="form-group">
+    {label max_files_count class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input max_files_count class=>"form-control"}</div>
+    </div>
+<div class="form-group">
+    {label solution_to class=>"col-sm-2 control-label"/}
+    <div class="col-sm-5">{input solution_to class=>"form-control"}</div>
+    </div>
+<div class="form-group">
+        <div class="col-sm-5 col-sm-offset-2">
+    {input submit value=> isset($presenter->param['id']) ? 'Upraviť' : 'Vytvoriť',  class=>"btn btn-danger"}
+        </div></div>
 {/form}
 
 <script>

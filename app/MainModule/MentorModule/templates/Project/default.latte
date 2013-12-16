@@ -1,10 +1,12 @@
 {block content}
 <h1><i class="glyphicon glyphicon-list-alt"></i> Projekty</h1>
-<a n:href=":Main:Subject:showMy">Predmety</a>->
-<a>{$subject->name} </a><br>
-<a n:href="addEdit $presenter->param['subjectId']">Pridať nový projekt</a>
+<ol class="breadcrumb">
+    <li><a n:href=":Main:Subject:showMy">Predmety</a></li>
+    <li><a>{$subject->name} </a></li>
+</ol>
+<a n:href="addEdit $presenter->param['subjectId']" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i> Pridať nový projekt</a>
 {if count($projects)}
-    <table>
+    <table class="table table-hover table-striped">
         <thead>
         <tr>
             <th>Názov projektu</th>
@@ -16,7 +18,8 @@
         <tr n:foreach="$projects as $project">
             <td><a n:href="Theme:default, $project->id">{$project->name}</a></td>
             <td>{$project->solution_to|date:"d. n. Y"}</td>
-            <td><a n:href="addEdit $presenter->param['subjectId'], $project->id">upraviť</a></td>
+            <td>{$project->evaluation_from|date:"d. n. Y"}</td>
+            <td><a n:href="addEdit $presenter->param['subjectId'], $project->id" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> upraviť</a></td>
         </tr>
         </tbody>
     </table>

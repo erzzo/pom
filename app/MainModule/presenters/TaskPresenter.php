@@ -37,7 +37,6 @@ class TaskPresenter extends BasePresenter
 		$this->template->theme = $this->themeModel->get($themeId);
 		$this->template->tasks = $this->taskModel->getTasks($themeId);
 		$this->template->files = $this->fileModel->getFiles($themeId);
-		$this->template->hours_worked = $this->taskModel->getHoursWorked($themeId);
 
 		$paginator = $this['paginator']->getPaginator();
 		$paginator->itemCount = count($this->themeModel->getAllComments($themeId));
@@ -141,7 +140,11 @@ class TaskPresenter extends BasePresenter
 		$values = $form->getValues();
 		$id = $this->presenter->getParameter('taskId');
 		$this->flashMessage("Počet hodín upravený");
-
+		$task = $this->taskModel->get($id);
+		$theme = $this->themeModel->get($task->theme_id);
+		$themeHours = clone $values;
+		$themeHours->hours_worked = $values->hours_worked + $theme->hours_worked;
+		$theme->update($themeHours);
 		$this->taskModel->addEdit($values, $id);
 
 		$this->redirect('this');

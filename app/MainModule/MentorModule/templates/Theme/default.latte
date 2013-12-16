@@ -9,7 +9,8 @@
     <a n:href="addEdit $presenter->param['projectId']" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i> Pridať novú tému</a>
     </div>
     <div class="form">
-<div id="progress-chart" style="height: 250px; font-size: 14px; line-height: 1.2em;" ></div></div>
+<div id="progress-chart" style="height: 250px; font-size: 14px; line-height: 1.2em;" ></div>
+    </div>
 
 {form filterThemesForm class=>'ajax form-inline'}
     {input name placeholder => "Vyhľadať podľa názov témy", class=>"form-control"}
@@ -21,7 +22,7 @@
         <thead>
         <tr>
             <th>Názov témy</th>
-            <th>Popis</th>
+            <th>Čas</th>
             <th>Stav</th>
             <th>Hodnotenie</th>
             <th>Priradení študenti</th>
@@ -31,7 +32,7 @@
         <tbody>
         <tr n:foreach="$themes as $theme">
             <td><a n:href=":Main:Task:default, $theme->id">{$theme->name}</a></td>
-            <td>{$theme->description}</td>
+            <td>{$theme->hours_worked} h</td>
             <td>
 				{var $late = $theme->project->solution_to < new \Nette\Datetime() ? TRUE : FALSE}
 				{if $theme->evaluation_id}

@@ -33,7 +33,7 @@ class Theme extends Base
 
 	public function getThemeUsers($themeId)
 	{
-		return $this->db->table('theme_user')->select('theme_id, user.login')->where('theme_id', $themeId)->fetchPairs('theme_id','login');
+		return $this->db->table('theme_user')->select('user_id AS user_id, CONCAT(user.firstname, \' \', user.lastname) AS name')->where('theme_id', $themeId)->fetchPairs('user_id','name');
 	}
 
 	public function getEvaluation($evaluationId)

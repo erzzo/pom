@@ -47,7 +47,12 @@ class SubjectPresenter extends BasePresenter
 		$id = $this->presenter->getParameter('id');
 
 		$this->subjectModel->addEdit($values, $id);
-		$this->flashMessage("Predmet bol pridaný");
+
+		if ($id) {
+			$this->flashMessage("Predmet bol upravený.");
+		}else {
+			$this->flashMessage("Predmet bol pridaný.");
+		}
 
 		$this->redirect(':Main:Subject:showMy');
 	}

@@ -17,6 +17,11 @@
 
 {snippet themes}
 {if count($themes)}
+	<style>
+		#token-input-frmassignStudentForm-students {
+			min-width: 250px;
+		}
+	</style>
     <table class="table table-striped table-hover">
         <thead>
         <tr>
@@ -44,31 +49,32 @@
             <td>
                 {form assignStudentForm class=>"form form-inline"}
                 <div class="form-group">
-                    {input students class=> "student-search" . $theme->id}
+                    {input students class=> "student-search " . $theme->id}
                 </div>
-                    {input theme_id value => $theme->id}
-                    {input submit value => 'Upraviť', class=>"btn btn-default"}
-                {/form}
+				{input submit value => 'OK', class=>"btn btn-default"}
+				{input theme_id value => $theme->id}
+				{/form}
             </td>
             <td><a n:href="addEdit $presenter->param['projectId'], $theme->id" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Upraviť</a></td>
         </tr>
         </tbody>
     </table>
     <script>
-        $('.student-search').tokenInput({link searchStudent!}, {
-            hintText: "Vyhľadaj študentov",
-            minChars: 2,
-            resultLimit: {$project->max_solver_count},
-            preventDuplicates: 'true'
-        });
+		$('.student-search').tokenInput({link searchStudent!}, {
+			hintText: false,
+			searchingText: "Hľadám študentov",
+			minChars: 2,
+			resultLimit: {$project->max_solver_count},
+			preventDuplicates: 'true'
+		});
 
-        var themeStudent = {!$themeStudent};
+		var themeStudent = {!$themeStudent};
 
-        $.each(themeStudent, function(themeKey, theme) {
-            jQuery.each(theme, function(userKey, user) {
-                $('.student-search.'+themeKey).tokenInput("add", { id: userKey, name: user});
-            })
-        })
+		$.each(themeStudent, function(themeKey, theme) {
+			jQuery.each(theme, function(userKey, user) {
+				$('.student-search.'+themeKey).tokenInput("add", { id: userKey, name: user});
+			})
+		})
     </script>
 {else}
 <div class="alert alert-info">

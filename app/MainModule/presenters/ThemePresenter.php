@@ -23,12 +23,12 @@ class ThemePresenter extends BasePresenter
 			$flotPercentage[$key][0] = array(
 				"label" => "Splnene",
 				"data" => $perc,
-				"color" => "#00D50F"
+				"color" => "#acda3e"
 			);
 			$flotPercentage[$key][1] = array(
 				"label" => "Nesplnene",
 				"data" => 100-$perc,
-				"color" => "#FA0000"
+				"color" => "#CCCCCC"
 			);
 		}
 

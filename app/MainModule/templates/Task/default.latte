@@ -22,9 +22,11 @@
             font-family: 'helvetica_neueultralight';
             z-index: 1 ;
             width: 60px;
+            line-height: 0.9; padding:0px;
             display: block;
             text-align: center;
         }
+        #chart-value small { font-size:14px; }
         #task-chart {
             width: 90px;
             height:90px;
@@ -35,20 +37,20 @@
         }
     </style>
     <div style="width: 90px; height: 90px; position: relative">
-        <span id="chart-value">{$taskPercentage|number: 1}%</span>
+        <span id="chart-value">{$taskPercentage|number: 1}%<br /><small>{$hours_worked->total_hours ? $hours_worked->total_hours : 0} hod.</small></span>
         <div id="task-chart"></div>
     </div>
     <div>
-        <span>Odpracované hodiny: {$hours_worked->total_hours ? $hours_worked->total_hours : 0}</span>
+    
     </div>
 </div>
    
-<div class="form-group">
+<div class="form-group clrbth">
 	{if count($tasks)}
 		<a n:href="addEdit $theme->id" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i> Pridať novú úlohu</a>
 	{/if}
 	{if $user->isInRole('student') && !$theme->submitted}
-		<a n:href="sendToEvaluation! $theme->id" class="btn btn-warning pull-right"> Odovzdať zadanie</a>
+		<a n:href="sendToEvaluation! $theme->id" class="btn btn-warning"> Odovzdať zadanie</a>
 	{/if}
 	{if $user->isAllowed('admin') && !$theme->evaluation_id}
         <a n:href=":Main:Mentor:Task:addEditEvaluation $theme->id" class="btn btn-warning">Pridať hodnotenie</a>
@@ -75,9 +77,9 @@
 	{/if}
     <h1></h1>
 </div>
-
-{if count($tasks)}
 <h2>Úlohy</h2>
+{if count($tasks)}
+
     <table class="table table-hover table-striped">
         <thead>
         <tr>
@@ -105,7 +107,7 @@
 {else}
 
 
-<div class="alert alert-danger" style="clear:both">Žiadne úlohy neboli nájdené.</div>
+<div class="alert alert-danger clrbth">Žiadne úlohy neboli nájdené.</div>
 {/if}
 <div class="form-group">
 <a n:href="addEdit $theme->id" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i> Pridať novú úlohu</a>
@@ -184,7 +186,7 @@
     $(function() {
         var data = {!$flotPercentage};
         $.plot('#task-chart', data, {
-            colors: ['#00D50F', '#FA0000'],
+            colors: ['#95cc12', '#CCCCCC'],
             series: {
                 pie: {
                     innerRadius: 0.9,

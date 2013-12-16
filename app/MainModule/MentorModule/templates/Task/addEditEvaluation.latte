@@ -1,8 +1,17 @@
 {block body}
-Pridať ohodnotenie
+<h1><i class="glyphicon glyphicon-edit"></i> Pridať/upraviť hodnotenie</h1>
 
-{form addEditEvaluationForm}
-    <p>{label points/}{input points}maximálny počet je {$theme->project->max_points}</p><br>
-    {label description/}{input description}<br>
-    {input submit value=> isset($presenter->param['evaluationId']) ? 'Uložiť' : 'Pridať ohodnotenie'}
+{form addEditEvaluationForm class=>"form form-horizontal"}
+<div class="form-group">
+    {label points class=>"label-control col-sm-2"/}
+    <div class="col-sm-5">{input points  class=>"form-control"}maximálny počet bodov je {$theme->project->max_points}</div>
+</div>
+<div class="form-group">
+    {label description class=>"label-control col-sm-2"/}
+    <div class="col-sm-5">{input description class=>"form-control"}</div>
+</div>
+<div class="form-group">
+    <div class="col-sm-5 col-sm-offset-2">
+    {input submit value=> isset($presenter->param['evaluationId']) ? 'Uložiť' : 'Pridať ohodnotenie', class=>"btn btn-danger"}
+</div></div>
 {/form}

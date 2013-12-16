@@ -25,10 +25,6 @@ class TaskPresenter extends BasePresenter
 	public function actionAddEditEvaluation($themeId, $evaluationId = NULL)
 	{
 		$this->template->theme = $theme = $this->themeModel->get($themeId);
-		if ($theme->project->evaluation_from > new DateTime()) {
-			$this->flashMessage("Nieje ešte možné pridávať hodnotenie");
-			$this->redirect(':Main:Task:default', array('themeId' => $themeId));
-		}
 		if ($evaluationId) {
 			$evalutaion = $this->themeModel->getEvaluation($evaluationId);
 			if (!$evalutaion) {

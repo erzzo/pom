@@ -50,7 +50,6 @@
     <tr>
         <th>Súbor</th>
         <th>Popis</th>
-        <th>Stav</th>
         <th>Nastavenia</th>
     </tr>
     </thead>
@@ -58,7 +57,6 @@
     <tr n:foreach="$files as $file">
         <td><a n:href="downloadFile! $file->id">{$file->name}</a></td>
         <td>{$file->description}</td>
-        <td>{$file->grade}</td>
         <td><a n:href="deleteFile! $file->id" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Zmazať</a></td>
     </tr>
     </tbody>

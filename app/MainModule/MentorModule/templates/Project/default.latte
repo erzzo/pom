@@ -18,7 +18,6 @@
         <tr n:foreach="$projects as $project">
             <td><a n:href="Theme:default, $project->id">{$project->name}</a></td>
             <td>{$project->solution_to|date:"d. n. Y"}</td>
-            <td>{$project->evaluation_from|date:"d. n. Y"}</td>
             <td><a n:href="addEdit $presenter->param['subjectId'], $project->id" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> upraviť</a></td>
         </tr>
         </tbody>

@@ -27,7 +27,6 @@ class ProjectPresenter extends BasePresenter
 			if (!$project) {
 				//throw Nette\
 			}
-			$project['solution_from'] = $project['solution_from']->format('d.m.Y');
 			$project['solution_to'] = $project['solution_to']->format('d.m.Y');
 			$this['addEditProjectForm']->setDefaults($project);
 		}

@@ -16,7 +16,7 @@ class BasePresenter extends \BasePresenter
 	protected function createComponentPaginator()
 	{
 		$visualPaginator = new VisualPaginator();
-		$visualPaginator->paginator->itemsPerPage = 10;
+		$visualPaginator->paginator->itemsPerPage = 5;
 		$visualPaginator->onShowPage[] = callback($this, 'triggerShowPage');
 		return $visualPaginator;
 	}

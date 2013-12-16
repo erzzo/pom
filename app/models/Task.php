@@ -29,4 +29,9 @@ class Task extends Base
 		$this->findBy(array('id' => $id))->update(array('grade' => 1, 'submitted' => new \Nette\DateTime()));
 
 	}
+
+	public function getHoursWorked($themeId)
+	{
+		return $this->getTable()->select('id, SUM(hours_worked) AS total_hours')->where('theme_id', $themeId)->fetch();
+	}
 }

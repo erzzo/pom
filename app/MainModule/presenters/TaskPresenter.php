@@ -31,11 +31,13 @@ class TaskPresenter extends BasePresenter
 			}
 		}
 	}
+
 	public function actionDefault($themeId)
 	{
 		$this->template->theme = $this->themeModel->get($themeId);
 		$this->template->tasks = $this->taskModel->getTasks($themeId);
 		$this->template->files = $this->fileModel->getFiles($themeId);
+		$this->template->hours_worked = $this->taskModel->getHoursWorked($themeId);
 
 		$paginator = $this['paginator']->getPaginator();
 		$paginator->itemCount = count($this->themeModel->getAllComments($themeId));
@@ -124,6 +126,27 @@ class TaskPresenter extends BasePresenter
 		$this->invalidateControl();
 	}
 
+	public function createComponentEditHoursWorkedForm()
+	{
+		$form = new Form;
+		$form->addText('hours_worked', 'Počet odrobených hodín')
+			->setType('Number');
+		$form->onSuccess[] = $this->processEditHoursWorkedForm;
+		$form->addSubmit('submit');
+		return $form;
+	}
+
+	public function processEditHoursWorkedForm(Form $form)
+	{
+		$values = $form->getValues();
+		$id = $this->presenter->getParameter('taskId');
+		$this->flashMessage("Počet hodín upravený");
+
+		$this->taskModel->addEdit($values, $id);
+
+		$this->redirect('this');
+	}
+
 	public function createComponentAddEditTaskForm()
 	{
 		$users = $this->themeModel->getThemeUsers($this->presenter->params['themeId']);
@@ -134,6 +157,8 @@ class TaskPresenter extends BasePresenter
 		$form->addSelect('user_id','Riešitelia', $users)
 			->setRequired('Povinný atribút');
 		$form->addText('max_files_count', 'Maximálny počet nahratých súborov')
+			->setType('Number');
+		$form->addText('hours_worked', 'Počet odrobených hodín')
 			->setType('Number');
 		$form->addTextArea('description', 'Popis úlohy');
 		$form->addSubmit('submit');

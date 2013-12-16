@@ -37,7 +37,7 @@
         }
     </style>
     <div style="width: 90px; height: 90px; position: relative">
-        <span id="chart-value">{$taskPercentage|number: 1}%<br /><small>{$hours_worked->total_hours ? $hours_worked->total_hours : 0} hod.</small></span>
+        <span id="chart-value">{$taskPercentage|number: 1}%<br /><small>{if $theme->hours_worked}{$theme->hours_worked|number:1} {else}0{/if} hod.</small></span>
         <div id="task-chart"></div>
     </div>
     <div>

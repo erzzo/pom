@@ -38,6 +38,9 @@
         <span id="chart-value">{$taskPercentage|number: 1}%</span>
         <div id="task-chart"></div>
     </div>
+    <div>
+        <span>Odpracované hodiny: {$hours_worked->total_hours ? $hours_worked->total_hours : 0}</span>
+    </div>
 </div>
    
 <div class="form-group">
@@ -82,6 +85,7 @@
             <th>Popis</th>
             <th>Stav</th>
             <th>Riešiteľ</th>
+            <th>Počet hodín</th>
             <th>Nastavenia</th>
         </tr>
         </thead>
@@ -91,6 +95,7 @@
             <td>{$task->description}</td>
             <td>{$task->grade ? "splnená" : "nesplnená"}</td>
             <td>{$task->user->firstname} {$task->user->lastname}</td>
+            <td>{$task->hours_worked}</td>
             <td><a n:href="addEdit $theme->id, $task->id" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Upraviť</a>
                 <a n:if="$task->grade == 0" n:href="markDone! $task->id" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Hotovo</a>
             </td>
